@@ -1,0 +1,53 @@
+{
+  "name": "Guatemala Rewards",
+  "short_name": "Guatemala",
+  "description": "Install Guatemala Rewards to show your member QR, record partner purchases, and manage rewards from your phone.",
+  "id": "/?source=pwa",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "portrait",
+  "categories": ["business", "shopping", "productivity"],
+  "lang": "en",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "theme_color": "#2F2014",
+  "background_color": "#2F2014",
+  "shortcuts": [
+    {
+      "name": "Member QR",
+      "short_name": "QR",
+      "description": "Open your scannable member QR.",
+      "url": "/profile?source=pwa-shortcut",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Business Portal",
+      "short_name": "Business",
+      "description": "Open the business QR sales workspace.",
+      "url": "/business/dashboard?source=pwa-shortcut",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Platform Guide",
+      "short_name": "Guide",
+      "description": "Open the customer, business, and admin walkthrough.",
+      "url": "/guide?source=pwa-shortcut",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ]
+}

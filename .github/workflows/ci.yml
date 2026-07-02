@@ -1,0 +1,116 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  frontend:
+    name: Frontend quality gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm run test
+
+      - name: Build
+        run: npm run build
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Public E2E smoke
+        run: npm run test:e2e
+
+      - name: Upload production build
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: dist
+          if-no-files-found: error
+          retention-days: 7
+
+  supabase:
+    name: Supabase migration checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify Supabase CLI
+        run: npx supabase --version
+
+      - name: Check Supabase config
+        run: test -f supabase/config.toml
+
+      - name: Validate migration files
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+
+          files=(supabase/migrations/*.sql)
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "No Supabase migration files found."
+            exit 1
+          fi
+
+          declare -A seen_timestamps=()
+          for file in "${files[@]}"; do
+            name="$(basename "$file")"
+
+            if [[ ! "$name" =~ ^[0-9]{14}_[a-z0-9_]+\.sql$ ]]; then
+              echo "Invalid migration filename: $name"
+              exit 1
+            fi
+
+            timestamp="${name%%_*}"
+            if [[ -n "${seen_timestamps[$timestamp]:-}" ]]; then
+              echo "Duplicate migration timestamp: $timestamp"
+              exit 1
+            fi
+
+            seen_timestamps[$timestamp]=1
+          done
+
+          echo "Validated ${#files[@]} Supabase migration files."
