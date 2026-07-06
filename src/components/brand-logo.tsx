@@ -21,12 +21,11 @@ export function BrandLogo({
 }: BrandLogoProps) {
   const imageSizeClass = markClassName ?? imageClassName ?? (compact ? 'w-[54px]' : 'w-[162px]')
   const shouldShowWordmark = showText && !imageClassName
-  const logoSrc = shouldShowWordmark ? '/guatemala-rewards-mark.png' : '/guatemala-rewards-logo.png'
 
   return (
     <span className={cn('inline-flex min-w-0 items-center justify-center gap-2.5', className)} aria-label={ariaLabel}>
       <img
-        src={logoSrc}
+        src="/guatemala-rewards-logo.png"
         alt={shouldShowWordmark ? '' : 'Guatemala Rewards'}
         className={cn(
           'block h-auto shrink-0 object-contain',

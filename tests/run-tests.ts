@@ -245,7 +245,7 @@ runTest('global CSS restores the brand theme outside early access', () => {
   assert.match(css, /\.early-access-neutral/)
 })
 
-runTest('Guatemala Rewards logo assets use the black-backed gold mark', () => {
+runTest('Guatemala Rewards logo assets use the exact black-backed upload', () => {
   const fullLogo = readFileSync('public/guatemala-rewards-logo.png')
   const markLogo = readFileSync('public/guatemala-rewards-mark.png')
   const manifest = readFileSync('public/site.webmanifest', 'utf8')
@@ -257,9 +257,9 @@ runTest('Guatemala Rewards logo assets use the black-backed gold mark', () => {
   assert.equal(markLogo.subarray(1, 4).toString('ascii'), 'PNG')
   assert.equal(fullLogo[25], 2)
   assert.equal(markLogo[25], 2)
-  assert.match(manifest, /\/guatemala-rewards-mark\.png/)
+  assert.deepEqual(fullLogo, markLogo)
+  assert.match(manifest, /\/guatemala-rewards-logo\.png/)
   assert.match(manifest, /"theme_color": "#F6F7F8"/)
-  assert.match(brandLogo, /\/guatemala-rewards-mark\.png/)
   assert.match(brandLogo, /\/guatemala-rewards-logo\.png/)
   assert.doesNotMatch(brandLogo, /guatemala-rewards-(logo|mark)\.svg/)
   assert.match(brandLogo, /sr-only">Guatemala Rewards/)

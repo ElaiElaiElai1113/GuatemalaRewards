@@ -15,7 +15,7 @@ export default defineConfig({
       includeAssets: [
         'apple-touch-icon.png',
         'favicon.ico',
-        'guatemala-rewards-mark.png',
+        'guatemala-rewards-logo.png',
         'icon-192.png',
         'icon-512.png',
         'site.webmanifest',
