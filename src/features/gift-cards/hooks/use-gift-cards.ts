@@ -108,8 +108,11 @@ export function useIssueGiftCard(customerId?: string) {
 
   return useMutation({
     mutationFn: (catalogId: string) => {
-      if (profile?.verificationStatus !== 'verified') {
-        throw new Error('ID verification is required before using reward value actions.')
+      if (!profile?.id) {
+        throw new Error('Sign in before using reward value actions.')
+      }
+      if (!profile.fullName?.trim() || !profile.email?.trim() || !profile.phone?.trim()) {
+        throw new Error('Add your full name, email, and WhatsApp or phone before using rewards.')
       }
       return giftCardsService.issueGiftCard(catalogId, customerId!)
     },

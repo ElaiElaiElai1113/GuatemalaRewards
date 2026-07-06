@@ -9,6 +9,7 @@ import {
 } from 'lucide-react'
 import { NavLink, Outlet } from 'react-router-dom'
 
+import { BrandLogo } from '@/components/brand-logo'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -45,9 +46,7 @@ export function AppShell() {
         <aside className="rounded-[2rem] border border-border/80 bg-background/80 p-5 shadow-panel  lg:sticky lg:top-4 lg:h-[calc(100vh-2rem)] lg:w-[290px] lg:self-start">
           <div className="flex items-center justify-between gap-4">
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                Guatemala Rewards
-              </p>
+              <BrandLogo markClassName="h-9" textClassName="text-lg text-foreground" />
               <h1 className="mt-1 font-serif text-3xl tracking-[-0.04em] text-foreground">
                 Menu
               </h1>

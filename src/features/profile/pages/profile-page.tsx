@@ -61,20 +61,18 @@ export function ProfilePage() {
   }, [form, profile.data])
 
   const verificationStatus = profile.data?.verificationStatus ?? 'not_submitted'
-  const isMemberVerified = verificationStatus === 'verified'
+  const isMemberVerified = Boolean(profile.data?.memberQrToken)
   const canSubmitVerification = ['not_submitted', 'pending_document', 'rejected', 'submitted'].includes(verificationStatus)
   const memberQrUrl =
-    isMemberVerified && profile.data?.memberQrToken && typeof window !== 'undefined'
+    profile.data?.memberQrToken && typeof window !== 'undefined'
       ? `${window.location.origin}/business/member-sale/${profile.data.memberQrToken}`
       : ''
   const memberQrStatusMessage =
     verificationStatus === 'submitted'
-      ? 'Your ID is under review. Your member QR activates after approval.'
+      ? 'Your ID is under review for future account security. Your member QR is active now.'
       : verificationStatus === 'rejected'
-        ? 'Resubmit ID verification to activate your member QR.'
-        : isMemberVerified
-          ? 'Businesses scan this code to record outside-app purchases and award rewards automatically.'
-          : 'Verify your ID to activate your member QR.'
+        ? 'ID verification is optional during launch. Your member QR stays active.'
+        : 'Businesses scan this code to record outside-app purchases and award rewards automatically.'
 
   return (
     <div className="space-y-16 pb-20">
@@ -124,18 +122,13 @@ export function ProfilePage() {
                 </div>
               )}
             </div>
-            {!isMemberVerified ? (
-              <Button asChild type="button" variant="outline" className="mt-5 w-full rounded-2xl">
-                <a href="#id-verification">{t('Verify ID to activate QR')}</a>
-              </Button>
-            ) : null}
             <Button
               type="button"
               variant="outline"
               className="mt-3 w-full rounded-2xl"
-              disabled={!isMemberVerified || !memberQrUrl}
+              disabled={!memberQrUrl}
               onClick={async () => {
-                if (!isMemberVerified || !memberQrUrl) return
+                if (!memberQrUrl) return
                 await navigator.clipboard.writeText(memberQrUrl)
                 toast.success('Member QR link copied')
               }}
@@ -174,7 +167,7 @@ export function ProfilePage() {
                 <IdCard className="size-5" />
               </div>
               <div className="space-y-2">
-                <h2 className="font-serif text-2xl text-primary">ID Verification</h2>
+                <h2 className="font-serif text-2xl text-primary">Future ID verification</h2>
                 <Badge
                   variant="accent"
                   className={
@@ -191,7 +184,7 @@ export function ProfilePage() {
                       ? 'Rejected'
                       : verificationStatus === 'submitted'
                         ? 'Submitted'
-                        : 'Required'}
+                        : 'Optional'}
                 </Badge>
                 {profile.data?.verificationRejectionReason ? (
                   <p className="text-sm font-medium leading-6 text-red-600">
@@ -199,7 +192,7 @@ export function ProfilePage() {
                   </p>
                 ) : (
                   <p className="text-sm font-medium leading-6 text-on-surface-variant/80">
-                    Verified ID is required before earning points, redeeming rewards, or using reward credits.
+                    ID is not required during launch. We may ask for it later as an extra security step to protect member rewards.
                   </p>
                 )}
               </div>
@@ -212,7 +205,7 @@ export function ProfilePage() {
                   try {
                     setVerificationError(null)
                     if (!verificationDocument) {
-                      setVerificationError('Upload a photo or PDF of your ID for account verification.')
+                      setVerificationError('Upload a photo or PDF of your ID for optional account verification.')
                       return
                     }
 
@@ -270,7 +263,7 @@ export function ProfilePage() {
                 {verificationError ? <p className="text-sm font-bold text-red-500">{verificationError}</p> : null}
                 <Button type="submit" disabled={submitVerification.isPending || updateProfile.isPending}>
                   <Upload className="size-4" />
-                  {submitVerification.isPending || updateProfile.isPending ? 'Submitting...' : 'Submit ID'}
+                  {submitVerification.isPending || updateProfile.isPending ? 'Submitting...' : 'Submit optional ID'}
                 </Button>
               </form>
             ) : null}

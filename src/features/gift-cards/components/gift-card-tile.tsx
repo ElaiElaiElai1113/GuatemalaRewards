@@ -114,7 +114,7 @@ export function GiftCardTile({
                 {formatPoints(item.pointsCost - balancePoints)} {t('points needed')}
               </p>
             ) : actionLocked ? (
-              <p className="text-xs font-medium text-[var(--muted-foreground)]">{t('ID verification required')}</p>
+              <p className="text-xs font-medium text-[var(--muted-foreground)]">{t('Contact details required')}</p>
             ) : null}
           </div>
           <Button
@@ -125,7 +125,7 @@ export function GiftCardTile({
             onClick={() => onSelect(item)}
           >
             {canIssue ? <CheckCircle className="size-4" /> : null}
-            {actionLocked && hasEnoughPoints ? t('Verify ID to issue') : t('Issue')}
+            {actionLocked && hasEnoughPoints ? t('Add contact details') : t('Issue')}
           </Button>
         </div>
     </div>

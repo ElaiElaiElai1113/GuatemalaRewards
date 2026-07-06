@@ -22,6 +22,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 
 import { LanguagePicker } from '@/components/language-picker'
 import { ThemeToggle } from '@/components/theme-toggle'
+import { BrandLogo } from '@/components/brand-logo'
 import { AuthPortalShell } from '@/features/auth/components/auth-portal-shell'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -148,8 +149,8 @@ export function LandingPage() {
     <main className="screenshot-landing min-h-screen overflow-x-hidden bg-[#f6f7f8] text-[#242426]">
       <header className="sticky top-0 z-40 flex min-h-[61px] items-center border-b border-[#e1e4e8] bg-[#ffffff] px-8">
         <div className="mx-auto flex w-full max-w-[1336px] items-center justify-between gap-4">
-          <Link to="/" className="font-serif text-[23px] font-bold leading-none tracking-[-0.01em] text-[#111111]">
-            Guatemala <span className="text-[#c9a84c]">Rewards</span>
+          <Link to="/" className="flex min-h-[48px] items-center" aria-label="Guatemala Rewards home">
+            <BrandLogo compact imageClassName="w-[48px]" />
           </Link>
           <nav className="hidden items-center gap-[30px] text-[14px] font-medium leading-none text-[#687282] md:flex">
             <a href="#how-it-works" className="transition hover:text-[#202023]">
@@ -240,9 +241,7 @@ export function LandingPage() {
 
             <div className="mt-[13px] rounded-[8px] bg-[#f8f9fb] px-4 py-[14px]">
               <div className="mx-auto w-full max-w-[218px] border-[6px] border-[#111111] bg-[#ffffff] p-3 shadow-[0_10px_24px_rgba(17,17,17,0.08)]">
-                <p className="mb-2 text-center font-serif text-[18px] font-bold leading-none text-[#111111]">
-                  Guatemala <span className="text-[#c9a84c]">Rewards</span>
-                </p>
+                <BrandLogo className="mb-2 w-full" imageClassName="mx-auto w-[86px]" />
                 <QRCodeSVG
                   value={samplePartnerQrUrl}
                   size={168}
@@ -360,9 +359,7 @@ export function LandingPage() {
 
       <footer className="flex min-h-[86px] items-center bg-[#ffffff] px-8">
         <div className="mx-auto grid w-full max-w-[1336px] gap-4 text-center md:grid-cols-[1fr_auto_1fr] md:items-center md:text-left">
-          <p className="font-serif text-[20px] font-bold leading-none tracking-[-0.01em] text-[#202023]">
-            Guatemala <span className="text-[#c9a84c]">Rewards</span>
-          </p>
+          <BrandLogo className="justify-center md:justify-start" imageClassName="w-[62px]" />
           <p className="text-[12px] font-medium text-[#687282]">Business-coded QR stickers for local member rewards</p>
           <nav className="flex flex-wrap items-center justify-center gap-[16px] text-[12px] font-medium text-[#687282] md:justify-end">
             <Link to="/reward-terms" className="transition hover:text-[#202023]">Member agreement</Link>
@@ -664,9 +661,7 @@ export function CompactAuthPage() {
   return (
     <AuthPortalShell activeTab="signin">
       <div className="mb-7 text-center">
-        <p className="font-serif text-[18px] font-bold leading-none text-[#d1ad4a]">
-          Guatemala Rewards
-        </p>
+        <BrandLogo imageClassName="mx-auto w-[96px]" />
         <p className="mt-3 text-[12px] font-semibold uppercase tracking-[0.26em] text-[#8f8f8f]">
           {t('Member Portal').toUpperCase()}
         </p>

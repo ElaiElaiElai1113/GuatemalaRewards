@@ -182,8 +182,12 @@ export const authService = {
 
     const name = input.fullName?.trim()
     const email = input.email.trim().toLowerCase()
+    const phone = input.phone.trim()
     if (!name) {
       throw new Error('Enter your full name to create an account.')
+    }
+    if (!phone) {
+      throw new Error('Enter your WhatsApp or phone number to create an account.')
     }
 
     const { data, error: authError } = await sb.auth.signUp({
@@ -192,6 +196,7 @@ export const authService = {
       options: {
         data: {
           full_name: name,
+          phone,
         },
       },
     })
@@ -201,7 +206,7 @@ export const authService = {
         throw new Error('That email already exists. Try signing in instead.')
       }
       if (authError.message.includes('Database error saving new user')) {
-        throw new Error('Account could not be created. Make sure this verification ID is not already attached to another member account.')
+        throw new Error('Account could not be created. Please check your details and try again.')
       }
       throw new Error(authError.message)
     }

@@ -30,9 +30,12 @@ const customerKeys = {
   orders: (profileId: string) => ['orders', profileId] as const,
 }
 
-function requireVerifiedCustomer(verificationStatus?: string | null) {
-  if (verificationStatus !== 'verified') {
-    throw new Error('ID verification is required before using reward value actions.')
+function requireLaunchCustomer(profile: { id?: string | null; fullName?: string | null; email?: string | null; phone?: string | null } | null | undefined) {
+  if (!profile?.id) {
+    throw new Error('Sign in before using reward value actions.')
+  }
+  if (!profile.fullName?.trim() || !profile.email?.trim() || !profile.phone?.trim()) {
+    throw new Error('Add your full name, email, and WhatsApp or phone before using rewards.')
   }
 }
 
@@ -168,7 +171,7 @@ export function usePlaceOrder(profileId?: string) {
       items: CheckoutPayloadItem[]
       partnerCode?: string | null
     }) => {
-      requireVerifiedCustomer(profile?.verificationStatus)
+      requireLaunchCustomer(profile)
       return ordersService.placeOrder(profileId!, businessId, paymentMethod, items, partnerCode)
     },
     onSuccess: () => {
@@ -206,7 +209,7 @@ export function useRedeemReward(profileId?: string) {
 
   return useMutation({
     mutationFn: (values: RedeemFormValues & { rewardId: string }) => {
-      requireVerifiedCustomer(profile?.verificationStatus)
+      requireLaunchCustomer(profile)
       return rewardsService.redeemReward({
         ...values,
         profileId: profileId!,
@@ -226,7 +229,7 @@ export function useGenerateCreditCode(profileId?: string) {
   const { profile } = useAuth()
   return useMutation({
     mutationFn: () => {
-      requireVerifiedCustomer(profile?.verificationStatus)
+      requireLaunchCustomer(profile)
       return referralsService.generateCreditCode(profileId!)
     },
   })

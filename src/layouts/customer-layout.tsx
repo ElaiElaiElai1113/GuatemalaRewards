@@ -6,6 +6,7 @@ import {
 } from 'lucide-react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
+import { BrandLogo } from '@/components/brand-logo'
 import { CustomerBottomNav } from '@/components/customer-bottom-nav'
 import { LanguagePicker } from '@/components/language-picker'
 import { ThemeToggle } from '@/components/theme-toggle'
@@ -49,9 +50,10 @@ export function CustomerLayout() {
         <div className="mx-auto flex min-h-16 w-full items-center justify-between gap-3 px-4 py-2 sm:px-5 md:px-6 2xl:px-10">
           <div className="flex min-w-0 flex-1 items-center gap-4 xl:gap-10">
             <NavLink to="/dashboard" className="flex min-w-0 items-center gap-3">
-              <span className="block max-w-36 truncate text-lg font-semibold leading-tight text-[var(--foreground)] sm:max-w-none sm:text-xl">
-                Guatemala Rewards
-              </span>
+              <BrandLogo
+                markClassName="h-9"
+                textClassName="max-w-28 text-lg text-[var(--foreground)] sm:max-w-none sm:text-xl"
+              />
             </NavLink>
 
             <nav className="hidden items-center gap-0.5 xl:flex">
@@ -103,6 +105,16 @@ export function CustomerLayout() {
               </NavLink>
               <LanguagePicker className="text-[var(--muted-foreground)]" compact />
               <ThemeToggle />
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--destructive)] xl:hidden"
+                onClick={() => void signOut()}
+                title={t('Sign out')}
+                aria-label={t('Sign out')}
+              >
+                <LogOut className="size-5" />
+              </Button>
 
               <Avatar className="hidden size-10 rounded-lg border border-[var(--border)] xl:flex">
                 <AvatarFallback className="rounded-lg bg-[var(--muted)] font-semibold text-[var(--foreground)]">
@@ -135,7 +147,7 @@ export function CustomerLayout() {
         <div className="mx-auto w-full px-6 2xl:px-10">
           <div className="flex flex-col justify-between gap-10 md:flex-row">
             <div className="max-w-xs">
-              <span className="text-lg font-semibold text-[var(--foreground)]">Guatemala Rewards</span>
+              <BrandLogo markClassName="h-10" textClassName="text-lg text-[var(--foreground)]" />
               <p className="mt-4 text-sm leading-relaxed text-[var(--muted-foreground)]">
                 {t('Use one member QR across partner businesses and keep every recorded purchase connected to your account.')}
               </p>

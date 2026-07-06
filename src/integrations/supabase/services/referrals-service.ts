@@ -98,7 +98,7 @@ export const referralsService = {
     const [{ data: profile }, { data: balance, error: balanceError }] = await Promise.all([
       sb
         .from('profiles')
-        .select('verification_status')
+        .select('full_name,email,phone')
         .eq('id', profileId)
         .single(),
       sb
@@ -108,8 +108,8 @@ export const referralsService = {
         .single(),
     ])
 
-    if (profile?.verification_status !== 'verified') {
-      throw new Error('ID verification is required before using reward value actions.')
+    if (!profile?.full_name?.trim() || !profile.email?.trim() || !profile.phone?.trim()) {
+      throw new Error('Add full name, email, and WhatsApp or phone before using reward value actions.')
     }
 
     if (balanceError || !balance) {

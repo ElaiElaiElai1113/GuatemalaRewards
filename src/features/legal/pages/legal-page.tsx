@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 
+import { BrandLogo } from '@/components/brand-logo'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { useLanguage } from '@/lib/language'
@@ -93,8 +94,8 @@ export function LegalPage({ kind }: LegalPageProps) {
     <main className="min-h-screen bg-[#fffaf4] px-4 py-8 text-[#21140d] sm:px-6 lg:px-8">
       <div className="mx-auto max-w-4xl space-y-8">
         <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-          <Link to="/" className="font-serif text-2xl font-bold text-[#21140d]">
-            Guatemala Rewards
+          <Link to="/" aria-label="Guatemala Rewards home">
+            <BrandLogo imageClassName="w-[80px]" />
           </Link>
           <Button asChild variant="outline" className="w-full rounded-full border-[#9c6a22]/35 bg-[#fffdf8] sm:w-auto">
             <Link to="/join">{t('Join Rewards Club')}</Link>

@@ -16,6 +16,7 @@ import { memberSignUpSchema, type MemberSignUpFormValues } from '@/types/forms'
 const defaultValues: MemberSignUpFormValues = {
   fullName: '',
   email: '',
+  phone: '',
   password: '',
   role: 'customer',
 }
@@ -115,10 +116,10 @@ export function ReferralRegisterPage() {
                   <h2 className="font-serif text-4xl tracking-tight text-primary">{t('Welcome aboard!')}</h2>
                   <p className="text-sm font-medium leading-relaxed text-on-surface-variant/80">
                     {hasPartnerReferral
-                      ? 'Your partner referral is attached. Sign in, then verify your ID from your profile to unlock rewards.'
+                      ? 'Your partner referral is attached. Sign in to use your member QR and rewards.'
                       : currentBusiness
-                        ? `Your ${currentBusiness.name} account is ready. Sign in, then verify your ID from your profile to unlock rewards.`
-                        : t('Your account is created. Sign in, then verify your ID from your profile to unlock earning, redemption, memberships, gift cards, and QR rewards.')}
+                        ? `Your ${currentBusiness.name} account is ready. Sign in to use your member QR and rewards.`
+                        : t('Your account is created. Sign in to use your member QR and rewards. We will use your contact details for reward updates and account support.')}
                   </p>
                   {signUpWarning ? (
                     <p className="text-sm font-bold leading-relaxed text-warning">{signUpWarning}</p>
@@ -187,6 +188,16 @@ export function ReferralRegisterPage() {
                 <div className="grid gap-3">
                   <Label htmlFor="referral-signup-email">{t('Email Address')}</Label>
                   <Input id="referral-signup-email" placeholder="your@email.com" {...form.register('email')} />
+                </div>
+
+                <div className="grid gap-3">
+                  <Label htmlFor="referral-signup-phone">{t('WhatsApp or phone')}</Label>
+                  <Input
+                    id="referral-signup-phone"
+                    type="tel"
+                    placeholder="+57 300 000 0000"
+                    {...form.register('phone')}
+                  />
                 </div>
 
                 <div className="grid gap-3">

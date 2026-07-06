@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Guatemala Rewards logo</title>
+  <desc id="desc">Gold Guatemala Rewards G, volcano, and wordmark on a transparent background.</desc>
+  <defs>
+    <linearGradient id="gold" x1="214" y1="125" x2="940" y2="1042" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff3bd"/>
+      <stop offset=".18" stop-color="#d99f33"/>
+      <stop offset=".34" stop-color="#fff4bf"/>
+      <stop offset=".55" stop-color="#b87414"/>
+      <stop offset=".77" stop-color="#f5cd6b"/>
+      <stop offset="1" stop-color="#7c4408"/>
+    </linearGradient>
+    <linearGradient id="goldSoft" x1="298" y1="167" x2="846" y2="701" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff8ce"/>
+      <stop offset=".28" stop-color="#d79a2b"/>
+      <stop offset=".46" stop-color="#ffefaa"/>
+      <stop offset=".7" stop-color="#9f5f10"/>
+      <stop offset="1" stop-color="#f4cf70"/>
+    </linearGradient>
+    <filter id="glow" x="-8%" y="-8%" width="116%" height="116%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.2" flood-color="#5c3006" flood-opacity=".55"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="1.5" flood-color="#fff0a8" flood-opacity=".45"/>
+    </filter>
+  </defs>
+
+  <g fill="none" stroke="url(#gold)" stroke-linecap="round" filter="url(#glow)">
+    <path d="M318 678C208 560 226 372 348 260c136-125 351-138 501-31 118 84 183 226 166 364" stroke-width="7"/>
+    <path d="M344 679C239 535 288 342 452 247c133-77 315-68 443 23 104 73 160 194 151 313" stroke-width="3" opacity=".68"/>
+  </g>
+
+  <g filter="url(#glow)">
+    <path fill="url(#goldSoft)" d="M720 238c-100 0-184 34-250 101-66 66-99 148-99 246 0 96 32 177 97 244 64 67 144 101 240 101 74 0 139-17 195-52 56-34 94-81 115-139h-112c-18 31-45 55-80 73-35 18-74 27-116 27-69 0-125-24-169-72-44-48-66-109-66-183 0-73 23-134 69-181 46-48 105-72 177-72 59 0 109 15 150 44 42 29 70 70 83 122h92V247h-60c-7 30-18 49-34 57-14 7-35 2-63-15-52-34-108-51-169-51Z"/>
+    <path fill="transparent" d="M724 491h288v93h-70c14 75-5 152-57 231-48 73-113 112-196 116v-90c47-5 84-25 111-60 27-34 39-72 37-114h-113v-88h288v-88H724Z"/>
+    <path fill="url(#goldSoft)" d="M724 491h288v88H837v245c-38 43-91 75-158 94v-92c28-12 49-29 64-49 14-21 21-46 21-75V579h-40v-88Z"/>
+  </g>
+
+  <g fill="url(#gold)" filter="url(#glow)">
+    <path d="M575 657c15-22 7-48 25-74-3 31 25 49 6 82 23-22 16-45 33-63-7 35 21 56 9 92-8 24-26 34-48 35-24-2-39-15-45-36-4-16 7-24 20-36Z"/>
+    <path d="M309 775c84-19 159-63 225-134h91c82 75 169 122 263 141-121-7-223-43-306-108-86 62-177 96-273 101Z"/>
+    <path d="M435 807c53-36 92-77 117-124h44c-15 62-43 111-84 148 24-47 38-84 42-112-30 35-70 65-119 88Z"/>
+    <path d="M565 839c21-52 34-105 38-159h40c11 57 33 108 67 153-39-25-66-61-83-108-7 42-27 80-62 114Z"/>
+    <path d="M768 812c-45-27-78-59-99-97 10 42 27 78 50 109-42-34-70-80-85-139h44c22 48 52 90 90 127Z"/>
+    <path d="M324 853c83 6 168 6 255 1 97-5 186-3 267 7-69 14-153 21-252 22-98 0-188-10-270-30Z" opacity=".84"/>
+  </g>
+
+  <g fill="url(#gold)" filter="url(#glow)" font-family="Cormorant Garamond, Georgia, serif" text-anchor="middle">
+    <text x="600" y="966" font-size="116" font-weight="600" letter-spacing="44">GUATEMALA</text>
+    <text x="600" y="1062" font-size="69" font-weight="600" letter-spacing="38">REWARDS</text>
+  </g>
+  <g fill="none" stroke="url(#gold)" stroke-linecap="round" filter="url(#glow)">
+    <path d="M180 1036h108" stroke-width="5"/>
+    <path d="M912 1036h108" stroke-width="5"/>
+    <path d="M460 1117h92" stroke-width="4"/>
+    <path d="M648 1117h92" stroke-width="4"/>
+  </g>
+  <path fill="url(#gold)" filter="url(#glow)" d="M600 1094l14 23 23 14-23 14-14 23-14-23-23-14 23-14 14-23Z"/>
+</svg>

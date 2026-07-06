@@ -41,7 +41,7 @@ export function RewardsPage() {
   const rewards = useRewards(selectedBusiness ?? undefined)
   const balancePoints = rewardBalance.data?.points ?? 0
   const verificationStatus = profile?.verificationStatus ?? 'not_submitted'
-  const rewardActionsLocked = Boolean(profile) && verificationStatus !== 'verified'
+  const rewardActionsLocked = Boolean(profile) && !profile?.phone?.trim()
   const allRewards = rewards.data ?? []
   const claimableRewards = allRewards.filter((reward) =>
     reward.inventory > 0
@@ -62,7 +62,7 @@ export function RewardsPage() {
       ? 'No rewards match this filter'
       : 'No rewards yet'
   const emptyStateDescription = activeFilter === 'Claimable'
-    ? 'Earn more points, verify your ID, or check back when new rewards are available.'
+    ? 'Earn more points, add contact details, or check back when new rewards are available.'
     : allRewards.length > 0
       ? 'Try a different category or business filter.'
       : 'Rewards from participating businesses will appear here when they are available.'

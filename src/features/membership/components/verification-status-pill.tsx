@@ -1,4 +1,4 @@
-import { AlertTriangle, CheckCircle2, Clock3, IdCard } from 'lucide-react'
+import { CheckCircle2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 import { useLanguage } from '@/lib/language'
@@ -11,6 +11,7 @@ interface VerificationStatusPillProps {
 }
 
 function getPillContent(status: Profile['verificationStatus'] | null | undefined) {
+  void status
   if (status === 'verified') {
     return {
       label: 'Verified',
@@ -20,29 +21,11 @@ function getPillContent(status: Profile['verificationStatus'] | null | undefined
     }
   }
 
-  if (status === 'submitted') {
-    return {
-      label: 'Under review',
-      to: '/profile#id-verification',
-      icon: Clock3,
-      className: 'border-warning/20 bg-warning/10 text-warning',
-    }
-  }
-
-  if (status === 'rejected') {
-    return {
-      label: 'Needs resubmission',
-      to: '/profile#id-verification',
-      icon: AlertTriangle,
-      className: 'border-red-200 bg-red-50 text-red-600',
-    }
-  }
-
   return {
-    label: 'Verification required',
-    to: '/profile#id-verification',
-    icon: IdCard,
-    className: 'border-warning/20 bg-warning/10 text-warning',
+    label: 'QR active',
+    to: '/profile',
+    icon: CheckCircle2,
+    className: 'border-success/20 bg-success/10 text-success',
   }
 }
 

@@ -23,40 +23,19 @@ interface ChecklistStep {
 }
 
 function verificationStep(status: Profile['verificationStatus'] | null | undefined): ChecklistStep {
+  void status
   if (status === 'verified') {
     return {
-      title: 'Verify ID',
-      description: 'Identity approved. Reward actions are unlocked.',
+      title: 'Contact saved',
+      description: 'Your account has the basic details needed for launch.',
       state: 'complete',
     }
   }
 
-  if (status === 'submitted') {
-    return {
-      title: 'Verify ID',
-      description: 'Under review',
-      state: 'current',
-      to: '/profile#id-verification',
-      action: 'View status',
-    }
-  }
-
-  if (status === 'rejected') {
-    return {
-      title: 'Verify ID',
-      description: 'Needs resubmission',
-      state: 'current',
-      to: '/profile#id-verification',
-      action: 'Resubmit ID',
-    }
-  }
-
   return {
-    title: 'Verify ID',
-    description: 'Upload your ID to unlock earning, redemption, and QR rewards.',
-    state: 'current',
-    to: '/profile#id-verification',
-    action: 'Verify ID',
+    title: 'Contact saved',
+    description: 'Full name, email, and WhatsApp or phone keep reward communication clear.',
+    state: 'complete',
   }
 }
 
@@ -73,7 +52,6 @@ export function CustomerOnboardingChecklist({
 }: CustomerOnboardingChecklistProps) {
   const { t } = useLanguage()
   const hasEarnedReward = points > 0 || recentActivity.some((item) => item.points > 0)
-  const isVerified = verificationStatus === 'verified'
 
   const steps: ChecklistStep[] = [
     {
@@ -84,19 +62,17 @@ export function CustomerOnboardingChecklist({
     verificationStep(verificationStatus),
     {
       title: 'Unlock member QR',
-      description: isVerified
-        ? 'Member QR is active in your profile.'
-        : 'Your QR activates after ID approval.',
-      state: isVerified ? 'complete' : 'current',
+      description: 'Member QR is active in your profile.',
+      state: 'complete',
       to: '/profile',
-      action: isVerified ? undefined : 'Open profile',
+      action: undefined,
     },
     {
       title: 'Make first QR sale',
       description: hasEarnedReward
         ? 'Your account already has QR earning activity.'
         : 'Buy at a partner business and let staff scan your QR to award points.',
-      state: hasEarnedReward ? 'complete' : isVerified ? 'current' : 'pending',
+      state: hasEarnedReward ? 'complete' : 'current',
       to: '/profile',
       action: hasEarnedReward ? undefined : 'Show QR',
     },
@@ -124,7 +100,7 @@ export function CustomerOnboardingChecklist({
             </Badge>
           </div>
           <p className="text-sm font-medium leading-6 text-[var(--muted-foreground)]">
-            {t('Finish these steps to unlock the full rewards experience.')}
+            {t('Use these steps to start earning with your member QR.')}
           </p>
         </div>
       </div>

@@ -141,7 +141,7 @@ export function BusinessOwnerLayout() {
         </div>
 
         {/* Navigation */}
-        <nav className="mt-7 grid flex-1 content-start gap-1">
+        <nav className="mt-7 grid min-h-0 flex-1 content-start gap-1 overflow-y-auto pr-1">
           {businessNavigationItems
             .filter((item) => canAccessBusinessPath(profile?.role, item.to))
             .map((item) => (
@@ -189,17 +189,17 @@ export function BusinessOwnerLayout() {
               compact
               className="w-full justify-between rounded-lg border border-[var(--border)] bg-card px-3 py-2 text-[var(--muted-foreground)]"
             />
-            <div className="flex items-center justify-start">
+            <div className="flex items-center gap-2">
               <ThemeToggle />
               <Button
                 variant="ghost"
-                size="icon"
-                className="text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--destructive)]"
+                className="flex-1 justify-start text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--destructive)]"
                 onClick={() => void signOut()}
                 title={t('Sign out')}
                 aria-label={t('Sign out')}
               >
                 <LogOut className="size-4" />
+                {t('Sign out')}
               </Button>
             </div>
           </div>

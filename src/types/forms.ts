@@ -15,6 +15,7 @@ export type AuthFormValues = z.infer<typeof authSchema>
 
 export const memberSignUpSchema = authSchema.extend({
   fullName: z.string().trim().min(2, 'Enter your full name'),
+  phone: z.string().trim().min(8, 'Enter your WhatsApp or phone number'),
   role: z.literal('customer'),
 })
 

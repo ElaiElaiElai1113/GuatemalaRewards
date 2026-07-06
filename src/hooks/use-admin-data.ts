@@ -51,6 +51,24 @@ export function useAdminUsers() {
   })
 }
 
+export function useDeleteCustomer() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (profileId: string) => adminService.deleteCustomer(profileId),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: adminKeys.users })
+      void queryClient.invalidateQueries({ queryKey: adminKeys.overview })
+      void queryClient.invalidateQueries({ queryKey: ['activities'] })
+      void queryClient.invalidateQueries({ queryKey: ['admin', 'member-transactions'] })
+      toast.success('Customer removed successfully')
+    },
+    onError: (error: Error) => {
+      toast.error(`Remove customer failed: ${error.message}`)
+    },
+  })
+}
+
 export function useAdminOverview() {
   return useQuery({
     queryKey: adminKeys.overview,

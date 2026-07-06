@@ -411,6 +411,18 @@ export const adminService = {
     return profiles
   },
 
+  async deleteCustomer(profileId: string) {
+    const sb = requireSupabase()
+
+    const { error } = await sb.rpc('admin_delete_customer', {
+      p_profile_id: profileId,
+    })
+
+    if (error) {
+      throw new Error(error.message || 'Failed to remove customer.')
+    }
+  },
+
   async getAgreementStatuses(): Promise<AgreementStatusRecord[]> {
     const sb = requireSupabase()
 

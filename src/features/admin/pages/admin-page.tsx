@@ -45,6 +45,7 @@ import {
   useCreateProduct,
   useCreatePromotion,
   useCreateReward,
+  useDeleteCustomer,
   useDeleteProduct,
   useDeletePromotion,
   useDeleteReward,
@@ -222,6 +223,7 @@ export function AdminPage() {
   const [partnerActionError, setPartnerActionError] = useState<string | null>(null)
   const [verificationRejectionReason, setVerificationRejectionReason] = useState('')
   const [isCreateBusinessDialogOpen, setIsCreateBusinessDialogOpen] = useState(false)
+  const [customerPendingDelete, setCustomerPendingDelete] = useState<Profile | null>(null)
   const [businessAccessDialog, setBusinessAccessDialog] = useState<{
     businessId: string
     role: 'business-owner' | 'business-staff'
@@ -257,6 +259,7 @@ export function AdminPage() {
   const deleteReward = useDeleteReward(profile?.fullName)
   const deleteProduct = useDeleteProduct(profile?.fullName)
   const deletePromotion = useDeletePromotion(profile?.fullName)
+  const deleteCustomer = useDeleteCustomer()
   const useCredit = useUseCredit()
   const approveReferral = useAdminApproveReferral()
   const rejectReferral = useAdminRejectReferral()
@@ -780,6 +783,16 @@ export function AdminPage() {
                             <p className="mt-1 truncate text-sm font-semibold text-primary">{getVerificationStatusLabel(selectedMember.profile.verificationStatus)}</p>
                           </div>
                         </div>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="w-full rounded-full border-red-200 bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700"
+                          disabled={deleteCustomer.isPending}
+                          onClick={() => setCustomerPendingDelete(selectedMember.profile)}
+                        >
+                          <Trash2 className="size-4" />
+                          Remove Customer
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -1141,6 +1154,17 @@ export function AdminPage() {
                       >
                         {selectedProfileId === member.id ? t('Selected') : t('View Profile')}
                       </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        className="rounded-full border-red-200 bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700"
+                        disabled={deleteCustomer.isPending}
+                        onClick={() => setCustomerPendingDelete(member)}
+                      >
+                        <Trash2 className="size-4" />
+                        Remove
+                      </Button>
                     </div>
                   </div>
                 ))}
@@ -1160,6 +1184,69 @@ export function AdminPage() {
               </div>
             </div>
           </div>
+
+          <Dialog
+            open={Boolean(customerPendingDelete)}
+            onOpenChange={(open) => {
+              if (!open && !deleteCustomer.isPending) {
+                setCustomerPendingDelete(null)
+              }
+            }}
+          >
+            <DialogContent className="max-w-lg rounded-3xl border border-red-200 bg-[var(--card)] p-6 text-on-surface shadow-card sm:p-8">
+              <DialogHeader className="mb-5 pr-8">
+                <DialogTitle className="font-serif text-2xl text-red-600">Remove Customer</DialogTitle>
+                <DialogDescription className="text-sm leading-6 text-on-surface-variant/85">
+                  This permanently removes the customer account, login access, rewards, orders, activity, gift cards, and related customer records from the database. This cannot be undone.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-5">
+                {customerPendingDelete ? (
+                  <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+                    <p className="font-bold">{customerPendingDelete.fullName}</p>
+                    <p className="mt-1 break-all">{customerPendingDelete.email}</p>
+                  </div>
+                ) : null}
+                <div className="flex flex-col-reverse gap-3 border-t border-red-100 pt-5 sm:flex-row sm:justify-end">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="rounded-full"
+                    disabled={deleteCustomer.isPending}
+                    onClick={() => setCustomerPendingDelete(null)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="button"
+                    className="rounded-full bg-red-600 text-white hover:bg-red-700"
+                    disabled={deleteCustomer.isPending || !customerPendingDelete}
+                    onClick={async () => {
+                      if (!customerPendingDelete) return
+
+                      const deletingId = customerPendingDelete.id
+                      try {
+                        await deleteCustomer.mutateAsync(deletingId)
+                        if (selectedProfileId === deletingId) {
+                          adjustmentForm.reset({
+                            profileId: '',
+                            delta: 50,
+                            reason: '',
+                          })
+                        }
+                        setCustomerPendingDelete(null)
+                      } catch {
+                        // The mutation hook displays the error toast.
+                      }
+                    }}
+                  >
+                    <Trash2 className="size-4" />
+                    {deleteCustomer.isPending ? 'Removing...' : 'Remove Customer'}
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
         </TabsContent>
 
         <TabsContent value="catalog" className="space-y-12 outline-none">

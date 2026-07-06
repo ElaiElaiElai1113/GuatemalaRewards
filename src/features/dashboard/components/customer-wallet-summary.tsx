@@ -1,4 +1,4 @@
-import { BadgeCheck, IdCard, QrCode, Ticket } from 'lucide-react'
+import { BadgeCheck, QrCode, Ticket } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 import { Badge } from '@/components/ui/badge'
@@ -19,13 +19,7 @@ function getPrimaryAction({
   isVerified: boolean
   points: number
 }) {
-  if (!isVerified) {
-    return {
-      label: 'Verify ID',
-      to: '/profile#id-verification',
-      helper: 'Verify your ID to activate your member QR.',
-    }
-  }
+  void isVerified
 
   if (points > 0) {
     return {
@@ -49,7 +43,8 @@ export function CustomerWalletSummary({
   points,
 }: CustomerWalletSummaryProps) {
   const { t } = useLanguage()
-  const isVerified = verificationStatus === 'verified'
+  void verificationStatus
+  const isVerified = true
   const primaryAction = getPrimaryAction({ isVerified, points })
 
   const stats = [
@@ -60,12 +55,12 @@ export function CustomerWalletSummary({
     },
     {
       label: 'QR status',
-      value: isVerified ? t('Active') : t('Locked'),
+      value: t('Active'),
       icon: QrCode,
     },
     {
       label: 'Account status',
-      value: isVerified ? t('Verified') : t('Needs ID check'),
+      value: t('Launch ready'),
       icon: BadgeCheck,
     },
   ]
@@ -94,7 +89,7 @@ export function CustomerWalletSummary({
 
         <Button asChild className="w-full rounded-full sm:w-auto">
           <Link to={primaryAction.to}>
-            <IdCard className="mr-2 size-4" />
+            <QrCode className="mr-2 size-4" />
             {t(primaryAction.label)}
           </Link>
         </Button>

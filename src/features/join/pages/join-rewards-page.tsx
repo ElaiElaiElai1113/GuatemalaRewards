@@ -17,6 +17,7 @@ import { memberSignUpSchema, type MemberSignUpFormValues } from '@/types/forms'
 const defaultValues: MemberSignUpFormValues = {
   fullName: '',
   email: '',
+  phone: '',
   password: '',
   role: 'customer',
 }
@@ -87,7 +88,7 @@ export function LegacyJoinRewardsPage() {
                 <div className="space-y-3">
                   <h2 className="text-4xl font-black leading-tight text-[var(--foreground)]">{t('Welcome to the Rewards Club.')}</h2>
                   <p className="mx-auto max-w-md text-sm font-semibold leading-6 text-[var(--muted-foreground)]">
-                    {t('Your account is created. Sign in, then verify your ID from your profile to unlock earning, redemption, memberships, gift cards, and QR rewards.')}
+                    {t('Your account is created. Sign in to use your member QR and rewards. We will use your contact details for reward updates and account support.')}
                   </p>
                   {signUpWarning ? (
                     <p className="mx-auto max-w-md text-sm font-bold leading-6 text-warning">
@@ -136,7 +137,7 @@ export function LegacyJoinRewardsPage() {
                   <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-primary">{t('Member signup')}</p>
                   <h2 className="text-3xl font-black leading-tight text-[var(--foreground)]">{t('Create your member account')}</h2>
                   <p className="text-sm font-semibold leading-6 text-[var(--muted-foreground)]">
-                    {t('Account created. Verification unlocks rewards.')}
+                    {t('Full name, email, and WhatsApp or phone are enough to start. ID checks may be added later for extra security.')}
                   </p>
                 </div>
 
@@ -153,6 +154,14 @@ export function LegacyJoinRewardsPage() {
                   <Input id="join-email" className={joinInputClass} type="email" placeholder="your@email.com" {...form.register('email')} />
                   {form.formState.errors.email ? (
                     <p className="text-xs font-bold text-error">{t(form.formState.errors.email.message ?? '')}</p>
+                  ) : null}
+                </div>
+
+                <div className="grid gap-3">
+                  <Label htmlFor="join-phone" className={joinLabelClass}>{t('WhatsApp or phone')}</Label>
+                  <Input id="join-phone" className={joinInputClass} type="tel" placeholder="+57 300 000 0000" {...form.register('phone')} />
+                  {form.formState.errors.phone ? (
+                    <p className="text-xs font-bold text-error">{t(form.formState.errors.phone.message ?? '')}</p>
                   ) : null}
                 </div>
 
@@ -230,7 +239,7 @@ export function CompactJoinRewardsPage() {
               {t('Welcome to the Rewards Club.')}
             </h1>
             <p className="text-[12px] font-medium leading-5 text-[#8f8f8f]">
-              {t('Your account is created. Sign in, then verify your ID from your profile to unlock rewards.')}
+              {t('Your account is created. Sign in to use your member QR and rewards. We will use your contact details for reward updates and account support.')}
             </p>
             {signUpWarning ? (
               <p className="text-xs font-bold leading-5 text-warning">{signUpWarning}</p>
@@ -281,6 +290,14 @@ export function CompactJoinRewardsPage() {
             <Input id="join-email" className="h-[42px] rounded-none border-[#d8dce4] bg-[#f8f9fb] px-3.5 text-[15px] text-[#111827] shadow-none placeholder:text-[#6b7280] focus-visible:ring-[#d1ad4a]/35" type="email" placeholder="your@email.com" {...form.register('email')} />
             {form.formState.errors.email ? (
               <p className="text-xs font-bold text-red-400">{t(form.formState.errors.email.message ?? '')}</p>
+            ) : null}
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="join-phone" className="text-[12px] font-semibold text-[#8f8f8f]">{t('WhatsApp or phone')}</Label>
+            <Input id="join-phone" className="h-[42px] rounded-none border-[#d8dce4] bg-[#f8f9fb] px-3.5 text-[15px] text-[#111827] shadow-none placeholder:text-[#6b7280] focus-visible:ring-[#d1ad4a]/35" type="tel" placeholder="+57 300 000 0000" {...form.register('phone')} />
+            {form.formState.errors.phone ? (
+              <p className="text-xs font-bold text-red-400">{t(form.formState.errors.phone.message ?? '')}</p>
             ) : null}
           </div>
 
@@ -425,7 +442,7 @@ export function SplitJoinRewardsPage() {
                         {t('Welcome to the Rewards Club.')}
                       </h1>
                       <p className="text-sm font-medium leading-6 text-[var(--cream)]/74">
-                        {t('Your account is created. Sign in, then verify your ID from your profile to unlock rewards.')}
+                        {t('Your account is created. Sign in to use your member QR and rewards. We will use your contact details for reward updates and account support.')}
                       </p>
                       {signUpWarning ? (
                         <p className="text-xs font-bold leading-5 text-warning">{signUpWarning}</p>
@@ -476,6 +493,14 @@ export function SplitJoinRewardsPage() {
                       <Input id="join-email" className="border-[var(--champagne)]/22 bg-[var(--espresso)]/42 text-[var(--cream)]" type="email" placeholder="your@email.com" {...form.register('email')} />
                       {form.formState.errors.email ? (
                         <p className="text-xs font-bold text-red-500">{t(form.formState.errors.email.message ?? '')}</p>
+                      ) : null}
+                    </div>
+
+                    <div className="grid gap-3">
+                      <Label htmlFor="join-phone" className="text-[var(--champagne)]">{t('WhatsApp or phone')}</Label>
+                      <Input id="join-phone" className="border-[var(--champagne)]/22 bg-[var(--espresso)]/42 text-[var(--cream)]" type="tel" placeholder="+57 300 000 0000" {...form.register('phone')} />
+                      {form.formState.errors.phone ? (
+                        <p className="text-xs font-bold text-red-500">{t(form.formState.errors.phone.message ?? '')}</p>
                       ) : null}
                     </div>
 

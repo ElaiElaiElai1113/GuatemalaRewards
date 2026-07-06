@@ -245,6 +245,27 @@ runTest('global CSS restores the brand theme outside early access', () => {
   assert.match(css, /\.early-access-neutral/)
 })
 
+runTest('Guatemala Rewards logo assets use the transparent gold mark', () => {
+  const fullLogo = readFileSync('public/guatemala-rewards-logo.svg', 'utf8')
+  const markLogo = readFileSync('public/guatemala-rewards-mark.svg', 'utf8')
+  const favicon = readFileSync('public/favicon.svg', 'utf8')
+  const manifest = readFileSync('public/site.webmanifest', 'utf8')
+  const brandLogo = readFileSync('src/components/brand-logo.tsx', 'utf8')
+
+  assert.equal(existsSync('public/guatemala-rewards-logo.png'), true)
+  assert.match(fullLogo, /Guatemala/)
+  assert.match(fullLogo, /REWARDS/)
+  assert.match(markLogo, /linearGradient id="gold"/)
+  assert.match(favicon, /linearGradient id="gold"/)
+  assert.match(manifest, /\/guatemala-rewards-mark\.svg/)
+  assert.match(manifest, /"theme_color": "#F6F7F8"/)
+  assert.doesNotMatch(fullLogo, /fill="#000"|fill="black"|bg-\[#000000\]/)
+  assert.doesNotMatch(markLogo, /fill="#000"|fill="black"|bg-\[#000000\]/)
+  assert.doesNotMatch(favicon, /fill="#000"|fill="black"|bg-\[#000000\]/)
+  assert.match(brandLogo, /\/guatemala-rewards-mark\.svg/)
+  assert.match(brandLogo, /sr-only">Guatemala Rewards/)
+})
+
 runTest('admin portal header uses the restored warm theme', () => {
   const adminPage = readFileSync('src/features/admin/pages/admin-page.tsx', 'utf8')
   const headerStart = adminPage.indexOf('warm-hero-muted relative min-w-0')
@@ -337,44 +358,44 @@ runTest('referral approval can award credits before ID verification but still bl
   assert.match(migration, /grant execute on function public\.approve_referral\(uuid, uuid\) to authenticated/)
 })
 
-runTest('landing page content follows the approved member-facing wording', () => {
-  assert.equal(landingHeroEyebrow, "THE WORLD'S HIGHEST PAYING REWARDS PROGRAM")
+runTest('landing page content follows the approved QR-first wording', () => {
+  assert.equal(landingHeroEyebrow, 'BUSINESS-CODED QR REWARDS FOR GUATEMALA')
   assert.deepEqual(landingHeroHeadline, {
-    beforeHighlight: 'Earn a ',
-    highlight: 'free vacation',
-    afterHighlight: ' every year — doing what you already do',
+    beforeHighlight: 'Scan once. ',
+    highlight: 'Join locally.',
+    afterHighlight: ' Earn rewards with Guatemala partners.',
   })
-  assert.equal(landingTagline, 'Earn a free vacation every year — doing what you already do')
+  assert.equal(landingTagline, 'Scan once. Join locally. Earn rewards with Guatemala partners.')
   assert.equal(
     landingBody,
-    'Imagine being able to earn enough rewards every year for a free vacation by doing what you already do, with Guatemala Rewards you can do exactly that!',
+    'Guatemala Rewards gives each partner business its own scannable on-site entry point, so customers can learn, join, and start earning from the place they already visited.',
   )
   assert.deepEqual(landingHeroInfoRows.map((row) => row.text), [
-    'Earn between 20% - 100% by simply spending at amazing businesses within our platform',
-    'Earn from purchasing almost any type of product or service from going to a restaurant or hotel to buying a car or home.',
+    'Individually coded 5x5 inch QR stickers for each partner business',
+    'Business-specific landing pages that explain the program and capture member signups',
   ])
   assert.deepEqual(landingHeroPills.map((pill) => pill.label), [
-    'Restaurants & hotels',
-    'Cars & real estate',
-    '20% – 100% back',
-    'Any product or service',
+    'Cafes, hotels & restaurants',
+    'Local member rewards',
+    'Business-coded QR stickers',
+    'Built for Guatemala',
   ])
   assert.equal(landingJoinButtonLabel, 'Join Guatemala Rewards')
   assert.deepEqual(landingTags, [
-    'Earn between 20% - 100% by simply spending at amazing businesses within our platform',
-    'Earn from purchasing almost any type of product or service from going to a restaurant or hotel to buying a car or home.',
+    'Individually coded 5x5 inch QR stickers for each partner business',
+    'Business-specific landing pages that explain the program and capture member signups',
   ])
   assert.deepEqual(landingOfferLines, [
-    'Early adopter',
-    'Monthly subscription',
-    '$100,000 bonus 100%',
-    '$100,000 in Rewards',
+    'Partner QR rollout',
+    'Business-specific code',
+    '5x5 inch sticker',
+    'Scan. Join. Earn.',
   ])
   assert.deepEqual(landingFaqQuestions, [
-    'Where can I use my rewards?',
-    'Can I have more than one rewards account?',
-    'Can I transfer rewards to another account?',
-    'Can rewards be exchanged for money?',
+    'What does each partner QR do?',
+    'Where should the QR sticker go?',
+    'Does the customer need an app first?',
+    'How does the business flow work?',
   ])
 })
 
@@ -394,8 +415,8 @@ runTest('landing page FAQs are clickable and include answers', () => {
   assert.match(landingPage, /<summary/)
   assert.match(landingPage, /faqs\.map/)
   assert.match(landingPage, /answer:/)
-  assert.match(landingPage, /partnered businesses inside the Guatemala Rewards network/)
-  assert.match(landingPage, /ID verification/)
+  assert.match(landingPage, /business-specific Guatemala Rewards landing page/)
+  assert.match(landingPage, /member QR/)
 })
 
 runTest('landing FAQ and footer follow the Figma lower page', () => {
@@ -406,7 +427,6 @@ runTest('landing FAQ and footer follow the Figma lower page', () => {
   assert.match(landingPage, /min-h-\[58px\]/)
   assert.match(landingPage, /rounded-\[7px\] border border-\[#dfe3e8\] bg-\[#ffffff\]/)
   assert.match(landingPage, /MapPin/)
-  assert.match(landingPage, /Users/)
   assert.match(landingPage, /BadgeCheck/)
   assert.match(landingPage, /DollarSign/)
   assert.doesNotMatch(landingPage, /ChevronRight/)
@@ -418,16 +438,16 @@ runTest('landing FAQ and footer follow the Figma lower page', () => {
 runTest('client landing page renders the screenshot sections', () => {
   const landingPage = readFileSync('src/features/auth/pages/landing-page.tsx', 'utf8')
 
-  assert.match(landingPage, /free vacation<\/span>/)
-  assert.match(landingPage, /Early adopter monthly subscription/)
-  assert.match(landingPage, /\$100,000 in Rewards/)
+  assert.match(landingPage, /Earn rewards<\/span>/)
+  assert.match(landingPage, /Partner QR sticker rollout/)
+  assert.match(landingPage, /Scan\. Join\. Earn\./)
   assert.match(landingPage, /id="how-it-works"/)
   assert.match(landingPage, /steps\.map/)
   assert.match(landingPage, /faqs\.map/)
 })
 
 runTest('landing Figma reference asset is stored with app assets', () => {
-  assert.equal(existsSync('src/assets/Guatemala-landing.png'), true)
+  assert.equal(existsSync('src/assets/guatemala-landing.png'), true)
 })
 
 runTest('member signup page uses the compact member portal layout', () => {
@@ -448,14 +468,18 @@ runTest('member signup page uses the compact member portal layout', () => {
   assert.doesNotMatch(compactJoin, /bg-\[#24150e\]/)
 })
 
-runTest('member signup schema no longer requires ID verification fields', () => {
+runTest('member signup schema no longer requires member QR fields', () => {
   const forms = readFileSync('src/types/forms.ts', 'utf8')
   const joinPage = readFileSync('src/features/join/pages/join-rewards-page.tsx', 'utf8')
   const referralPage = readFileSync('src/features/referrals/pages/referral-register-page.tsx', 'utf8')
   const authService = readFileSync('src/integrations/supabase/services/auth-service.ts', 'utf8')
 
   assert.match(forms, /export const memberSignUpSchema = authSchema\.extend\(\{[\s\S]*role: z\.literal\('customer'\)/)
+  assert.match(forms, /phone: z\.string\(\)\.trim\(\)\.min\(8, 'Enter your WhatsApp or phone number'\)/)
   assert.match(forms, /export type MemberSignUpSubmission = MemberSignUpFormValues/)
+  assert.match(joinPage, /WhatsApp or phone/)
+  assert.match(referralPage, /WhatsApp or phone/)
+  assert.match(authService, /phone,\s*\n\s*\}/)
   assert.doesNotMatch(forms, /MemberSignUpSubmission = MemberSignUpFormValues & \{\s*verificationDocument: File/)
   assert.doesNotMatch(joinPage, /verificationDocument/)
   assert.doesNotMatch(joinPage, /verificationIdNumber/)
@@ -465,14 +489,16 @@ runTest('member signup schema no longer requires ID verification fields', () => 
   assert.doesNotMatch(authService, /MEMBER_VERIFICATION_BUCKET/)
 })
 
-runTest('profile verification remains the ID upload path after signup', () => {
+runTest('profile verification remains an optional future ID upload path after signup', () => {
   const profilePage = readFileSync('src/features/profile/pages/profile-page.tsx', 'utf8')
   const profileService = readFileSync('src/integrations/supabase/services/profile-service.ts', 'utf8')
   const forms = readFileSync('src/types/forms.ts', 'utf8')
 
   assert.match(forms, /export const memberVerificationSchema/)
   assert.match(forms, /export type MemberVerificationSubmission = MemberVerificationFormValues & \{\s*verificationDocument: File\s*\}/)
-  assert.match(profilePage, /Submit ID/)
+  assert.match(profilePage, /Future ID verification/)
+  assert.match(profilePage, /Submit optional ID/)
+  assert.match(profilePage, /ID is not required during launch/)
   assert.match(profilePage, /verificationForm\.register\('verificationIdNumber'\)/)
   assert.match(profileService, /validateVerificationDocument\(values\.verificationDocument\)/)
   assert.match(profileService, /submit_member_verification/)
@@ -484,6 +510,10 @@ runTest('new customer auth trigger allows account creation before ID submission'
     'supabase/migrations/20260608000000_allow_member_signup_without_verification_id.sql',
     'utf8',
   )
+  const launchMigration = readFileSync(
+    'supabase/migrations/20260705010000_launch_contact_signup_relax_id_verification.sql',
+    'utf8',
+  )
 
   assert.doesNotMatch(migration, /Verification ID is required for member signup/)
   assert.doesNotMatch(migration, /Verification document is required for member signup/)
@@ -492,6 +522,9 @@ runTest('new customer auth trigger allows account creation before ID submission'
   assert.doesNotMatch(forwardMigration, /Verification ID is required for member signup/)
   assert.doesNotMatch(forwardMigration, /Verification document is required for member signup/)
   assert.match(forwardMigration, /else 'not_submitted'/)
+  assert.match(launchMigration, /new_phone/)
+  assert.match(launchMigration, /phone,/)
+  assert.match(launchMigration, /coalesce\(new_phone, ''\)/)
 })
 
 runTest('landing Join CTAs go to invitation', () => {
@@ -508,32 +541,31 @@ runTest('landing Join CTAs go to invitation', () => {
   assert.match(landingPage, /FAQ/)
   assert.match(landingPage, /Join now/)
   assert.match(landingPage, /Join Guatemala Rewards/)
-  assert.match(landingPage, /Early adopter monthly subscription/)
+  assert.match(landingPage, /Partner QR sticker rollout/)
   assert.doesNotMatch(landingPage, /leadModalOpen/)
   assert.doesNotMatch(landingPage, /memberLeadSchema/)
 })
 
-runTest('landing early subscriber section follows the client-focused design', () => {
-  const landingPage = readFileSync('src/features/auth/pages/landing-page.tsx', 'utf8')
+runTest("landing QR rollout section follows the client-focused design", () => {
+  const landingPage = readFileSync("src/features/auth/pages/landing-page.tsx", "utf8")
 
-  assert.match(landingPage, /Early adopter monthly subscription/)
-  assert.match(landingPage, /Early adopter offer/)
-  assert.match(landingPage, /Monthly subscription/)
-  assert.match(landingPage, /\$100,000 Bonus 100%/)
-  assert.match(landingPage, /Member agreement applies/)
-  assert.match(landingPage, /View Agreement/)
+  assert.match(landingPage, /Partner QR sticker rollout/)
+  assert.match(landingPage, /5x5 inch sticker/)
+  assert.match(landingPage, /Business-specific code/)
+  assert.match(landingPage, /Scan\. Join\. Earn\./)
+  assert.match(landingPage, /View member terms/)
 })
 
-runTest('landing rewards system section explains the flow and disclaimer', () => {
-  const landingPage = readFileSync('src/features/auth/pages/landing-page.tsx', 'utf8')
+runTest("landing rewards system section explains the QR-first flow", () => {
+  const landingPage = readFileSync("src/features/auth/pages/landing-page.tsx", "utf8")
 
   assert.match(landingPage, /id="how-it-works"/)
   assert.match(landingPage, /steps\.map/)
   assert.match(landingPage, /lg:grid-cols-4/)
   assert.match(landingPage, /rounded-\[10px\] border border-\[#dfe3e8\] bg-\[#ffffff\]/)
   assert.match(landingPage, /size-\[36px\]/)
-  assert.match(landingPage, /Three simple steps to start earning rewards/)
-  assert.match(landingPage, /Use your rewards for travel, experiences, and more - free vacation every year\./)
+  assert.match(landingPage, /The QR-first path Shaun wants finished first/)
+  assert.match(landingPage, /Partner staff scan the member QR/)
 })
 
 runTest('early access CTA opens a lead capture modal', () => {
@@ -664,13 +696,14 @@ runTest('welcome email API uses server-only Hostinger SMTP settings', () => {
   }
 })
 
-runTest('root route renders only the early access letter page', () => {
+runTest('root route redirects to the actual landing page', () => {
   const router = readFileSync('src/routes/router.tsx', 'utf8')
   const rootRouteStart = router.indexOf('function RootRoute()')
   const protectedRouteStart = router.indexOf('function ProtectedCustomerRoute()')
   const rootRoute = router.slice(rootRouteStart, protectedRouteStart)
 
-  assert.match(rootRoute, /<EarlyAccessPage \/>/)
+  assert.match(rootRoute, /<Navigate replace to="\/landing-page" \/>/)
+  assert.doesNotMatch(rootRoute, /<EarlyAccessPage \/>/)
   assert.doesNotMatch(rootRoute, /<LandingPage \/>/)
   assert.doesNotMatch(rootRoute, /landing-header-figma/)
 })
@@ -1065,6 +1098,7 @@ runTest('supabase seed can be rerun without duplicate seeded rows', () => {
 runTest('member transaction migration creates QR tokens, transaction ledger, and secure RPCs', () => {
   const migration = readFileSync('supabase/migrations/20260521000000_member_transactions.sql', 'utf8')
   const rewardValueMigration = readFileSync('supabase/migrations/20260701050000_reward_points_are_reward_value.sql', 'utf8')
+  const launchContactMigration = readFileSync('supabase/migrations/20260705010000_launch_contact_signup_relax_id_verification.sql', 'utf8')
 
   assert.match(migration, /add column if not exists member_qr_token/i)
   assert.match(migration, /add column if not exists reward_rate_percent/i)
@@ -1078,15 +1112,17 @@ runTest('member transaction migration creates QR tokens, transaction ledger, and
   assert.match(migration, /client_request_id/i)
   assert.match(migration, /create or replace function public\.get_member_by_qr_token/)
   assert.match(migration, /create or replace function public\.record_member_transaction/)
-  assert.match(migration, /member_profile\.verification_status::text <> 'verified'/)
-  assert.match(migration, /raise exception 'identity_verification_required'/)
+  assert.match(launchContactMigration, /create or replace function public\.record_member_transaction/)
+  assert.match(launchContactMigration, /perform public\.assert_member_verified\(member_profile\.id\)/)
+  assert.doesNotMatch(launchContactMigration, /verification_status::text <> 'verified'/)
+  assert.match(launchContactMigration, /member_contact_required/)
   assert.match(migration, /create or replace function public\.mark_member_transaction_commission_paid/)
   assert.match(rewardValueMigration, /points_awarded_value := floor\(reward_value_value\)/i)
   assert.match(rewardValueMigration, /points_awarded <> floor\(reward_value\)::integer/i)
   assert.match(migration, /commission_rate_percent >= 10/i)
 })
 
-runTest('customer profile only exposes the scannable member QR after verification', () => {
+runTest('customer profile exposes the scannable member QR during launch', () => {
   const profilePage = readFileSync('src/features/profile/pages/profile-page.tsx', 'utf8')
   const qrSectionStart = profilePage.indexOf('<h2 className="font-serif text-2xl text-primary">Member QR</h2>')
   const preferencesStart = profilePage.indexOf('<span className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-on-surface-variant/80">{t(\'Preferences\')}</span>')
@@ -1096,14 +1132,14 @@ runTest('customer profile only exposes the scannable member QR after verificatio
 
   const qrSection = profilePage.slice(qrSectionStart, preferencesStart)
 
-  assert.match(profilePage, /const isMemberVerified = verificationStatus === 'verified'/)
+  assert.match(profilePage, /const isMemberVerified = Boolean\(profile\.data\?\.memberQrToken\)/)
   assert.match(qrSection, /isMemberVerified && memberQrUrl/)
   assert.match(qrSection, /<QRCodeSVG value=\{memberQrUrl\}/)
-  assert.match(profilePage, /Verify your ID to activate your member QR\./)
-  assert.match(profilePage, /Your ID is under review\. Your member QR activates after approval\./)
-  assert.match(profilePage, /Resubmit ID verification to activate your member QR\./)
-  assert.match(qrSection, /href="#id-verification"/)
-  assert.match(qrSection, /disabled=\{!isMemberVerified \|\| !memberQrUrl\}/)
+  assert.match(profilePage, /Your member QR is active now\./)
+  assert.match(profilePage, /ID verification is optional during launch/)
+  assert.doesNotMatch(profilePage, /Verify your ID to activate your member QR\./)
+  assert.doesNotMatch(qrSection, /href="#id-verification"/)
+  assert.match(qrSection, /disabled=\{!memberQrUrl\}/)
 })
 
 runTest('profile verification submit persists unsaved contact fields first', () => {
@@ -1115,12 +1151,13 @@ runTest('profile verification submit persists unsaved contact fields first', () 
   assert.match(profilePage, /disabled=\{submitVerification\.isPending \|\| updateProfile\.isPending\}/)
 })
 
-runTest('business member-sale page clearly blocks unverified scanned QR transactions', () => {
+runTest('business member-sale page allows launch member QR transactions', () => {
   const page = readFileSync('src/features/business-owner/pages/member-sale-page.tsx', 'utf8')
 
-  assert.match(page, /const isMemberVerified = member\.data\.verificationStatus === 'verified'/)
-  assert.match(page, /disabled=\{!isMemberVerified \|\| !preview \|\| recordTransaction\.isPending\}/)
-  assert.match(page, /This member QR is not active yet\. Ask the member to complete ID verification before recording rewards\./)
+  assert.match(page, /const isMemberEligible = Boolean\(member\.data\.id\)/)
+  assert.match(page, /disabled=\{!preview \|\| recordTransaction\.isPending\}/)
+  assert.match(page, /Launch member/)
+  assert.doesNotMatch(page, /complete member QR before recording rewards/)
 })
 
 runTest('business dashboard keeps transaction scanning out of the dashboard tab', () => {
@@ -1206,6 +1243,29 @@ runTest('admin member action tabs use short labels that fit the compact panel', 
   assert.doesNotMatch(actionTabs, />Verification<\/TabsTrigger>/)
 })
 
+runTest('platform admins can remove customer accounts from the member list', () => {
+  const adminPage = readFileSync('src/features/admin/pages/admin-page.tsx', 'utf8')
+  const adminHooks = readFileSync('src/hooks/use-admin-data.ts', 'utf8')
+  const adminService = readFileSync('src/integrations/supabase/services/admin-service.ts', 'utf8')
+  const migration = readFileSync('supabase/migrations/20260705020000_admin_delete_customer.sql', 'utf8')
+  const membersStart = adminPage.indexOf('<TabsContent value="members"')
+  const catalogStart = adminPage.indexOf('<TabsContent value="catalog"')
+  const membersSection = adminPage.slice(membersStart, catalogStart)
+
+  assert.match(membersSection, /customerPendingDelete/)
+  assert.match(membersSection, /Remove Customer/)
+  assert.match(membersSection, /deleteCustomer\.mutateAsync/)
+  assert.match(adminPage, /useDeleteCustomer/)
+  assert.match(adminHooks, /export function useDeleteCustomer/)
+  assert.match(adminHooks, /adminService\.deleteCustomer/)
+  assert.match(adminService, /admin_delete_customer/)
+  assert.match(migration, /create or replace function public\.admin_delete_customer/)
+  assert.match(migration, /actor_profile\.role <> 'platform-admin'/)
+  assert.match(migration, /target_profile\.role <> 'customer'/)
+  assert.match(migration, /delete from auth\.users/)
+  assert.match(migration, /grant execute on function public\.admin_delete_customer\(uuid\) to authenticated/)
+})
+
 runTest('admin layout renders admin portal section navigation inside the sidebar', () => {
   const adminLayout = readFileSync('src/layouts/admin-layout.tsx', 'utf8')
 
@@ -1250,7 +1310,7 @@ runTest('customer layout exposes full desktop navigation in the header', () => {
   assert.doesNotMatch(headerMarkup, /<span className="hidden text-xs[^>]*>\s*Home\s*<\/span>/)
 })
 
-runTest('customer mobile bottom nav exposes core routes and verification status', () => {
+runTest('customer mobile bottom nav exposes core routes and active QR status', () => {
   const bottomNav = readFileSync('src/components/customer-bottom-nav.tsx', 'utf8')
   const customerLayout = readFileSync('src/layouts/customer-layout.tsx', 'utf8')
 
@@ -1267,11 +1327,10 @@ runTest('customer mobile bottom nav exposes core routes and verification status'
   assert.doesNotMatch(bottomNav, /ShoppingCart/)
   assert.match(bottomNav, /xl:hidden/)
   assert.match(bottomNav, /verificationStatus\?: Profile\['verificationStatus'\] \| null/)
-  assert.match(bottomNav, /\/profile#id-verification/)
-  assert.match(bottomNav, /Verification required/)
-  assert.match(bottomNav, /Under review/)
-  assert.match(bottomNav, /Needs resubmission/)
-  assert.match(bottomNav, /Verified/)
+  assert.match(bottomNav, /Member QR active/)
+  assert.match(bottomNav, /\/profile/)
+  assert.doesNotMatch(bottomNav, /\/profile#id-verification/)
+  assert.doesNotMatch(bottomNav, /Verification required/)
   assert.match(bottomNav, /pathname\.startsWith\(prefix\)/)
 
   assert.match(customerLayout, /<CustomerBottomNav verificationStatus=\{profile\?\.verificationStatus\} \/>/)
@@ -1312,15 +1371,14 @@ runTest('customer dashboard exposes a guided onboarding checklist', () => {
   assert.match(dashboardPage, /points=\{points\}/)
   assert.match(dashboardPage, /recentActivity=\{recentActivity\}/)
 
-  for (const label of ['Account created', 'Verify ID', 'Unlock member QR', 'Make first QR sale', 'Review activity']) {
+  for (const label of ['Account created', 'Contact saved', 'Unlock member QR', 'Make first QR sale', 'Review activity']) {
     assert.match(checklist, new RegExp(label))
   }
 
-  assert.match(checklist, /\/profile#id-verification/)
+  assert.doesNotMatch(checklist, /\/profile#id-verification/)
   assert.match(checklist, /\/profile/)
   assert.match(checklist, /\/activity/)
-  assert.match(checklist, /Under review/)
-  assert.match(checklist, /Needs resubmission/)
+  assert.match(checklist, /WhatsApp or phone/)
 })
 
 runTest('customer dashboard exposes a guided wallet summary', () => {
@@ -1331,11 +1389,11 @@ runTest('customer dashboard exposes a guided wallet summary', () => {
   assert.match(dashboardPage, /verificationStatus=\{verificationStatus\}/)
   assert.match(dashboardPage, /points=\{points\}/)
 
-  for (const label of ['Verify ID', 'Show member QR', 'Total Points', 'QR status', 'Account status']) {
+  for (const label of ['Show member QR', 'Total Points', 'QR status', 'Account status', 'Launch ready']) {
     assert.match(walletSummary, new RegExp(label))
   }
 
-  assert.match(walletSummary, /\/profile#id-verification/)
+  assert.doesNotMatch(walletSummary, /\/profile#id-verification/)
   assert.match(walletSummary, /\/profile/)
   assert.match(walletSummary, /Reward wallet/)
   assert.match(walletSummary, /Ready to earn/)
@@ -1345,24 +1403,22 @@ runTest('customer dashboard exposes a guided wallet summary', () => {
   assert.doesNotMatch(dashboardPage, /<MetricCard[\s\S]*Gift Cards/)
 })
 
-runTest('customer header exposes verification status pill', () => {
+runTest('customer header exposes active QR status pill', () => {
   const customerLayout = readFileSync('src/layouts/customer-layout.tsx', 'utf8')
   const pill = readFileSync('src/features/membership/components/verification-status-pill.tsx', 'utf8')
 
   assert.match(customerLayout, /VerificationStatusPill/)
   assert.match(customerLayout, /status=\{profile\?\.verificationStatus\}/)
-  assert.match(pill, /Verification required/)
-  assert.match(pill, /Under review/)
+  assert.match(pill, /QR active/)
   assert.match(pill, /Verified/)
-  assert.match(pill, /Needs resubmission/)
-  assert.match(pill, /\/profile#id-verification/)
+  assert.doesNotMatch(pill, /\/profile#id-verification/)
   assert.match(pill, /\/profile/)
 })
 
-runTest('reward cards explain ID verification locked redemption', () => {
+runTest('reward cards keep locked redemption copy concise', () => {
   const rewardCard = readFileSync('src/features/rewards/components/reward-card.tsx', 'utf8')
 
-  assert.match(rewardCard, /Verify ID to redeem/)
+  assert.match(rewardCard, /Unlock the treat/)
   assert.doesNotMatch(rewardCard, /\? 'Verify ID'\s*:/)
 })
 
@@ -1389,10 +1445,11 @@ runTest('activity feedback uses clear labels and customer empty actions', () => 
   assert.doesNotMatch(adminPage, /emptyActionTo="\/shop"/)
 })
 
-runTest('gift card tiles explain ID verification locked issuance', () => {
+runTest('gift card tiles explain contact-details locked issuance', () => {
   const giftCardTile = readFileSync('src/features/gift-cards/components/gift-card-tile.tsx', 'utf8')
 
-  assert.match(giftCardTile, /Verify ID to issue/)
+  assert.match(giftCardTile, /Contact details required/)
+  assert.match(giftCardTile, /Add contact details/)
   assert.doesNotMatch(giftCardTile, /\? t\('Verify ID'\) : t\('Issue'\)/)
 })
 
@@ -1533,7 +1590,7 @@ runTest('gift card catalog exposes claimable filtering and summary feedback', ()
 
   assert.match(giftCardsPage, /No claimable gift cards yet/)
   assert.match(giftCardsPage, /No gift cards for this business/)
-  assert.match(giftCardsPage, /Earn more points, verify your ID, or check back when new gift cards are available\./)
+  assert.match(giftCardsPage, /Earn more points, add contact details, or check back when new gift cards are available\./)
   assert.match(giftCardsPage, /Try another business or clear the business filter\./)
 })
 
@@ -1551,7 +1608,7 @@ runTest('checkout and order pages explain purchase feedback and next actions', (
     'Items in order',
     'Estimated total',
     'Estimated reward impact',
-    'Verification required before earning rewards',
+    'Add WhatsApp or phone in your profile before earning rewards',
   ]) {
     assert.match(checkoutPage, new RegExp(label))
   }
@@ -1584,7 +1641,7 @@ runTest('reward catalog exposes claimable filtering and summary feedback', () =>
 
   assert.match(rewardsPage, /No claimable rewards yet/)
   assert.match(rewardsPage, /No rewards match this filter/)
-  assert.match(rewardsPage, /Earn more points, verify your ID, or check back when new rewards are available\./)
+  assert.match(rewardsPage, /Earn more points, add contact details, or check back when new rewards are available\./)
   assert.match(rewardsPage, /Try a different category or business filter\./)
 })
 
@@ -1879,15 +1936,34 @@ runTest('business staff owner-only routes are guarded and hidden from navigation
   assert.doesNotMatch(layout, /\.filter\(\(item\) => !item\.ownerOnly \|\| profile\?\.role === 'business-owner'\)/)
 })
 
-runTest('public business page header uses business onboarding actions', () => {
+runTest('public business page follows the clean landing-page format', () => {
   const layout = readFileSync('src/layouts/public-browse-layout.tsx', 'utf8')
+  const page = readFileSync('src/features/business/pages/for-businesses-page.tsx', 'utf8')
 
   assert.match(layout, /useLocation/)
   assert.match(layout, /isBusinessOnboarding/)
-  assert.match(layout, /href="#book-demo"/)
-  assert.match(layout, /to="\/business\/login"/)
+  assert.match(layout, /bg-\[#ffffff\]/)
+  assert.match(layout, /max-w-\[1336px\]/)
+  assert.match(layout, /How it works/)
+  assert.match(layout, /Business tools/)
+  assert.match(layout, /md:hidden/)
+  assert.match(layout, /Start Onboarding/)
+  assert.match(layout, /Business Login/)
+  assert.match(layout, /<Outlet \/>/)
+  assert.doesNotMatch(layout, /headerContainerClassName = isBusinessOnboarding/)
+
+  assert.match(page, /screenshot-landing/)
+  assert.match(page, /Business onboarding/)
+  assert.match(page, /Join the <span className="text-\[#cfaa44\]">rewards network<\/span>/)
+  assert.match(page, /id="how-it-works"/)
+  assert.match(page, /id="business-tools"/)
+  assert.match(page, /id="faq"/)
+  assert.match(page, /href="#book-demo"/)
+  assert.match(page, /to="\/business\/login"/)
   assert.match(layout, /isBusinessOnboarding[\s\S]*Start Onboarding/)
   assert.match(layout, /isBusinessOnboarding[\s\S]*Business Login/)
+  assert.doesNotMatch(page, /ornate-page/)
+  assert.doesNotMatch(page, /ornate-frame/)
 })
 
 runTest('business and admin login pages follow the compact auth layout', () => {

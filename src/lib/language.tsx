@@ -35,6 +35,28 @@ const spanishTranslations: Record<string, string> = {
     'Obtén más valor de compras recurrentes, referidos y promociones por tiempo limitado.',
   'Create your member account and start earning points after your membership is active.':
     'Crea tu cuenta de miembro y empieza a ganar puntos cuando tu membresia este activa.',
+  'WhatsApp or phone': 'WhatsApp o telefono',
+  'Contact details': 'Datos de contacto',
+  'Contact details required': 'Datos de contacto requeridos',
+  'Add contact details': 'Agregar datos de contacto',
+  'Add contact details to place order': 'Agrega datos de contacto para hacer el pedido',
+  'Add contact details to renew': 'Agrega datos de contacto para renovar',
+  'Add contact details to subscribe': 'Agrega datos de contacto para suscribirte',
+  'Add WhatsApp or phone in your profile before earning rewards':
+    'Agrega WhatsApp o telefono en tu perfil antes de ganar recompensas',
+  'Add WhatsApp or phone in your profile before using membership rewards.':
+    'Agrega WhatsApp o telefono en tu perfil antes de usar recompensas de membresia.',
+  'Add your WhatsApp or phone first so staff can contact you about reward support.':
+    'Agrega primero tu WhatsApp o telefono para que el equipo pueda ayudarte con tus recompensas.',
+  'Full name, email, and WhatsApp or phone are enough to start. ID checks may be added later for extra security.':
+    'Nombre completo, email y WhatsApp o telefono son suficientes para empezar. Mas adelante podemos pedir ID para mas seguridad.',
+  'Keep your WhatsApp or phone updated so we can support reward use.':
+    'Mantén actualizado tu WhatsApp o telefono para poder ayudarte con tus recompensas.',
+  'Launch ready': 'Listo para lanzamiento',
+  'Use these steps to start earning with your member QR.':
+    'Usa estos pasos para empezar a ganar con tu QR de miembro.',
+  'Your account is created. Sign in to use your member QR and rewards. We will use your contact details for reward updates and account support.':
+    'Tu cuenta esta creada. Inicia sesion para usar tu QR de miembro y recompensas. Usaremos tus datos de contacto para avisos y soporte.',
   'Network Member': 'Miembro de la red',
   'Rewards account': 'Cuenta de recompensas',
   'Earn points, redeem rewards, and stay connected across partner businesses.':
@@ -188,6 +210,47 @@ const spanishTranslations: Record<string, string> = {
     'Muestra tu QR en negocios aliados, gana puntos por compras que califican y usa esos puntos para gift cards de aliados.',
   'Use one member QR across partner businesses and keep every recorded purchase connected to your account.':
     'Usa un solo QR de miembro en negocios aliados y conserva cada compra registrada conectada a tu cuenta.',
+  'After joining, customers use their own member QR when buying from partner businesses.':
+    'Despues de unirse, los clientes usan su propio QR de miembro al comprar en negocios aliados.',
+  'Business attribution': 'Atribucion por negocio',
+  'Business-specific entry': 'Entrada especifica del negocio',
+  'Customer joins and receives their member account.':
+    'El cliente se une y recibe su cuenta de miembro.',
+  'Customer scans the partner business QR sticker.':
+    'El cliente escanea el sticker QR del negocio aliado.',
+  'Customers can understand the program and join without needing training first.':
+    'Los clientes pueden entender el programa y unirse sin necesitar capacitacion primero.',
+  'Customers join from the exact partner business where they scanned.':
+    'Los clientes se unen desde el negocio aliado exacto donde escanearon.',
+  'Each QR is tied to one business, so scans and signups can be connected to that location.':
+    'Cada QR esta vinculado a un negocio, para conectar escaneos y registros con esa ubicacion.',
+  'Join from a partner business QR, keep your member account connected, and earn rewards from eligible purchases.':
+    'Unete desde el QR de un negocio aliado, mantén tu cuenta conectada y gana recompensas por compras elegibles.',
+  'Join from real local businesses': 'Unete desde negocios locales reales',
+  Learn: 'Aprender',
+  'On-site conversion': 'Conversion en el local',
+  'Partner staff can scan member QRs to record purchases and award rewards.':
+    'El personal aliado puede escanear QRs de miembro para registrar compras y otorgar recompensas.',
+  'Recorded purchases stay connected to the member account and the partner business.':
+    'Las compras registradas quedan conectadas con la cuenta del miembro y el negocio aliado.',
+  'Rewards stay connected to one member profile.':
+    'Las recompensas quedan conectadas a un solo perfil de miembro.',
+  Scan: 'Escanear',
+  'Scan the QR sticker at a participating business and join from that business page.':
+    'Escanea el sticker QR en un negocio participante y unete desde la pagina de ese negocio.',
+  'See how it works': 'Ver como funciona',
+  'Simple scan-to-join flow': 'Flujo simple de escanear para unirse',
+  'Staff scan the member QR at purchase to record rewards.':
+    'El personal escanea el QR de miembro al comprar para registrar recompensas.',
+  'Staff-ready rewards': 'Recompensas listas para el personal',
+  'The business-specific landing page explains Guatemala Rewards.':
+    'La pagina especifica del negocio explica Guatemala Rewards.',
+  'The sticker turns foot traffic into a rewards signup moment.':
+    'El sticker convierte el trafico del local en un momento de registro a recompensas.',
+  'Track partner rewards': 'Seguir recompensas de aliados',
+  'Turn local spending into member rewards across the Guatemala Rewards network':
+    'Convierte compras locales en recompensas para miembros dentro de la red Guatemala Rewards',
+  'Use one member QR': 'Usa un solo QR de miembro',
   'Verify your ID first to activate the QR staff will scan at checkout.':
     'Verifica tu ID primero para activar el QR que el personal escaneara en el pago.',
   'View cart': 'Ver carrito',
@@ -1344,8 +1407,8 @@ const spanishTranslations: Record<string, string> = {
     'Cuando lancemos oficialmente, los suscriptores seran los primeros en enterarse y tendran acceso a beneficios exclusivos, novedades y oportunidades especiales para maximizar sus recompensas.',
   'We’re tired of watching people work hard but still struggle to afford the life they want — vacations, freedom, extras.':
     'Estamos cansados de ver a la gente trabajar duro y aun asi luchar para pagar la vida que quiere: vacaciones, libertad y extras.',
-  'That is why we are building Guatemala Rewards: business-coded QR rewards for local partner purchases.':
-    'Por eso estamos creando Guatemala Rewards: recompensas con QR por negocio para compras con aliados locales.',
+  'That is why we are building Guatemala Rewards: the highest-paying rewards program. Earn 20-100% back on almost everything you already buy daily.':
+    'Por eso estamos creando Guatemala Rewards: el programa de recompensas que mas paga. Gana de 20 a 100% de vuelta en casi todo lo que ya compras cada dia.',
   'No extra spending. Just real money back to help you do more of what you love.':
     'Sin gastar de mas. Solo dinero real de vuelta para ayudarte a hacer mas de lo que amas.',
   'We’re currently preparing for launch, and we’re inviting early supporters to join before anyone else.':
@@ -1606,7 +1669,7 @@ const spanishTranslations: Record<string, string> = {
   'Subscribing...': 'Suscribiendo...',
   'The page you are looking for does not exist or may have moved.':
     'La pagina que buscas no existe o puede haberse movido.',
-  'Business-coded QR rewards for Guatemala': 'Recompensas con QR por negocio para Guatemala',
+  "The world's highest paying rewards program": 'El programa de recompensas que mas paga en el mundo',
   'This week feels extra golden': 'Esta semana se siente extra dorada',
   'Track your balance, rewards, and recent activity across partner businesses.':
     'Consulta tu saldo, recompensas y actividad reciente en negocios aliados.',

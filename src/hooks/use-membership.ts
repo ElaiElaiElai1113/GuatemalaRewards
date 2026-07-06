@@ -12,9 +12,12 @@ function isMembershipActive(membership: Awaited<ReturnType<typeof membershipServ
   return membership?.status === 'active' && new Date(membership.currentPeriodEnd).getTime() > Date.now()
 }
 
-function requireVerifiedCustomer(verificationStatus?: string | null) {
-  if (verificationStatus !== 'verified') {
-    throw new Error('ID verification is required before using reward value actions.')
+function requireLaunchCustomer(profile: { id?: string | null; fullName?: string | null; email?: string | null; phone?: string | null } | null | undefined) {
+  if (!profile?.id) {
+    throw new Error('Sign in before using reward value actions.')
+  }
+  if (!profile.fullName?.trim() || !profile.email?.trim() || !profile.phone?.trim()) {
+    throw new Error('Add your full name, email, and WhatsApp or phone before using rewards.')
   }
 }
 
@@ -38,7 +41,7 @@ export function useMembership() {
 
   const subscribe = useMutation({
     mutationFn: () => {
-      requireVerifiedCustomer(profile?.verificationStatus)
+      requireLaunchCustomer(profile)
       return membershipService.mockSubscribe()
     },
     onSuccess: () => {
@@ -50,7 +53,7 @@ export function useMembership() {
 
   const renew = useMutation({
     mutationFn: () => {
-      requireVerifiedCustomer(profile?.verificationStatus)
+      requireLaunchCustomer(profile)
       return membershipService.mockRenew()
     },
     onSuccess: () => {

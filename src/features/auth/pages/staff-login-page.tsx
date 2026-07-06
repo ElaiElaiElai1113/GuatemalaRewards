@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
+import { BrandLogo } from '@/components/brand-logo'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -76,9 +77,7 @@ export function StaffLoginPage({ portal }: { portal: StaffPortal }) {
   return (
     <AuthPortalShell showTabs={false}>
       <div className="mb-7 text-center">
-        <p className="font-serif text-[18px] font-bold leading-none text-[#d1ad4a]">
-          Guatemala Rewards
-        </p>
+        <BrandLogo className="mx-auto" imageClassName="w-[96px]" aria-label="Guatemala Rewards" />
         <p className="mt-3 text-[12px] font-semibold uppercase tracking-[0.26em] text-[#8f8f8f]">
           {portalLabel.toUpperCase()}
         </p>

@@ -30,7 +30,7 @@ export function GiftCardsPage() {
   const issueGiftCard = useIssueGiftCard(profile?.id)
   const balancePoints = balance.data?.points ?? 0
   const verificationStatus = profile?.verificationStatus ?? 'not_submitted'
-  const rewardActionsLocked = verificationStatus !== 'verified'
+  const rewardActionsLocked = !profile?.phone?.trim()
   const catalogItems = catalog.data ?? []
   const claimableGiftCards = catalogItems.filter((item) =>
     balancePoints >= item.pointsCost
@@ -46,7 +46,7 @@ export function GiftCardsPage() {
       ? 'No gift cards for this business'
       : 'No gift cards yet'
   const emptyStateDescription = showClaimableOnly
-    ? 'Earn more points, verify your ID, or check back when new gift cards are available.'
+    ? 'Earn more points, add contact details, or check back when new gift cards are available.'
     : selectedBusiness
       ? 'Try another business or clear the business filter.'
       : 'Gift cards from partner businesses will appear here when they are available.'

@@ -37,7 +37,10 @@ export function requireSupabase() {
 export function friendlySupabaseError(error: { message?: string } | null | undefined, fallback: string) {
   const message = error?.message ?? fallback
   if (message.includes('identity_verification_required')) {
-    return 'ID verification is required before using reward value actions.'
+    return 'Add your full name, email, and WhatsApp or phone before using reward value actions.'
+  }
+  if (message.includes('member_contact_required')) {
+    return 'Add your full name, email, and WhatsApp or phone before using reward value actions.'
   }
   return message
 }

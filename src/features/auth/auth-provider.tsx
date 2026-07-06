@@ -83,6 +83,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
     }, 5000)
 
+    if (!supabase) {
+      handleResolvedProfile(null)
+      window.clearTimeout(loadingFallback)
+      return () => {
+        isActive = false
+        window.clearTimeout(loadingFallback)
+      }
+    }
+
     void authService
       .getSessionProfile()
       .then((sessionProfile) => {
@@ -94,13 +103,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       .finally(() => {
         window.clearTimeout(loadingFallback)
       })
-
-    if (!supabase) {
-      return () => {
-        isActive = false
-        window.clearTimeout(loadingFallback)
-      }
-    }
 
     const {
       data: { subscription },

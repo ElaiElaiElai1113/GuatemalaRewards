@@ -81,7 +81,7 @@ export function CheckoutPage() {
   const itemCount = resolvedItems.reduce((sum, { quantity }) => sum + quantity, 0)
   const estimatedPoints = Math.floor(total * (business?.earnRate ?? 10))
   const verificationStatus = profile?.verificationStatus ?? 'not_submitted'
-  const rewardActionsLocked = verificationStatus !== 'verified'
+  const rewardActionsLocked = !profile?.phone?.trim()
   const memberQrUrl =
     profile?.memberQrToken && typeof window !== 'undefined'
       ? `${window.location.origin}/business/member-sale/${profile.memberQrToken}`
@@ -131,7 +131,7 @@ export function CheckoutPage() {
             </div>
             {rewardActionsLocked ? (
               <p className="mt-4 rounded-xl bg-warning/10 p-4 text-sm font-semibold text-warning">
-                {t('Verification required before earning rewards')}
+                {t('Add WhatsApp or phone in your profile before earning rewards')}
               </p>
             ) : (
               <p className="mt-4 rounded-xl bg-primary/5 p-4 text-sm font-semibold text-primary">
@@ -149,7 +149,7 @@ export function CheckoutPage() {
                     <h3 className="font-serif text-2xl text-primary">Member QR</h3>
                     <p className="max-w-xl text-sm font-medium leading-6 text-on-surface-variant/80">
                       {rewardActionsLocked
-                        ? t('Verify your ID first to activate the QR staff will scan at checkout.')
+                        ? t('Add your WhatsApp or phone first so staff can contact you about reward support.')
                         : t('If partner staff need to verify your member account during checkout, they can scan this QR.')}
                     </p>
                   </div>
@@ -201,7 +201,7 @@ export function CheckoutPage() {
                   return
                 }
                 if (rewardActionsLocked) {
-                  setError('Verification required before earning rewards')
+                  setError('Add WhatsApp or phone in your profile before earning rewards')
                   return
                 }
 
@@ -291,7 +291,7 @@ export function CheckoutPage() {
                   isLoading={placeOrder.isPending}
                 >
                   {rewardActionsLocked
-                    ? t('Verify ID to place order')
+                    ? t('Add contact details to place order')
                     : placeOrder.isPending
                       ? t('Placing Order...')
                       : `${t('Place order request')} ${formatCurrency(total)}`}

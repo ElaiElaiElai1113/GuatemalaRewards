@@ -143,13 +143,13 @@ export function MemberSalePage() {
   const rewardValue = preview?.rewardValue ?? 0
   const pointsAwarded = preview?.pointsAwarded ?? 0
   const commissionAmount = preview?.commissionAmount ?? 0
-  const isMemberVerified = member.data.verificationStatus === 'verified'
+  const isMemberEligible = Boolean(member.data.id)
 
   return (
     <div className="mx-auto max-w-5xl space-y-10 pb-20">
       <div className="space-y-4 border-b border-outline-variant/10 pb-8">
-        <Badge variant={isMemberVerified ? 'accent' : 'outline'} className="w-fit">
-          {isMemberVerified ? 'Verified member' : 'Verification required'}
+        <Badge variant="accent" className="w-fit">
+          {isMemberEligible ? 'Launch member' : 'Member'}
         </Badge>
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
@@ -362,16 +362,10 @@ export function MemberSalePage() {
             type="submit"
             size="lg"
             className="h-14 w-full rounded-full font-semibold"
-            disabled={!isMemberVerified || !preview || recordTransaction.isPending}
+            disabled={!preview || recordTransaction.isPending}
           >
             {recordTransaction.isPending ? 'Recording...' : 'Record Sale'}
           </Button>
-
-          {!isMemberVerified ? (
-            <p className="rounded-2xl bg-warning/10 p-4 text-sm font-medium text-warning">
-              This member QR is not active yet. Ask the member to complete ID verification before recording rewards.
-            </p>
-          ) : null}
         </div>
       </form>
     </div>

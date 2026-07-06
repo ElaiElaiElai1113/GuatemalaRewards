@@ -20,7 +20,7 @@ export function RedeemRewardPage() {
   const rewardBalance = useRewardBalance(profile?.id)
   const redeemReward = useRedeemReward(profile?.id)
   const verificationStatus = profile?.verificationStatus ?? 'not_submitted'
-  const rewardActionsLocked = verificationStatus !== 'verified'
+  const rewardActionsLocked = !profile?.phone?.trim()
 
   if (!rewardId) {
     return <Navigate to="/rewards" replace />

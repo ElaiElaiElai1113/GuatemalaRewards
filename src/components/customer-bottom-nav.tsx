@@ -1,4 +1,4 @@
-import { Activity, AlertTriangle, CheckCircle2, Clock3, Home, IdCard, MapPin, QrCode } from 'lucide-react'
+import { Activity, CheckCircle2, Home, MapPin, QrCode } from 'lucide-react'
 import { NavLink, useLocation } from 'react-router-dom'
 
 import { useLanguage } from '@/lib/language'
@@ -17,6 +17,7 @@ interface CustomerBottomNavProps {
 }
 
 function getVerificationStatus(status: Profile['verificationStatus'] | null | undefined) {
+  void status
   if (status === 'verified') {
     return {
       label: 'Verified',
@@ -26,29 +27,11 @@ function getVerificationStatus(status: Profile['verificationStatus'] | null | un
     }
   }
 
-  if (status === 'submitted') {
-    return {
-      label: 'Under review',
-      to: '/profile#id-verification',
-      icon: Clock3,
-      className: 'border-warning/20 bg-warning/10 text-warning',
-    }
-  }
-
-  if (status === 'rejected') {
-    return {
-      label: 'Needs resubmission',
-      to: '/profile#id-verification',
-      icon: AlertTriangle,
-      className: 'border-red-200 bg-red-50 text-red-600',
-    }
-  }
-
   return {
-    label: 'Verification required',
-    to: '/profile#id-verification',
-    icon: IdCard,
-    className: 'border-warning/20 bg-warning/10 text-warning',
+    label: 'Member QR active',
+    to: '/profile',
+    icon: CheckCircle2,
+    className: 'border-success/20 bg-success/10 text-success',
   }
 }
 

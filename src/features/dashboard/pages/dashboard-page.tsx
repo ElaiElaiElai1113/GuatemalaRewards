@@ -1,4 +1,4 @@
-import { Gift, History, MonitorPlay, QrCode, ShieldCheck } from 'lucide-react'
+import { Gift, History, MonitorPlay, Phone, QrCode } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 import { ActivityList } from '@/features/activity/components/activity-list'
@@ -32,10 +32,10 @@ export function DashboardPage() {
       to: '/profile',
     },
     {
-      title: t('Verify ID'),
-      description: t('Activate your member QR so staff can record purchases.'),
-      icon: ShieldCheck,
-      to: '/profile#id-verification',
+      title: t('Contact details'),
+      description: t('Keep your WhatsApp or phone updated so we can support reward use.'),
+      icon: Phone,
+      to: '/profile',
     },
     {
       title: t('View history'),
