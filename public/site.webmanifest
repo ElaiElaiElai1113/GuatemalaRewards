@@ -13,9 +13,9 @@
   "dir": "ltr",
   "icons": [
     {
-      "src": "/guatemala-rewards-mark.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "/guatemala-rewards-mark.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "any"
     },
     {
