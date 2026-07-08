@@ -114,6 +114,10 @@ function currencyLabel(currency: string | undefined, value: number) {
   return `${currency ?? 'PHP'} ${value.toLocaleString(undefined, { maximumFractionDigits: 2 })}`
 }
 
+function giftCardBalance(card?: GiftCard | null) {
+  return Math.max(Number(card?.remainingValueAmount ?? 0), 0)
+}
+
 export function RedemptionsPage() {
   const queryClient = useQueryClient()
   const { business, memberTransactions } = useBusinessOwnerData()
@@ -206,7 +210,7 @@ export function RedemptionsPage() {
       (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
     )
   }, [business, cards, memberTransactions])
-  const selectedGiftCardValue = parseGiftCardValue(selectedCard?.catalog?.valueLabel)
+  const selectedGiftCardValue = giftCardBalance(selectedCard) || parseGiftCardValue(selectedCard?.catalog?.valueLabel)
   const remainingBill = Math.max((Number.isFinite(originalBill) ? originalBill : 0) - selectedGiftCardValue, 0)
   const canRedeemSelectedCard = validationStatus === 'active' && originalBill > 0 && receiptNumber.trim().length >= 3
   const rewardableBreakdown = useMemo(() => {
@@ -280,7 +284,7 @@ export function RedemptionsPage() {
         return
       }
 
-      if (card.status === 'redeemed') {
+      if (card.status === 'redeemed' || giftCardBalance(card) <= 0) {
         setValidationStatus('redeemed')
         return
       }
@@ -301,7 +305,7 @@ export function RedemptionsPage() {
 
   async function redeem() {
     if (!selectedCard) return
-    await redeemGiftCard.mutateAsync({
+    const updatedCard = await redeemGiftCard.mutateAsync({
       giftCardId: selectedCard.id,
       originalBill,
       receiptNumber: receiptNumber.trim(),
@@ -310,7 +314,8 @@ export function RedemptionsPage() {
     })
     await refreshTransactionHistory()
     setConfirmOpen(false)
-    setValidationStatus('redeemed')
+    setSelectedCard(updatedCard)
+    setValidationStatus(updatedCard.status === 'active' ? 'active' : 'redeemed')
     setTransactionComplete(true)
   }
 
@@ -565,6 +570,9 @@ export function RedemptionsPage() {
                 <div className="rounded border border-primary-container/20 bg-surface-low p-3">
                   <p className="font-semibold text-primary-container">{selectedCard.catalog?.title ?? 'Gift card'}</p>
                   <p className="mt-1 break-all font-mono text-xs text-on-surface-variant">{selectedCard.code}</p>
+                  <p className="mt-2 text-xs font-semibold text-on-surface-variant">
+                    Remaining balance: {currencyLabel(selectedCard.valueCurrency, selectedGiftCardValue)}
+                  </p>
                 </div>
               ) : null}
 
@@ -573,7 +581,7 @@ export function RedemptionsPage() {
                   <AlertTriangle className="size-5 text-error" />
                   <p>
                     {validationStatus === 'redeemed'
-                      ? 'This gift card has already been redeemed.'
+                      ? 'This gift card has no remaining balance.'
                       : validationStatus === 'wrong_business'
                         ? 'This gift card belongs to a different business.'
                         : 'This gift card cannot be redeemed.'}
@@ -689,6 +697,8 @@ export function RedemptionsPage() {
         giftCard={selectedCard}
         open={confirmOpen}
         isSubmitting={redeemGiftCard.isPending}
+        appliedAmount={rewardableBreakdown?.giftCardAmount ?? 0}
+        remainingAfterUse={selectedCard ? Math.max(selectedGiftCardValue - (rewardableBreakdown?.giftCardAmount ?? 0), 0) : 0}
         onOpenChange={setConfirmOpen}
         onConfirm={() => void redeem()}
       />

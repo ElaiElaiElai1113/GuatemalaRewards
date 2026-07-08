@@ -301,6 +301,9 @@ export interface GiftCard {
   publicToken: string
   status: GiftCardStatus
   pointsSpent: number
+  originalValueAmount: number
+  remainingValueAmount: number
+  valueCurrency: string
   expiresAt: string
   redeemedAt: string | null
   redeemedBy: string | null
@@ -309,6 +312,7 @@ export interface GiftCard {
   updatedAt: string
   redemptionOriginalBill?: number | null
   redemptionGiftCardAmount?: number | null
+  redemptionRemainingBalance?: number | null
   redemptionReceiptNumber?: string | null
   catalog?: Pick<GiftCardCatalogItem, 'id' | 'title' | 'description' | 'valueLabel' | 'imageUrl'>
   business?: Pick<Business, 'id' | 'name' | 'logoUrl'>

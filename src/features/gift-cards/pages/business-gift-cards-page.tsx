@@ -8,15 +8,17 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { useAuth } from '@/hooks/use-auth'
-import { useBusinessOwnerData } from '@/hooks/use-business-owner-data'
+import { useBusinessMembers, useBusinessOwnerData } from '@/hooks/use-business-owner-data'
 import type { GiftCardCatalogItem } from '@/types/domain'
 import { ownerGiftCardCatalogItemSchema, type OwnerGiftCardCatalogItemFormValues } from '@/types/forms'
 import {
   useCreateOwnerGiftCardCatalogItem,
   useDeleteGiftCardCatalogItem,
   useGiftCardCatalog,
+  useIssueGiftCard,
   useUpdateGiftCardCatalogItem,
 } from '../hooks/use-gift-cards'
 
@@ -24,12 +26,16 @@ export function BusinessGiftCardsPage() {
   const { profile } = useAuth()
   const { business } = useBusinessOwnerData()
   const catalog = useGiftCardCatalog(business?.id)
+  const members = useBusinessMembers(business?.id)
   const createItem = useCreateOwnerGiftCardCatalogItem(business?.id)
   const updateItem = useUpdateGiftCardCatalogItem()
   const deleteItem = useDeleteGiftCardCatalogItem()
   const [open, setOpen] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
+  const [issueCatalogId, setIssueCatalogId] = useState('')
+  const [issueCustomerId, setIssueCustomerId] = useState('')
   const [actionError, setActionError] = useState<string | null>(null)
+  const issueCard = useIssueGiftCard(issueCustomerId)
 
   const form = useForm<OwnerGiftCardCatalogItemFormValues>({
     resolver: zodResolver(ownerGiftCardCatalogItemSchema),
@@ -44,8 +50,11 @@ export function BusinessGiftCardsPage() {
     },
   })
 
-  if (profile?.role !== 'business-owner') {
-    return <div className="rounded-xl border border-[var(--border)] bg-card shadow-sm p-10 text-on-surface-variant">Only business owners can curate gift cards.</div>
+  const canCurateCatalog = profile?.role === 'business-owner'
+  const canIssueCards = profile?.role === 'business-owner' || profile?.role === 'business-staff'
+
+  if (!canIssueCards) {
+    return <div className="rounded-xl border border-[var(--border)] bg-card shadow-sm p-10 text-on-surface-variant">Only business teams can manage gift cards.</div>
   }
 
   function openForCreate() {
@@ -96,6 +105,22 @@ export function BusinessGiftCardsPage() {
     }
   })
 
+  async function submitIssue() {
+    try {
+      setActionError(null)
+      if (!issueCatalogId || !issueCustomerId) {
+        setActionError('Select a gift card and a customer before issuing.')
+        return
+      }
+
+      await issueCard.mutateAsync(issueCatalogId)
+      setIssueCatalogId('')
+      setIssueCustomerId('')
+    } catch (error) {
+      setActionError(error instanceof Error ? error.message : 'Gift card could not be issued.')
+    }
+  }
+
   return (
     <div className="space-y-12">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
@@ -103,7 +128,7 @@ export function BusinessGiftCardsPage() {
           <h1 className="font-serif text-5xl tracking-tight text-primary">Gift Card Catalog</h1>
           <p className="text-lg text-on-surface-variant/85">Create and manage gift cards customers can buy with points.</p>
         </div>
-        <Button className="h-14 rounded-full px-8" onClick={openForCreate} disabled={!business}>
+        <Button className="h-14 rounded-full px-8" onClick={openForCreate} disabled={!business || !canCurateCatalog}>
           <Gift className="size-5" />
           Add Gift Card
         </Button>
@@ -113,6 +138,59 @@ export function BusinessGiftCardsPage() {
           Business context is still loading.
         </p>
       ) : null}
+
+      <section className="rounded-xl border border-[var(--border)] bg-white p-6 shadow-sm">
+        <div className="flex flex-col gap-2">
+          <Badge variant="accent" className="w-fit">Business issue</Badge>
+          <h2 className="font-serif text-3xl text-primary-container">Issue Gift Card To Customer</h2>
+          <p className="text-sm text-on-surface-variant">
+            Use this when a customer buys or receives a gift card directly from the business. Business-issued cards do not spend the customer's reward points.
+          </p>
+        </div>
+        <div className="mt-5 grid gap-4 lg:grid-cols-[1fr,1fr,auto] lg:items-end">
+          <div className="grid gap-2">
+            <Label>Gift card</Label>
+            <Select value={issueCatalogId} onValueChange={setIssueCatalogId}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select gift card" />
+              </SelectTrigger>
+              <SelectContent>
+                {(catalog.data ?? [])
+                  .filter((item) => item.isActive)
+                  .map((item) => (
+                    <SelectItem key={item.id} value={item.id}>
+                      {item.title} - {item.valueLabel}
+                    </SelectItem>
+                  ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="grid gap-2">
+            <Label>Customer</Label>
+            <Select value={issueCustomerId} onValueChange={setIssueCustomerId}>
+              <SelectTrigger>
+                <SelectValue placeholder={members.isLoading ? 'Loading customers...' : 'Select customer'} />
+              </SelectTrigger>
+              <SelectContent>
+                {(members.data ?? []).map((member) => (
+                  <SelectItem key={member.id} value={member.id}>
+                    {member.fullName} - {member.email}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <Button
+            type="button"
+            variant="secondary"
+            className="h-12 rounded-full px-6"
+            disabled={!issueCatalogId || !issueCustomerId || issueCard.isPending}
+            onClick={() => void submitIssue()}
+          >
+            {issueCard.isPending ? 'Issuing...' : 'Issue Card'}
+          </Button>
+        </div>
+      </section>
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-lg">
@@ -168,14 +246,16 @@ export function BusinessGiftCardsPage() {
           <div key={item.id} className="rounded-xl border border-[var(--border)] bg-white shadow-sm p-7">
             <div className="flex items-start justify-between gap-4">
               <Badge variant={item.isActive ? 'accent' : 'outline'}>{item.isActive ? 'Active' : 'Inactive'}</Badge>
-              <div className="flex gap-2">
-                <Button variant="ghost" size="icon" onClick={() => openForEdit(item)}>
-                  <Edit2 className="size-4" />
-                </Button>
-                <Button variant="ghost" size="icon" className="text-error" onClick={() => void deleteItem.mutateAsync(item.id)}>
-                  <Trash2 className="size-4" />
-                </Button>
-              </div>
+              {canCurateCatalog ? (
+                <div className="flex gap-2">
+                  <Button variant="ghost" size="icon" onClick={() => openForEdit(item)}>
+                    <Edit2 className="size-4" />
+                  </Button>
+                  <Button variant="ghost" size="icon" className="text-error" onClick={() => void deleteItem.mutateAsync(item.id)}>
+                    <Trash2 className="size-4" />
+                  </Button>
+                </div>
+              ) : null}
             </div>
             <h3 className="mt-5 font-serif text-3xl text-primary-container">{item.title}</h3>
             <p className="mt-3 text-sm text-on-surface-variant">{item.description}</p>

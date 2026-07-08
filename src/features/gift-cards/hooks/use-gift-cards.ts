@@ -111,8 +111,11 @@ export function useIssueGiftCard(customerId?: string) {
       if (!profile?.id) {
         throw new Error('Sign in before using reward value actions.')
       }
-      if (!profile.fullName?.trim() || !profile.email?.trim() || !profile.phone?.trim()) {
+      if (profile.role === 'customer' && (!profile.fullName?.trim() || !profile.email?.trim() || !profile.phone?.trim())) {
         throw new Error('Add your full name, email, and WhatsApp or phone before using rewards.')
+      }
+      if (!customerId) {
+        throw new Error('Select a customer before issuing a gift card.')
       }
       return giftCardsService.issueGiftCard(catalogId, customerId!)
     },
@@ -123,6 +126,7 @@ export function useIssueGiftCard(customerId?: string) {
         return [giftCard, ...cards.filter((card) => typeof card === 'object' && card !== null && 'id' in card && card.id !== giftCard.id)]
       })
       void queryClient.invalidateQueries({ queryKey: giftCardKeys.myCards })
+      void queryClient.invalidateQueries({ queryKey: ['gift-cards', 'business'] })
       void queryClient.invalidateQueries({ queryKey: ['reward-balance', customerId] })
       void queryClient.invalidateQueries({ queryKey: ['activities', customerId] })
       toast.success('Gift card issued')
@@ -151,7 +155,7 @@ export function useRedeemGiftCard(businessId?: string) {
       void queryClient.invalidateQueries({ queryKey: ['businessMembers', businessId] })
       void queryClient.invalidateQueries({ queryKey: ['reward-balance', giftCard.customerId] })
       void queryClient.invalidateQueries({ queryKey: ['activities', giftCard.customerId] })
-      toast.success('Gift card redeemed')
+      toast.success(giftCard.status === 'active' ? 'Gift card balance updated' : 'Gift card redeemed')
     },
     onError: (error: Error) => toast.error(error.message),
   })

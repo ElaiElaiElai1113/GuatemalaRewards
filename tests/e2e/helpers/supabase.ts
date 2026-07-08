@@ -441,7 +441,7 @@ export async function createGiftCardCatalogItem(
       title,
       description: 'Workflow automation gift card.',
       points_cost: pointsCost,
-      value_label: 'Test value',
+      value_label: 'USD 50',
       expiry_days: 30,
       is_active: true,
     })
@@ -477,10 +477,17 @@ export async function redeemGiftCardForBusiness(
   client: AppSupabaseClient,
   giftCardId: string,
   businessId: string,
+  originalBill = 45,
+  receiptNumber = `E2E-GC-${Date.now()}`,
+  giftCardAmount = 45,
 ) {
   const { data, error } = await client.rpc('redeem_gift_card', {
     p_gift_card_id: giftCardId,
     p_business_id: businessId,
+    p_original_bill: originalBill,
+    p_receipt_number: receiptNumber,
+    p_gift_card_amount: giftCardAmount,
+    p_client_request_id: crypto.randomUUID(),
   })
 
   const row = (Array.isArray(data) ? data[0] : data) as Record<string, unknown> | null
@@ -494,7 +501,7 @@ export async function redeemGiftCardForBusiness(
 export async function getLatestGiftCardForCustomer(client: AppSupabaseClient, customerProfileId: string) {
   const { data, error } = await client
     .from('gift_cards')
-    .select('id, business_id, customer_id, status, public_token, points_spent, redeemed_at')
+    .select('id, business_id, customer_id, status, public_token, points_spent, redeemed_at, original_value_amount, remaining_value_amount, value_currency')
     .eq('customer_id', customerProfileId)
     .order('created_at', { ascending: false })
     .limit(1)

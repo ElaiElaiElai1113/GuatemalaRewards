@@ -72,7 +72,7 @@ test.describe.serial('gift card issue and redeem workflow automation', () => {
     await expect(page.locator('body')).toContainText(/Gift Cards|Active|Keep active/i)
   })
 
-  test('GC003 business staff can redeem an active gift card once', async ({ page }) => {
+  test('GC003 business staff can partially use an active gift card and keep remaining balance', async ({ page }) => {
     if (!giftCardId) {
       test.info().annotations.push({
         type: 'known-gap',
@@ -85,10 +85,11 @@ test.describe.serial('gift card issue and redeem workflow automation', () => {
     }
 
     const staffClient = await getSupabaseSessionClient(e2eAccounts.businessStaff)
-    const redeemedCard = await redeemGiftCardForBusiness(staffClient, giftCardId, businessId)
+    const redeemedCard = await redeemGiftCardForBusiness(staffClient, giftCardId, businessId, 45, `E2E-GC-${runId}`, 45)
 
-    expect(redeemedCard.status).toBe('redeemed')
-    expect(redeemedCard.redeemed_at).toBeTruthy()
+    expect(redeemedCard.status).toBe('active')
+    expect(Number(redeemedCard.remaining_value_amount)).toBe(5)
+    expect(redeemedCard.redeemed_at).toBeFalsy()
 
     await signInBusinessPortal(page, e2eAccounts.businessStaff)
     await page.goto('/business/redemptions')

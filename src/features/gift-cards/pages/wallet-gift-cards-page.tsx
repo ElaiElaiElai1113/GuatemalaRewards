@@ -27,6 +27,9 @@ function GiftCardRow({ card }: { card: GiftCard }) {
           </h3>
           <p className="text-sm text-on-surface-variant">{card.business?.name}</p>
           <p className="mt-2 font-mono text-sm text-on-surface">{card.code}</p>
+          <p className="mt-1 text-xs font-semibold text-on-surface-variant">
+            Remaining {card.valueCurrency} {card.remainingValueAmount.toFixed(2)}
+          </p>
         </div>
       </div>
       <Badge variant={card.status === 'active' ? 'accent' : 'outline'}>{card.status}</Badge>

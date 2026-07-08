@@ -21,7 +21,7 @@ export function GiftCardDisplay({ giftCard, publicUrl, title, businessName }: Gi
   const displayTitle = title ?? giftCard.catalog?.title ?? 'Gift card'
   const displayValue = 'valueLabel' in giftCard ? giftCard.valueLabel : giftCard.catalog?.valueLabel
   const displayBusiness = businessName ?? ('businessName' in giftCard ? giftCard.businessName : giftCard.business?.name)
-  const isActive = giftCard.status === 'active' && new Date(giftCard.expiresAt) > new Date()
+  const isActive = giftCard.status === 'active' && giftCard.remainingValueAmount > 0 && new Date(giftCard.expiresAt) > new Date()
 
   async function copyLink() {
     await navigator.clipboard.writeText(publicUrl)
@@ -48,6 +48,9 @@ export function GiftCardDisplay({ giftCard, publicUrl, title, businessName }: Gi
               <div className="rounded-lg bg-[var(--muted)] px-5 py-3 text-[var(--foreground)]">
                 <span className="text-xs font-medium text-[var(--muted-foreground)]">Value</span>
                 <p className="text-2xl font-semibold">{displayValue}</p>
+                <p className="mt-1 text-xs font-semibold text-[var(--muted-foreground)]">
+                  Remaining {giftCard.valueCurrency} {giftCard.remainingValueAmount.toFixed(2)}
+                </p>
               </div>
             ) : null}
           </div>
@@ -62,8 +65,10 @@ export function GiftCardDisplay({ giftCard, publicUrl, title, businessName }: Gi
               <p className="mt-1 text-sm font-semibold text-[var(--foreground)]">{formatDate(giftCard.expiresAt)}</p>
             </div>
             <div>
-              <p className="text-xs font-medium text-[var(--muted-foreground)]">Points Spent</p>
-              <p className="mt-1 text-sm font-semibold text-[var(--foreground)]">{giftCard.pointsSpent}</p>
+              <p className="text-xs font-medium text-[var(--muted-foreground)]">Remaining</p>
+              <p className="mt-1 text-sm font-semibold text-[var(--foreground)]">
+                {giftCard.valueCurrency} {giftCard.remainingValueAmount.toFixed(2)}
+              </p>
             </div>
           </div>
 
