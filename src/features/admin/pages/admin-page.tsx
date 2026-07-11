@@ -3220,8 +3220,8 @@ export function AdminPage() {
           <div className="space-y-8">
             <div className="space-y-2 pb-4 border-b border-outline-variant/10 flex items-end justify-between">
               <div>
-                <span className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-on-surface-variant/80">Early Adopters</span>
-                <h2 className="font-serif text-3xl text-primary">Early Access Leads</h2>
+                <span className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-on-surface-variant/80">Public Requests</span>
+                <h2 className="font-serif text-3xl text-primary">Lead Pipeline</h2>
               </div>
               <span className="text-[0.65rem] font-bold uppercase tracking-widest text-on-surface-variant/70 italic">
                 {(earlyAccessLeads.data ?? []).length} leads
@@ -3258,7 +3258,7 @@ export function AdminPage() {
                             <div className="space-y-2">
                               <div>
                                 <p className="text-[0.62rem] font-bold uppercase tracking-[0.16em] text-on-surface-variant/60">Name</p>
-                                <p className="font-serif text-xl text-primary">{lead.fullName || 'Early access lead'}</p>
+                                <p className="font-serif text-xl text-primary">{lead.fullName || 'Public lead'}</p>
                               </div>
                               <div>
                                 <p className="text-[0.62rem] font-bold uppercase tracking-[0.16em] text-on-surface-variant/60">WhatsApp</p>
@@ -3323,8 +3323,8 @@ export function AdminPage() {
                     <EmptyState
                       className="border-0 shadow-none"
                       icon={<Mail className="size-8" />}
-                      title="No early access leads yet"
-                      description="Early adopter signups will appear here after people submit the public form."
+                      title="No public leads yet"
+                      description="Early adopter and business onboarding requests will appear here after people submit the public forms."
                     />
                   ) : null}
                 </div>

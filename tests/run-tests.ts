@@ -288,7 +288,7 @@ runTest('admin portal exposes early access lead workflow', () => {
   const adminHooks = readFileSync('src/hooks/use-admin-data.ts', 'utf8')
 
   assert.match(adminPage, /value="early-access"/)
-  assert.match(adminPage, /Early Access Leads/)
+  assert.match(adminPage, /Lead Pipeline/)
   assert.match(adminPage, /earlyAccessLeadStatusOptions/)
   assert.match(earlyAccessService, /async getLeads\(/)
   assert.match(earlyAccessService, /async updateLeadStatus\(/)
@@ -437,7 +437,7 @@ runTest('landing FAQ and footer follow the Figma lower page', () => {
 runTest('client landing page renders the screenshot sections', () => {
   const landingPage = readFileSync('src/features/auth/pages/landing-page.tsx', 'utf8')
 
-  assert.match(landingPage, /Earn rewards<\/span>/)
+  assert.match(landingPage, /t\('Earn rewards'\)/)
   assert.match(landingPage, /Partner QR sticker rollout/)
   assert.match(landingPage, /Scan\. Join\. Earn\./)
   assert.match(landingPage, /id="how-it-works"/)
@@ -526,14 +526,14 @@ runTest('new customer auth trigger allows account creation before ID submission'
   assert.match(launchMigration, /coalesce\(new_phone, ''\)/)
 })
 
-runTest('landing Join CTAs go to invitation', () => {
+runTest('landing Join CTAs go to account signup', () => {
   const landingPage = readFileSync('src/features/auth/pages/landing-page.tsx', 'utf8')
   const authPageStart = landingPage.indexOf('export function LegacyAuthPage')
   const landingMarkup = landingPage.slice(0, authPageStart)
 
-  assert.ok((landingMarkup.match(/to="\/invitation"/g) ?? []).length >= 2)
+  assert.ok((landingMarkup.match(/to="\/join"/g) ?? []).length >= 2)
   assert.doesNotMatch(landingMarkup, /to="\/early-access"/)
-  assert.doesNotMatch(landingMarkup, /to="\/join"/)
+  assert.doesNotMatch(landingMarkup, /to="\/invitation"/)
   assert.match(landingPage, /min-h-\[61px\]/)
   assert.match(landingPage, /How it works/)
   assert.match(landingPage, /Businesses/)
@@ -563,7 +563,7 @@ runTest("landing rewards system section explains the QR-first flow", () => {
   assert.match(landingPage, /lg:grid-cols-4/)
   assert.match(landingPage, /rounded-\[10px\] border border-\[#dfe3e8\] bg-\[#ffffff\]/)
   assert.match(landingPage, /size-\[36px\]/)
-  assert.match(landingPage, /The QR-first path Shaun wants finished first/)
+  assert.doesNotMatch(landingPage, /The QR-first path Shaun wants finished first/)
   assert.match(landingPage, /Partner staff scan the member QR/)
 })
 

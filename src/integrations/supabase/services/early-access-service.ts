@@ -8,6 +8,10 @@ type EarlyAccessLeadApiResponse = {
   error?: string
 }
 
+type CreateLeadOptions = {
+  source?: string
+}
+
 function mapEarlyAccessLead(row: Record<string, unknown>): EarlyAccessLead {
   const mapped = camelCaseRow(row)
 
@@ -25,7 +29,7 @@ function mapEarlyAccessLead(row: Record<string, unknown>): EarlyAccessLead {
   }
 }
 
-async function createLeadViaSupabase(values: EarlyAccessLeadFormValues): Promise<EarlyAccessLead> {
+async function createLeadViaSupabase(values: EarlyAccessLeadFormValues, options?: CreateLeadOptions): Promise<EarlyAccessLead> {
   const sb = requireSupabase()
   const { data, error } = await sb.rpc('create_early_access_lead', {
     p_full_name: values.fullName?.trim() || null,
@@ -33,7 +37,7 @@ async function createLeadViaSupabase(values: EarlyAccessLeadFormValues): Promise
     p_whatsapp: values.whatsapp?.trim() || null,
     p_notes: values.notes?.trim() ?? '',
     p_marketing_consent: values.marketingConsent,
-    p_source: 'early-access-page',
+    p_source: options?.source ?? 'early-access-page',
   })
 
   if (error || !data) {
@@ -44,8 +48,9 @@ async function createLeadViaSupabase(values: EarlyAccessLeadFormValues): Promise
 }
 
 export const earlyAccessService = {
-  async createLead(values: EarlyAccessLeadFormValues): Promise<EarlyAccessLead> {
+  async createLead(values: EarlyAccessLeadFormValues, options?: CreateLeadOptions): Promise<EarlyAccessLead> {
     const fallbackMessage = 'Unable to join the early access list.'
+    const source = options?.source ?? 'early-access-page'
     let response: Response
 
     try {
@@ -60,11 +65,12 @@ export const earlyAccessService = {
           whatsapp: values.whatsapp?.trim() ?? '',
           notes: values.notes?.trim() ?? '',
           marketingConsent: values.marketingConsent,
+          source,
         }),
       })
     } catch (error) {
       console.warn('Unable to reach early access lead API.', error)
-      return createLeadViaSupabase(values)
+      return createLeadViaSupabase(values, { source })
     }
 
     let payload: EarlyAccessLeadApiResponse = {}
@@ -76,7 +82,7 @@ export const earlyAccessService = {
 
     if (!response.ok || !payload.lead) {
       if (response.status === 404 || response.status >= 500) {
-        return createLeadViaSupabase(values)
+        return createLeadViaSupabase(values, { source })
       }
 
       const message =

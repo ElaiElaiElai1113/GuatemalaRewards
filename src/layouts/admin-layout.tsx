@@ -39,7 +39,7 @@ const adminPortalSections = [
   { value: 'promotions', label: 'Promotions', icon: Sparkles },
   { value: 'partners', label: 'Partners', icon: Hotel },
   { value: 'ambassadors', label: 'Ambassadors', icon: Megaphone },
-  { value: 'early-access', label: 'Early Access', icon: Mail },
+  { value: 'early-access', label: 'Leads', icon: Mail },
   { value: 'referrals', label: 'Referrals', icon: TrendingUp },
   { value: 'agreements', label: 'Agreements', icon: FileSignature },
   { value: 'activity', label: 'Activity', icon: Activity },

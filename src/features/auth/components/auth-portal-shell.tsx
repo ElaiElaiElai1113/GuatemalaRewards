@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
+import { ArrowLeft } from 'lucide-react'
 
 import { LanguagePicker } from '@/components/language-picker'
 import { ThemeToggle } from '@/components/theme-toggle'
@@ -33,9 +34,18 @@ export function AuthPortalShell({ activeTab, children, showTabs = true }: AuthPo
         }}
       />
       <div className="relative z-10 flex w-full max-w-[420px] flex-col items-center">
-        <div className="mb-4 flex w-full items-center justify-end gap-2 text-[var(--foreground)]">
+        <div className="mb-4 flex w-full items-center justify-between gap-3 text-[var(--foreground)]">
+          <Link
+            to="/landing-page"
+            className="inline-flex min-h-9 items-center gap-2 rounded-[8px] border border-[#d1ad4a]/35 bg-[color-mix(in_srgb,var(--surface-container-lowest)_82%,transparent)] px-3 text-[12px] font-semibold text-[#d1ad4a] transition hover:bg-[#d1ad4a] hover:text-[#060606]"
+          >
+            <ArrowLeft className="size-4" aria-hidden="true" />
+            {t('Back')}
+          </Link>
+          <div className="flex items-center gap-2">
           <LanguagePicker className="text-current" compact />
           <ThemeToggle className="border border-[#d1ad4a]/45 bg-[color-mix(in_srgb,var(--surface-container-lowest)_86%,transparent)] text-[#d1ad4a] hover:bg-[#d1ad4a] hover:text-[#060606]" />
+          </div>
         </div>
 
         {showTabs ? (

@@ -66,6 +66,7 @@ function LoadingSpinner() {
 }
 
 export function LandingPage() {
+  const { t } = useLanguage()
   const samplePartnerQrs = [
     {
       name: 'Cafe Antigua',
@@ -92,56 +93,56 @@ export function LandingPage() {
     },
     {
       icon: Store,
-      text: 'Each sticker opens a business-specific landing page that explains Guatemala Rewards and lets the customer join from that exact location.',
+      text: t('Each sticker opens a business-specific landing page that explains Guatemala Rewards and lets the customer join from that exact location.'),
     },
   ] as const
 
   const categoryPills = [
-    { icon: Hotel, label: 'Cafes, hotels & restaurants' },
-    { icon: Gift, label: 'Local member rewards' },
-    { icon: ScanLine, label: 'Business-coded QR stickers' },
-    { icon: Leaf, label: 'Built for Guatemala' },
+    { icon: Hotel, label: t('Cafes, hotels & restaurants') },
+    { icon: Gift, label: t('Local member rewards') },
+    { icon: ScanLine, label: t('Business-coded QR stickers') },
+    { icon: Leaf, label: t('Built for Guatemala') },
   ] as const
 
   const steps = [
     {
-      title: 'Scan the business sticker',
-      body: 'A customer sees the black Guatemala Rewards QR sticker on-site and scans it with their phone.',
+      title: t('Scan the business sticker'),
+      body: t('A customer sees the black Guatemala Rewards QR sticker on-site and scans it with their phone.'),
     },
     {
-      title: 'Land on that business page',
-      body: 'The QR opens a page made for that exact partner, so the customer understands the program in context.',
+      title: t('Land on that business page'),
+      body: t('The QR opens a page made for that exact partner, so the customer understands the program in context.'),
     },
     {
-      title: 'Join Guatemala Rewards',
-      body: 'The customer joins from the business page and gets their own member account and scannable member QR.',
+      title: t('Join Guatemala Rewards'),
+      body: t('The customer joins from the business page and gets their own member account and scannable member QR.'),
     },
     {
-      title: 'Shop, scan, and earn',
-      body: 'Partner staff scan the member QR when the customer buys, record the sale, and award rewards.',
+      title: t('Shop, scan, and earn'),
+      body: t('Partner staff scan the member QR when the customer buys, record the sale, and award rewards.'),
     },
   ] as const
 
   const faqs = [
     {
       icon: QrCode,
-      question: 'What does each partner QR do?',
-      answer: 'Each QR is individually coded for one business. It opens that business-specific Guatemala Rewards landing page, so signups and interest can be tied back to the location where the customer scanned.',
+      question: t('What does each partner QR do?'),
+      answer: t('Each QR is individually coded for one business. It opens that business-specific Guatemala Rewards landing page, so signups and interest can be tied back to the location where the customer scanned.'),
     },
     {
       icon: MapPin,
-      question: 'Where should the QR sticker go?',
-      answer: 'The sticker should be easy to see where customers already pause: checkout, tables, hotel desks, menus, event booths, or partner counters.',
+      question: t('Where should the QR sticker go?'),
+      answer: t('The sticker should be easy to see where customers already pause: checkout, tables, hotel desks, menus, event booths, or partner counters.'),
     },
     {
       icon: BadgeCheck,
-      question: 'Does the customer need an app first?',
-      answer: 'No. The customer can scan the business QR and join from the landing page. After joining, they can use their own member QR for purchases at partner businesses.',
+      question: t('Does the customer need an app first?'),
+      answer: t('No. The customer can scan the business QR and join from the landing page. After joining, they can use their own member QR for purchases at partner businesses.'),
     },
     {
       icon: DollarSign,
-      question: 'How does the business flow work?',
-      answer: 'Staff scan the customer member QR, enter the purchase amount, and the system records rewards for the member plus the commission tracking for Guatemala Rewards.',
+      question: t('How does the business flow work?'),
+      answer: t('Staff scan the customer member QR, enter the purchase amount, and the system records rewards for the member plus the commission tracking for Guatemala Rewards.'),
     },
   ] as const
 
@@ -154,16 +155,17 @@ export function LandingPage() {
           </Link>
           <nav className="hidden items-center gap-[30px] text-[14px] font-medium leading-none text-[#687282] md:flex">
             <a href="#how-it-works" className="transition hover:text-[#202023]">
-              How it works
+              {t('How it works')}
             </a>
             <Link to="/business" className="transition hover:text-[#202023]">
-              Businesses
+              {t('Businesses')}
             </Link>
             <a href="#faq" className="transition hover:text-[#202023]">
-              FAQ
+              {t('FAQ')}
             </a>
-            <Link to="/invitation" className="font-semibold text-[#caa747] transition hover:text-[#a87916]">
-              Join now
+            <LanguagePicker className="text-[#687282]" compact />
+            <Link to="/join" className="font-semibold text-[#caa747] transition hover:text-[#a87916]">
+              {t('Join now')}
             </Link>
           </nav>
         </div>
@@ -172,21 +174,19 @@ export function LandingPage() {
       <section className="border-b border-[#e1e4e8] px-4 pb-[38px] pt-[52px] sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-[790px] flex-col items-center text-center">
           <p className="landing-soft-gold-border inline-flex min-h-[32px] items-center rounded-full border border-[#dcc070] bg-[#fffaf0] px-[18px] text-[12px] font-semibold uppercase leading-none tracking-[0.22em] text-[#a47713]">
-            Guatemala rewards, launched from local business QR stickers
+            {t('Guatemala rewards, launched from local business QR stickers')}
           </p>
 
           <h1 className="mt-[24px] max-w-[700px] font-serif text-[38px] font-bold leading-[1.11] tracking-normal text-[#202023] sm:text-[44px]">
-            Scan once. Join locally. <span className="text-[#cfaa44]">Earn rewards</span> with Guatemala partners.
+            {t('Scan once. Join locally.')} <span className="text-[#cfaa44]">{t('Earn rewards')}</span> {t('with Guatemala partners.')}
           </h1>
 
           <div className="mt-[22px] max-w-[610px] space-y-[18px] text-[17px] font-medium leading-[1.55] text-[#687282]">
             <p>
-              Guatemala Rewards gives each partner business its own scannable on-site entry point,
-              so customers can learn, join, and start earning from the place they already visited.
+              {t('Guatemala Rewards gives each partner business its own scannable on-site entry point, so customers can learn, join, and start earning from the place they already visited.')}
             </p>
             <p>
-              The first launch priority is simple: clear business-specific QR pages that explain the program
-              and turn real foot traffic into members.
+              {t('The first launch priority is simple: clear business-specific QR pages that explain the program and turn real foot traffic into members.')}
             </p>
           </div>
 
@@ -217,10 +217,10 @@ export function LandingPage() {
           </div>
 
           <Link
-            to="/invitation"
+            to="/join"
             className="mt-[26px] inline-flex min-h-[54px] min-w-[278px] items-center justify-center rounded-[8px] bg-[#d1ad4a] px-8 text-[15px] font-bold text-[#121212] transition hover:bg-[#c29f3d]"
           >
-            Join Guatemala Rewards
+            {t('Join Guatemala Rewards')}
           </Link>
         </div>
       </section>
@@ -284,9 +284,9 @@ export function LandingPage() {
 
       <section className="border-b border-[#e1e4e8] bg-[#f6f7f8] px-4 py-[34px] sm:px-6 lg:px-8">
         <div className="mx-auto max-w-[960px] text-center">
-          <p className="text-[12px] font-bold uppercase tracking-[0.22em] text-[#a47713]">Actual QR examples</p>
+          <p className="text-[12px] font-bold uppercase tracking-[0.22em] text-[#a47713]">{t('Actual QR examples')}</p>
           <h2 className="mt-3 font-serif text-[30px] font-bold leading-none text-[#202023]">
-            One sticker code per partner business
+            {t('One sticker code per partner business')}
           </h2>
           <div className="mt-[22px] grid gap-[14px] sm:grid-cols-3">
             {samplePartnerQrs.map((partner) => (
@@ -304,7 +304,7 @@ export function LandingPage() {
                 </div>
                 <h3 className="mt-4 text-[14px] font-bold text-[#202023]">{partner.name}</h3>
                 <p className="mt-2 text-[12px] font-medium leading-5 text-[#687282]">
-                  Scans route to that business-specific Guatemala Rewards landing page.
+                  {t('Scans route to that business-specific Guatemala Rewards landing page.')}
                 </p>
               </article>
             ))}
@@ -314,8 +314,7 @@ export function LandingPage() {
 
       <section id="how-it-works" className="border-b border-[#e1e4e8] px-4 py-[34px] sm:px-6 lg:px-8">
         <div className="mx-auto max-w-[1280px] text-center">
-          <h2 className="font-serif text-[30px] font-bold leading-none text-[#202023]">How it works</h2>
-          <p className="mt-[14px] text-[15px] font-medium text-[#687282]">The QR-first path Shaun wants finished first</p>
+          <h2 className="font-serif text-[30px] font-bold leading-none text-[#202023]">{t('How it works')}</h2>
 
           <div className="mt-[24px] grid gap-[16px] md:grid-cols-2 lg:grid-cols-4">
             {steps.map((step, index) => (
@@ -334,7 +333,7 @@ export function LandingPage() {
       <section id="faq" className="border-b border-[#e1e4e8] px-4 pb-[34px] pt-[38px] sm:px-6 lg:px-8">
         <div className="mx-auto max-w-[700px]">
           <h2 className="text-center font-serif text-[30px] font-bold leading-none text-[#202023]">
-            Frequently asked questions
+            {t('Frequently asked questions')}
           </h2>
 
           <div className="mt-[24px] space-y-[11px]">

@@ -17,6 +17,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { earlyAccessService } from '@/integrations/supabase/services/early-access-service'
 
 const heroRows = [
   {
@@ -108,6 +109,8 @@ const faqs = [
 
 export function ForBusinessesPage() {
   const [submitted, setSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
     if (window.location.hash !== '#book-demo') return
@@ -117,8 +120,9 @@ export function ForBusinessesPage() {
     })
   }, [])
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    const form = event.currentTarget
     const formData = new FormData(event.currentTarget)
     const lead = {
       name: String(formData.get('name') ?? '').trim(),
@@ -126,12 +130,31 @@ export function ForBusinessesPage() {
       email: String(formData.get('email') ?? '').trim(),
       phone: String(formData.get('phone') ?? '').trim(),
       notes: String(formData.get('notes') ?? '').trim(),
-      createdAt: new Date().toISOString(),
     }
 
-    window.localStorage.setItem('guatemalaRewardsDemoLead', JSON.stringify(lead))
-    event.currentTarget.reset()
-    setSubmitted(true)
+    setIsSubmitting(true)
+    setSubmitError(null)
+
+    try {
+      await earlyAccessService.createLead({
+        fullName: lead.name,
+        email: lead.email,
+        whatsapp: lead.phone,
+        notes: [
+          'Business onboarding request',
+          `Business name: ${lead.businessName}`,
+          lead.phone ? `Phone: ${lead.phone}` : null,
+          lead.notes ? `Notes: ${lead.notes}` : null,
+        ].filter(Boolean).join('\n'),
+        marketingConsent: true,
+      }, { source: 'business-onboarding-page' })
+      form.reset()
+      setSubmitted(true)
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'Unable to submit onboarding request.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -267,7 +290,7 @@ export function ForBusinessesPage() {
                   Request the presentation and signup process
                 </h2>
                 <p className="mt-[12px] text-[13px] font-medium leading-[1.55] text-[#687282]">
-                  This request is saved on this device for now. No payment or backend lead submission is connected.
+                  Submit your details and the Guatemala Rewards team will receive your onboarding request in the admin lead pipeline.
                 </p>
               </div>
               <CalendarClock className="size-[28px] shrink-0 text-[#caa747]" strokeWidth={1.8} aria-hidden="true" />
@@ -303,11 +326,13 @@ export function ForBusinessesPage() {
 
             <div className="mt-[22px] flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               {submitted ? (
-                <p className="text-sm font-bold text-success">Onboarding request saved. We can connect this to a lead backend later.</p>
+                <p className="text-sm font-bold text-success">Onboarding request sent. The team can now review it from the admin lead dashboard.</p>
+              ) : submitError ? (
+                <p className="text-sm font-bold text-error">{submitError}</p>
               ) : (
                 <p className="text-[13px] font-medium text-[#687282]">Best for member-friendly businesses with clear repeat purchase or referral potential.</p>
               )}
-              <Button type="submit" className="min-h-[44px] rounded-[8px] bg-[#d1ad4a] px-6 text-[#121212] hover:bg-[#c29f3d]">
+              <Button type="submit" isLoading={isSubmitting} className="min-h-[44px] rounded-[8px] bg-[#d1ad4a] px-6 text-[#121212] hover:bg-[#c29f3d]">
                 Request Onboarding
               </Button>
             </div>

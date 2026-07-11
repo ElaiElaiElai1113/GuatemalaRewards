@@ -67,7 +67,7 @@ export function GiftCardsPage() {
   }
 
   return (
-    <div className="space-y-12 pb-20">
+    <div className="min-w-0 space-y-12 overflow-x-hidden pb-20">
       <div className="animate-soft-reveal flex flex-col gap-8 border-b border-primary-container/15 pb-10 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-3xl space-y-4">
           <Badge variant="accent">Gift Cards</Badge>
@@ -101,33 +101,33 @@ export function GiftCardsPage() {
         compact
       />
 
-      <section className="rounded-[1.5rem] border border-primary/15 bg-card/92 p-4 shadow-soft">
+      <section className="min-w-0 rounded-[1.5rem] border border-primary/15 bg-card/92 p-4 shadow-soft">
         <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
+          <div className="min-w-0">
             <h2 className="text-sm font-bold uppercase tracking-[0.18em] text-primary">{t('Gift card summary')}</h2>
-            <p className="mt-1 text-sm font-medium text-[var(--muted-foreground)]">{selectedBusinessName}</p>
+            <p className="mt-1 truncate text-sm font-medium text-[var(--muted-foreground)]">{selectedBusinessName}</p>
           </div>
           <Button
             type="button"
             variant={showClaimableOnly ? 'tertiary' : 'outline'}
-            className="rounded-full"
+            className="w-full rounded-full sm:w-auto"
             onClick={() => setShowClaimableOnly((current) => !current)}
           >
             {t('Claimable')}
           </Button>
         </div>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid min-w-0 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {[
             { label: 'Available points', value: `${balancePoints}` },
             { label: 'Total gift cards', value: `${catalogItems.length}` },
             { label: 'Claimable gift cards', value: `${claimableGiftCards.length}` },
             { label: 'Active business', value: selectedBusinessName },
           ].map((item) => (
-            <div key={item.label} className="rounded-2xl border border-[var(--border)] bg-[var(--muted)] px-4 py-3">
+            <div key={item.label} className="min-w-0 rounded-2xl border border-[var(--border)] bg-[var(--muted)] px-4 py-3">
               <p className="text-[0.65rem] font-bold uppercase tracking-[0.14em] text-[var(--muted-foreground)]">
                 {t(item.label)}
               </p>
-              <p className="mt-2 text-2xl font-semibold text-[var(--foreground)]">{item.value}</p>
+              <p className="mt-2 truncate text-2xl font-semibold text-[var(--foreground)]">{item.value}</p>
             </div>
           ))}
         </div>
@@ -153,7 +153,9 @@ export function GiftCardsPage() {
       </div>
 
       {(businesses.data ?? []).length > 1 ? (
-        <BusinessFilter businesses={businesses.data ?? []} selected={selectedBusiness} onChange={setSelectedBusiness} />
+        <div className="min-w-0">
+          <BusinessFilter businesses={businesses.data ?? []} selected={selectedBusiness} onChange={setSelectedBusiness} />
+        </div>
       ) : null}
 
       {catalog.isLoading ? (

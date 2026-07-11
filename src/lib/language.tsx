@@ -1776,6 +1776,48 @@ const spanishTranslations: Record<string, string> = {
   'reward credits available': 'creditos de recompensa disponibles',
   'your balance is safe. Resubscribe to start earning again.':
     'tu saldo esta protegido. Vuelve a suscribirte para empezar a ganar otra vez.',
+  'Guatemala rewards, launched from local business QR stickers':
+    'Guatemala Rewards, impulsado por codigos QR de negocios locales',
+  'Scan once. Join locally.': 'Escanea una vez. Unete localmente.',
+  'with Guatemala partners.': 'con aliados de Guatemala.',
+  Back: 'Volver',
+  'Guatemala Rewards gives each partner business its own scannable on-site entry point, so customers can learn, join, and start earning from the place they already visited.':
+    'Guatemala Rewards le da a cada negocio aliado su propio punto de acceso escaneable para que los clientes conozcan el programa, se unan y empiecen a ganar desde el lugar que ya visitaron.',
+  'The first launch priority is simple: clear business-specific QR pages that explain the program and turn real foot traffic into members.':
+    'La prioridad inicial es sencilla: paginas QR claras para cada negocio que explican el programa y convierten las visitas reales en miembros.',
+  'Each sticker opens a business-specific landing page that explains Guatemala Rewards and lets the customer join from that exact location.':
+    'Cada sticker abre una pagina especifica del negocio que explica Guatemala Rewards y permite al cliente unirse desde ese lugar.',
+  'Cafes, hotels & restaurants': 'Cafes, hoteles y restaurantes',
+  'Local member rewards': 'Recompensas para miembros locales',
+  'Business-coded QR stickers': 'Stickers QR exclusivos para negocios',
+  'Built for Guatemala': 'Creado para Guatemala',
+  'Actual QR examples': 'Ejemplos reales de QR',
+  'One sticker code per partner business': 'Un codigo de sticker por cada negocio aliado',
+  'Scans route to that business-specific Guatemala Rewards landing page.':
+    'Cada escaneo abre la pagina de Guatemala Rewards de ese negocio.',
+  'Scan the business sticker': 'Escanea el sticker del negocio',
+  'A customer sees the black Guatemala Rewards QR sticker on-site and scans it with their phone.':
+    'El cliente ve el sticker QR negro de Guatemala Rewards en el negocio y lo escanea con su telefono.',
+  'Land on that business page': 'Abre la pagina de ese negocio',
+  'The QR opens a page made for that exact partner, so the customer understands the program in context.':
+    'El QR abre una pagina creada para ese aliado, para que el cliente entienda el programa en contexto.',
+  'The customer joins from the business page and gets their own member account and scannable member QR.':
+    'El cliente se une desde la pagina del negocio y obtiene su cuenta y su propio QR de miembro.',
+  'Shop, scan, and earn': 'Compra, escanea y gana',
+  'Partner staff scan the member QR when the customer buys, record the sale, and award rewards.':
+    'El personal del aliado escanea el QR del miembro al comprar, registra la venta y entrega recompensas.',
+  'What does each partner QR do?': 'Que hace el QR de cada aliado?',
+  'Each QR is individually coded for one business. It opens that business-specific Guatemala Rewards landing page, so signups and interest can be tied back to the location where the customer scanned.':
+    'Cada QR esta codificado para un solo negocio. Abre la pagina especifica de ese aliado para relacionar los registros con el lugar donde el cliente escaneo.',
+  'Where should the QR sticker go?': 'Donde debe colocarse el sticker QR?',
+  'The sticker should be easy to see where customers already pause: checkout, tables, hotel desks, menus, event booths, or partner counters.':
+    'El sticker debe verse facilmente donde los clientes se detienen: caja, mesas, recepcion de hoteles, menus, eventos o mostradores.',
+  'Does the customer need an app first?': 'El cliente necesita una aplicacion primero?',
+  'No. The customer can scan the business QR and join from the landing page. After joining, they can use their own member QR for purchases at partner businesses.':
+    'No. El cliente puede escanear el QR del negocio y registrarse desde la pagina. Luego puede usar su propio QR de miembro en los negocios aliados.',
+  'How does the business flow work?': 'Como funciona el proceso para el negocio?',
+  'Staff scan the customer member QR, enter the purchase amount, and the system records rewards for the member plus the commission tracking for Guatemala Rewards.':
+    'El personal escanea el QR del miembro, ingresa el valor de la compra y el sistema registra las recompensas y la comision de Guatemala Rewards.',
 }
 
 const LanguageContext = createContext<LanguageContextValue | null>(null)

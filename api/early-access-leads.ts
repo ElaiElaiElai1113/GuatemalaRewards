@@ -7,6 +7,7 @@ type EarlyAccessLeadRequest = {
   whatsapp?: unknown
   notes?: unknown
   marketingConsent?: unknown
+  source?: unknown
 }
 
 function sendJson(response: VercelResponse, status: number, body: Record<string, unknown>) {
@@ -64,6 +65,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
   const email = cleanOptionalString(body.email).toLowerCase()
   const whatsapp = cleanOptionalString(body.whatsapp)
   const notes = cleanOptionalString(body.notes)
+  const source = cleanOptionalString(body.source) || 'early-access-page'
 
   if (!email && !whatsapp) {
     sendJson(response, 400, { ok: false, error: 'Add an email or WhatsApp number.' })
@@ -88,7 +90,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
     p_whatsapp: whatsapp || null,
     p_notes: notes,
     p_marketing_consent: true,
-    p_source: 'early-access-page',
+    p_source: source,
   })
 
   if (error || !data) {

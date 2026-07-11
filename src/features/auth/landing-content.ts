@@ -161,7 +161,7 @@ export const landingMembershipAdvantages = [
   },
 ] as const
 
-export const landingHowItWorksLead = 'The QR-first path Shaun wants finished first'
+export const landingHowItWorksLead = ''
 
 export const landingHowItWorksSteps = [
   {
