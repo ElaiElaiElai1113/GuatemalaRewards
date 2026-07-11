@@ -1818,6 +1818,25 @@ const spanishTranslations: Record<string, string> = {
   'How does the business flow work?': 'Como funciona el proceso para el negocio?',
   'Staff scan the customer member QR, enter the purchase amount, and the system records rewards for the member plus the commission tracking for Guatemala Rewards.':
     'El personal escanea el QR del miembro, ingresa el valor de la compra y el sistema registra las recompensas y la comision de Guatemala Rewards.',
+  'This business QR is not active': 'Este QR de negocio no esta activo',
+  'The link may have changed. You can still explore Guatemala Rewards or create your member account.':
+    'El enlace puede haber cambiado. Aun puedes conocer Guatemala Rewards o crear tu cuenta de miembro.',
+  'Visit Guatemala Rewards': 'Visitar Guatemala Rewards',
+  'Business verified QR': 'QR verificado del negocio',
+  'Turn this visit into Guatemala Rewards': 'Convierte esta visita en Guatemala Rewards',
+  'Join from this location and keep your rewards organized in one member account.':
+    'Unete desde este lugar y organiza tus recompensas en una sola cuenta de miembro.',
+  'Create member account': 'Crear cuenta de miembro',
+  'I already have an account': 'Ya tengo una cuenta',
+  'Your signup will be attributed to this business location.':
+    'Tu registro quedara atribuido a este negocio.',
+  'Create your Guatemala Rewards member account.': 'Crea tu cuenta de miembro de Guatemala Rewards.',
+  'Show your member QR when you make an eligible purchase.':
+    'Muestra tu QR de miembro cuando hagas una compra elegible.',
+  'Track rewards and activity from your dashboard.':
+    'Consulta tus recompensas y actividad desde tu panel.',
+  'Live membership payments are not connected yet. Billing actions are disabled to prevent simulated subscriptions in production.':
+    'Los pagos reales de membresia aun no estan conectados. Las acciones de cobro estan desactivadas para evitar suscripciones simuladas en produccion.',
 }
 
 const LanguageContext = createContext<LanguageContextValue | null>(null)

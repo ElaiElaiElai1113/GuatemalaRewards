@@ -142,7 +142,7 @@ export function EarlyAccessPage() {
 
             <div className="grid gap-3">
               <label htmlFor="early-access-whatsapp" className={labelClass}>WhatsApp</label>
-              <input id="early-access-whatsapp" className={inputClass} placeholder="+57 300 000 0000" {...leadForm.register('whatsapp')} />
+              <input id="early-access-whatsapp" className={inputClass} placeholder="+502 5555 0000" {...leadForm.register('whatsapp')} />
               {leadForm.formState.errors.whatsapp ? <p className={errorClass}>{t(leadForm.formState.errors.whatsapp.message ?? '')}</p> : null}
             </div>
 

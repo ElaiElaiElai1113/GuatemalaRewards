@@ -2048,7 +2048,7 @@ export function AdminPage() {
                     <Input
                       id="create-partner-address"
                       className="h-12 rounded-2xl border-outline-variant/20 focus:border-primary/30"
-                      placeholder="Cra. 37 #10-32, El Poblado, Guatemala"
+                      placeholder="5a Avenida 10-00, Zona 1, Ciudad de Guatemala"
                       {...createBusinessForm.register('address')}
                     />
                     {createBusinessForm.formState.errors.address ? (
@@ -2063,7 +2063,7 @@ export function AdminPage() {
                       type="number"
                       step="0.0001"
                       className="h-12 rounded-2xl border-outline-variant/20 focus:border-primary/30"
-                      placeholder="6.2088"
+                      placeholder="14.6349"
                       {...createBusinessForm.register('latitude', {
                         setValueAs: (value) => value === '' ? null : Number(value),
                       })}
@@ -2082,7 +2082,7 @@ export function AdminPage() {
                       type="number"
                       step="0.0001"
                       className="h-12 rounded-2xl border-outline-variant/20 focus:border-primary/30"
-                      placeholder="-75.5672"
+                      placeholder="-90.5069"
                       {...createBusinessForm.register('longitude', {
                         setValueAs: (value) => value === '' ? null : Number(value),
                       })}

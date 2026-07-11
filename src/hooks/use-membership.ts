@@ -8,6 +8,14 @@ export const membershipKeys = {
   mine: (profileId?: string) => ['membership', profileId ?? 'guest'] as const,
 }
 
+export const isDemoBillingEnabled = import.meta.env.DEV || import.meta.env.VITE_ENABLE_DEMO_BILLING === 'true'
+
+function requireDemoBilling() {
+  if (!isDemoBillingEnabled) {
+    throw new Error('Membership billing is not available until a live payment provider is connected.')
+  }
+}
+
 function isMembershipActive(membership: Awaited<ReturnType<typeof membershipService.getMyMembership>>) {
   return membership?.status === 'active' && new Date(membership.currentPeriodEnd).getTime() > Date.now()
 }
@@ -41,6 +49,7 @@ export function useMembership() {
 
   const subscribe = useMutation({
     mutationFn: () => {
+      requireDemoBilling()
       requireLaunchCustomer(profile)
       return membershipService.mockSubscribe()
     },
@@ -53,6 +62,7 @@ export function useMembership() {
 
   const renew = useMutation({
     mutationFn: () => {
+      requireDemoBilling()
       requireLaunchCustomer(profile)
       return membershipService.mockRenew()
     },
@@ -64,7 +74,10 @@ export function useMembership() {
   })
 
   const cancel = useMutation({
-    mutationFn: () => membershipService.mockCancel(),
+    mutationFn: () => {
+      requireDemoBilling()
+      return membershipService.mockCancel()
+    },
     onSuccess: () => {
       invalidateMembershipData()
       toast.success('Membership canceled. Your balance is preserved.')
@@ -78,6 +91,7 @@ export function useMembership() {
     membership,
     isActive: isMembershipActive(membership),
     isLoading: query.isLoading,
+    isDemoBillingEnabled,
     subscribe,
     renew,
     cancel,

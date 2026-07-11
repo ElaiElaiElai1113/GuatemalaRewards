@@ -19,7 +19,7 @@ test.describe.serial('platform launch checklist PT001-PT008', () => {
   const launchRunId = process.env.LAUNCH_TEST_RUN_ID ?? `${Date.now()}`
   const transactionNote = `launch-checklist-PT003-${launchRunId}`
   const earlyAccessEmail = `launch-checklist-${launchRunId}@example.com`
-  const earlyAccessWhatsapp = `+57 300 ${launchRunId.slice(-3).padStart(3, '0')} 9900`
+  const earlyAccessWhatsapp = `+502 5555 ${launchRunId.slice(-3).padStart(3, '0')}`
 
   let memberProfile: E2EProfile
   let startingBalancePoints = 0

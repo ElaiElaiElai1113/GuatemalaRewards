@@ -4,7 +4,7 @@ import { chromium } from '@playwright/test'
 import { createServer } from 'vite'
 
 const host = '127.0.0.1'
-const port = 5176
+const port = Number(process.env.RESPONSIVE_AUDIT_PORT ?? 5176)
 const baseUrl = `http://${host}:${port}`
 const outputDir = '.tmp-responsive-audit'
 
@@ -29,6 +29,7 @@ const routes = [
   { name: 'invitation', path: '/invitation', fullViewport: true },
   { name: 'early-access-alias', path: '/early-access' },
   { name: 'landing', path: '/landing-page', fullViewport: true },
+  { name: 'business-qr', path: '/b/velvet-brew', fullViewport: true },
   { name: 'joinusearly-alias', path: '/joinusearly' },
   { name: 'join-us-early-alias', path: '/join-us-early' },
   { name: 'terms', path: '/terms', fullViewport: true },

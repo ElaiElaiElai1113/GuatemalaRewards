@@ -10,7 +10,7 @@ import { formatCurrency, formatDate } from '@/lib/utils'
 export function MembershipPage() {
   const { t } = useLanguage()
   const { profile } = useAuth()
-  const { membership, isActive, isLoading, subscribe, renew, cancel } = useMembership()
+  const { membership, isActive, isLoading, isDemoBillingEnabled, subscribe, renew, cancel } = useMembership()
   const hasMembership = Boolean(membership)
   const isFrozen = hasMembership && !isActive
   const verificationStatus = profile?.verificationStatus ?? 'not_submitted'
@@ -28,6 +28,11 @@ export function MembershipPage() {
       </div>
 
       <section className="rounded-xl border border-[var(--border)] bg-card p-6 text-card-foreground shadow-sm">
+        {!isDemoBillingEnabled ? (
+          <div className="mb-6 rounded-2xl border border-warning/25 bg-warning/10 p-4 text-sm font-semibold text-warning">
+            {t('Live membership payments are not connected yet. Billing actions are disabled to prevent simulated subscriptions in production.')}
+          </div>
+        ) : null}
         {rewardActionsLocked ? (
           <div className="mb-6 rounded-2xl border border-warning/25 bg-warning/10 p-4 text-sm font-semibold text-warning">
             {t('Add WhatsApp or phone in your profile before using membership rewards.')}
@@ -90,16 +95,16 @@ export function MembershipPage() {
             <div className="mt-6 grid gap-3">
               {isActive ? (
                 <>
-                  <Button type="button" disabled={renew.isPending || isLoading || rewardActionsLocked} onClick={() => renew.mutate()}>
+                  <Button type="button" disabled={!isDemoBillingEnabled || renew.isPending || isLoading || rewardActionsLocked} onClick={() => renew.mutate()}>
                     <RefreshCw className="size-4" />
                     {rewardActionsLocked ? t('Add contact details to renew') : renew.isPending ? t('Renewing...') : t('Renew now - Demo')}
                   </Button>
-                  <Button type="button" variant="outline" disabled={cancel.isPending} onClick={() => cancel.mutate()}>
+                  <Button type="button" variant="outline" disabled={!isDemoBillingEnabled || cancel.isPending} onClick={() => cancel.mutate()}>
                     {cancel.isPending ? t('Canceling...') : t('Cancel')}
                   </Button>
                 </>
               ) : (
-                <Button type="button" disabled={subscribe.isPending || isLoading || rewardActionsLocked} onClick={() => subscribe.mutate()}>
+                <Button type="button" disabled={!isDemoBillingEnabled || subscribe.isPending || isLoading || rewardActionsLocked} onClick={() => subscribe.mutate()}>
                   <CreditCard className="size-4" />
                   {rewardActionsLocked
                     ? t('Add contact details to subscribe')

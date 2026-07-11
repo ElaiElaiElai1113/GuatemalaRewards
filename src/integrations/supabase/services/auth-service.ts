@@ -190,6 +190,10 @@ export const authService = {
       throw new Error('Enter your WhatsApp or phone number to create an account.')
     }
 
+    const signupSourceBusinessId = typeof window === 'undefined'
+      ? null
+      : window.sessionStorage.getItem('signupSourceBusinessId')
+
     const { data, error: authError } = await sb.auth.signUp({
       email,
       password: input.password,
@@ -197,6 +201,7 @@ export const authService = {
         data: {
           full_name: name,
           phone,
+          ...(signupSourceBusinessId ? { registered_by_business_id: signupSourceBusinessId } : {}),
         },
       },
     })
@@ -221,6 +226,10 @@ export const authService = {
     const profile = await getProfileByUserId(userId)
     if (!profile) {
       throw new Error('Account created but profile could not be loaded. Please sign in.')
+    }
+
+    if (signupSourceBusinessId && typeof window !== 'undefined') {
+      window.sessionStorage.removeItem('signupSourceBusinessId')
     }
 
     return profile

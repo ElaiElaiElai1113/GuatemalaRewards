@@ -195,7 +195,7 @@ export function ReferralRegisterPage() {
                   <Input
                     id="referral-signup-phone"
                     type="tel"
-                    placeholder="+57 300 000 0000"
+                    placeholder="+502 5555 0000"
                     {...form.register('phone')}
                   />
                 </div>

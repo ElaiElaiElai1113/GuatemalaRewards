@@ -418,6 +418,30 @@ runTest('landing page FAQs are clickable and include answers', () => {
   assert.match(landingPage, /member QR/)
 })
 
+runTest('business QR links resolve to an attributed member signup workflow', () => {
+  const router = readFileSync('src/routes/router.tsx', 'utf8')
+  const qrPage = readFileSync('src/features/business/pages/business-qr-landing-page.tsx', 'utf8')
+  const businessService = readFileSync('src/integrations/supabase/services/business-service.ts', 'utf8')
+  const authService = readFileSync('src/integrations/supabase/services/auth-service.ts', 'utf8')
+
+  assert.match(router, /path: '\/b\/:slug'/)
+  assert.match(qrPage, /getBusinessBySlug\(slug\)/)
+  assert.match(qrPage, /signupSourceBusinessId/)
+  assert.match(businessService, /async getBusinessBySlug/)
+  assert.match(authService, /registered_by_business_id: signupSourceBusinessId/)
+})
+
+runTest('production membership billing cannot activate simulated subscriptions by default', () => {
+  const membershipHook = readFileSync('src/hooks/use-membership.ts', 'utf8')
+  const membershipPage = readFileSync('src/features/membership/pages/membership-page.tsx', 'utf8')
+  const envExample = readFileSync('.env.example', 'utf8')
+
+  assert.match(membershipHook, /VITE_ENABLE_DEMO_BILLING === 'true'/)
+  assert.match(membershipHook, /requireDemoBilling\(\)/)
+  assert.match(membershipPage, /Live membership payments are not connected yet/)
+  assert.match(envExample, /VITE_ENABLE_DEMO_BILLING=false/)
+})
+
 runTest('landing FAQ and footer follow the Figma lower page', () => {
   const landingPage = readFileSync('src/features/auth/pages/landing-page.tsx', 'utf8')
 
@@ -478,7 +502,7 @@ runTest('member signup schema no longer requires member QR fields', () => {
   assert.match(forms, /export type MemberSignUpSubmission = MemberSignUpFormValues/)
   assert.match(joinPage, /WhatsApp or phone/)
   assert.match(referralPage, /WhatsApp or phone/)
-  assert.match(authService, /phone,\s*\n\s*\}/)
+  assert.match(authService, /data: \{[\s\S]*full_name: name,[\s\S]*phone,/)
   assert.doesNotMatch(forms, /MemberSignUpSubmission = MemberSignUpFormValues & \{\s*verificationDocument: File/)
   assert.doesNotMatch(joinPage, /verificationDocument/)
   assert.doesNotMatch(joinPage, /verificationIdNumber/)
@@ -1726,7 +1750,7 @@ runTest('business location fields are migrated, typed, and seeded for the partne
   assert.match(migrations, /p_latitude numeric default null/)
   assert.match(migrations, /p_longitude numeric default null/)
   assert.match(seed, /address, latitude, longitude/)
-  assert.match(seed, /Cra\. 37 #10-32, El Poblado, Guatemala/)
+  assert.match(seed, /5a Avenida 10-00, Zona 1, Ciudad de Guatemala/)
   assert.match(seed, /Cl\. 10B #36-14, Provenza, Guatemala/)
   assert.match(domain, /address: string/)
   assert.match(domain, /latitude: number \| null/)

@@ -159,7 +159,7 @@ export function LegacyJoinRewardsPage() {
 
                 <div className="grid gap-3">
                   <Label htmlFor="join-phone" className={joinLabelClass}>{t('WhatsApp or phone')}</Label>
-                  <Input id="join-phone" className={joinInputClass} type="tel" placeholder="+57 300 000 0000" {...form.register('phone')} />
+                  <Input id="join-phone" className={joinInputClass} type="tel" placeholder="+502 5555 0000" {...form.register('phone')} />
                   {form.formState.errors.phone ? (
                     <p className="text-xs font-bold text-error">{t(form.formState.errors.phone.message ?? '')}</p>
                   ) : null}
@@ -295,7 +295,7 @@ export function CompactJoinRewardsPage() {
 
           <div className="grid gap-2">
             <Label htmlFor="join-phone" className="text-[12px] font-semibold text-[#8f8f8f]">{t('WhatsApp or phone')}</Label>
-            <Input id="join-phone" className="h-[42px] rounded-none border-[#d8dce4] bg-[#f8f9fb] px-3.5 text-[15px] text-[#111827] shadow-none placeholder:text-[#6b7280] focus-visible:ring-[#d1ad4a]/35" type="tel" placeholder="+57 300 000 0000" {...form.register('phone')} />
+            <Input id="join-phone" className="h-[42px] rounded-none border-[#d8dce4] bg-[#f8f9fb] px-3.5 text-[15px] text-[#111827] shadow-none placeholder:text-[#6b7280] focus-visible:ring-[#d1ad4a]/35" type="tel" placeholder="+502 5555 0000" {...form.register('phone')} />
             {form.formState.errors.phone ? (
               <p className="text-xs font-bold text-red-400">{t(form.formState.errors.phone.message ?? '')}</p>
             ) : null}
@@ -498,7 +498,7 @@ export function SplitJoinRewardsPage() {
 
                     <div className="grid gap-3">
                       <Label htmlFor="join-phone" className="text-[var(--champagne)]">{t('WhatsApp or phone')}</Label>
-                      <Input id="join-phone" className="border-[var(--champagne)]/22 bg-[var(--espresso)]/42 text-[var(--cream)]" type="tel" placeholder="+57 300 000 0000" {...form.register('phone')} />
+                      <Input id="join-phone" className="border-[var(--champagne)]/22 bg-[var(--espresso)]/42 text-[var(--cream)]" type="tel" placeholder="+502 5555 0000" {...form.register('phone')} />
                       {form.formState.errors.phone ? (
                         <p className="text-xs font-bold text-red-500">{t(form.formState.errors.phone.message ?? '')}</p>
                       ) : null}

@@ -15,7 +15,7 @@ export const earlyAccessSubscribeFields = [
   {
     name: 'whatsapp',
     label: 'WhatsApp number',
-    placeholder: '+57 300 000 0000',
+    placeholder: '+502 5555 0000',
     type: 'tel',
   },
   {

@@ -92,6 +92,22 @@ export const businessService = {
     return normalizeBusiness(data as Record<string, unknown>)
   },
 
+  async getBusinessBySlug(slug: string): Promise<Business | null> {
+    const sb = requireSupabase()
+    const normalizedSlug = slug.trim().toLowerCase()
+    if (!normalizedSlug) return null
+
+    const { data, error } = await sb
+      .from('businesses')
+      .select('*')
+      .eq('slug', normalizedSlug)
+      .eq('active', true)
+      .maybeSingle()
+
+    if (error || !data) return null
+    return normalizeBusiness(data as Record<string, unknown>)
+  },
+
   async updateSettings(businessId: string, values: BusinessSettingsFormValues): Promise<Business> {
     const sb = requireSupabase()
 

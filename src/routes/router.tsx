@@ -9,6 +9,7 @@ import { RequiredAgreementsPage } from '@/features/auth/pages/required-agreement
 import { ResetPasswordPage } from '@/features/auth/pages/reset-password-page'
 import { StaffLoginPage } from '@/features/auth/pages/staff-login-page'
 import { CostCalculatorPage } from '@/features/business/pages/cost-calculator-page'
+import { BusinessQrLandingPage } from '@/features/business/pages/business-qr-landing-page'
 import { ForBusinessesPage } from '@/features/business/pages/for-businesses-page'
 import { ActivityPage } from '@/features/activity/pages/activity-page'
 import { DashboardPage } from '@/features/dashboard/pages/dashboard-page'
@@ -426,6 +427,10 @@ const router = createBrowserRouter([
       {
         path: '/landing-page',
         element: <LandingPage />,
+      },
+      {
+        path: '/b/:slug',
+        element: <BusinessQrLandingPage />,
       },
       {
         path: '/joinusearly',

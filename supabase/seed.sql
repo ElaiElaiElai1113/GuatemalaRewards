@@ -6,7 +6,7 @@
 -- ─── Businesses ──────────────────────────────────────────────
 
 insert into public.businesses (id, name, slug, description, earn_rate, tax_rate, currency, active, address, latitude, longitude) values
-  ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'Velvet Brew', 'velvet-brew', 'A neighborhood beverage shop known for handcrafted drinks, seasonal pastries, and retail favorites.', 10, 0.0875, 'USD', true, 'Cra. 37 #10-32, El Poblado, Guatemala', 6.2088, -75.5672),
+  ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'Velvet Brew', 'velvet-brew', 'A neighborhood beverage shop known for handcrafted drinks, seasonal pastries, and retail favorites.', 10, 0.0875, 'USD', true, '5a Avenida 10-00, Zona 1, Ciudad de Guatemala', 14.6349, -90.5069),
   ('b1eebc99-9c0b-4ef8-bb6d-6bb9bd380a22', 'Mystic Coffee', 'mystic-coffee', 'A mystical coffee experience with ethically sourced beans, herbal infusions, and enchanted blends.', 8, 0.0925, 'USD', true, 'Cl. 10B #36-14, Provenza, Guatemala', 6.2099, -75.5651)
 on conflict (slug) do update
 set name = excluded.name,
