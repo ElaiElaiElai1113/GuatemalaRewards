@@ -462,8 +462,8 @@ runTest('client landing page renders the screenshot sections', () => {
   const landingPage = readFileSync('src/features/auth/pages/landing-page.tsx', 'utf8')
 
   assert.match(landingPage, /t\('Earn rewards'\)/)
-  assert.match(landingPage, /Partner QR sticker rollout/)
-  assert.match(landingPage, /Scan\. Join\. Earn\./)
+  assert.doesNotMatch(landingPage, /Partner QR sticker rollout/)
+  assert.doesNotMatch(landingPage, /Actual QR examples/)
   assert.match(landingPage, /id="how-it-works"/)
   assert.match(landingPage, /steps\.map/)
   assert.match(landingPage, /faqs\.map/)
@@ -564,19 +564,17 @@ runTest('landing Join CTAs go to account signup', () => {
   assert.match(landingPage, /FAQ/)
   assert.match(landingPage, /Join now/)
   assert.match(landingPage, /Join Guatemala Rewards/)
-  assert.match(landingPage, /Partner QR sticker rollout/)
+  assert.doesNotMatch(landingPage, /Partner QR sticker rollout/)
   assert.doesNotMatch(landingPage, /leadModalOpen/)
   assert.doesNotMatch(landingPage, /memberLeadSchema/)
 })
 
-runTest("landing QR rollout section follows the client-focused design", () => {
+runTest("landing page omits the removed QR rollout sections", () => {
   const landingPage = readFileSync("src/features/auth/pages/landing-page.tsx", "utf8")
 
-  assert.match(landingPage, /Partner QR sticker rollout/)
-  assert.match(landingPage, /5x5 inch sticker/)
-  assert.match(landingPage, /Business-specific code/)
-  assert.match(landingPage, /Scan\. Join\. Earn\./)
-  assert.match(landingPage, /View member terms/)
+  assert.doesNotMatch(landingPage, /Partner QR sticker rollout/)
+  assert.doesNotMatch(landingPage, /Actual QR examples/)
+  assert.doesNotMatch(landingPage, /One sticker code per partner business/)
 })
 
 runTest("landing rewards system section explains the QR-first flow", () => {

@@ -5,10 +5,8 @@ import {
   DollarSign,
   Eye,
   EyeOff,
-  FileText,
   Gift,
   Hotel,
-  KeyRound,
   Leaf,
   MapPin,
   QrCode,
@@ -17,7 +15,6 @@ import {
 } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { QRCodeSVG } from 'qrcode.react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 
 import { LanguagePicker } from '@/components/language-picker'
@@ -45,7 +42,6 @@ const authInputClass =
   'h-[42px] rounded-none border-[#d8dce4] bg-[#f8f9fb] px-3.5 text-[15px] text-[#111827] shadow-none placeholder:text-[#6b7280] focus-visible:ring-[#d1ad4a]/35'
 const authLabelClass = 'text-[12px] font-semibold text-[#8f8f8f]'
 const authErrorClass = 'text-center text-xs font-bold text-red-400'
-const samplePartnerQrUrl = 'https://guatemalarewards.com/b/cafe-antigua'
 
 function LoadingSpinner() {
   return (
@@ -67,21 +63,6 @@ function LoadingSpinner() {
 
 export function LandingPage() {
   const { t } = useLanguage()
-  const samplePartnerQrs = [
-    {
-      name: 'Cafe Antigua',
-      url: samplePartnerQrUrl,
-    },
-    {
-      name: 'Hotel Atitlan',
-      url: 'https://guatemalarewards.com/b/hotel-atitlan',
-    },
-    {
-      name: 'Mercado Local',
-      url: 'https://guatemalarewards.com/b/mercado-local',
-    },
-  ] as const
-
   const featureRows = [
     {
       icon: QrCode,
@@ -222,93 +203,6 @@ export function LandingPage() {
           >
             {t('Join Guatemala Rewards')}
           </Link>
-        </div>
-      </section>
-
-      <section className="border-b border-[#e1e4e8] bg-[#ffffff] px-4 py-[34px] sm:px-6 lg:px-8">
-        <div className="mx-auto flex max-w-[520px] flex-col items-center text-center">
-          <h2 className="font-serif text-[30px] font-bold leading-none text-[#202023]">
-            Partner QR sticker rollout
-          </h2>
-
-          <div className="landing-gold-border mt-[30px] w-full max-w-[352px] rounded-[10px] border-2 border-[#d1ad4a] bg-[#ffffff] px-[30px] pb-[22px] pt-[38px]">
-            <p className="mx-auto -mt-[50px] flex h-[28px] w-[200px] items-center justify-center rounded-full bg-[#d1ad4a] text-[12px] font-bold uppercase tracking-[0.18em] text-[#202023]">
-              5x5 inch sticker
-            </p>
-            <p className="mt-[22px] text-[15px] font-bold uppercase tracking-[0.22em] text-[#7a8291]">
-              Business-specific code
-            </p>
-
-            <div className="mt-[13px] rounded-[8px] bg-[#f8f9fb] px-4 py-[14px]">
-              <div className="mx-auto w-full max-w-[218px] border-[6px] border-[#111111] bg-[#ffffff] p-3 shadow-[0_10px_24px_rgba(17,17,17,0.08)]">
-                <BrandLogo className="mb-2 w-full" imageClassName="mx-auto w-[86px]" />
-                <QRCodeSVG
-                  value={samplePartnerQrUrl}
-                  size={168}
-                  level="H"
-                  marginSize={2}
-                  fgColor="#111111"
-                  bgColor="#ffffff"
-                  className="mx-auto block h-auto w-full max-w-[168px]"
-                />
-                <p className="mt-2 text-center text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#111111]">
-                  Scan to join here
-                </p>
-              </div>
-              <p className="mt-[12px] text-[12px] font-bold uppercase tracking-[0.05em] text-[#9aa2af]">Scans open the partner landing page</p>
-              <p className="mt-[10px] text-[25px] font-bold leading-none text-[#d0a63d]">Scan. Join. Earn.</p>
-            </div>
-
-            <Link
-              to="#how-it-works"
-              className="mt-[14px] flex min-h-[44px] w-full items-center justify-center rounded-[8px] bg-[#d1ad4a] text-[15px] font-bold text-[#121212] transition hover:bg-[#c29f3d]"
-            >
-              See how it works
-            </Link>
-
-            <p className="mt-[14px] flex items-center justify-center gap-[5px] text-[12px] font-medium text-[#7a8291]">
-              <FileText className="size-[13px]" strokeWidth={1.7} aria-hidden="true" />
-              Partner placement at checkout, tables, hotel desks, and counters
-            </p>
-          </div>
-
-          <Link
-            to="/reward-terms"
-            className="mt-[22px] inline-flex min-h-[48px] items-center justify-center gap-[12px] rounded-[8px] border border-[#dfe3e8] bg-[#ffffff] px-[27px] text-[14px] font-semibold text-[#4f5866] shadow-[0_2px_4px_rgba(16,24,40,0.04)] transition hover:border-[#d1ad4a]"
-          >
-            <KeyRound className="size-[17px] text-[#caa747]" strokeWidth={1.8} aria-hidden="true" />
-            View member terms
-          </Link>
-        </div>
-      </section>
-
-      <section className="border-b border-[#e1e4e8] bg-[#f6f7f8] px-4 py-[34px] sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-[960px] text-center">
-          <p className="text-[12px] font-bold uppercase tracking-[0.22em] text-[#a47713]">{t('Actual QR examples')}</p>
-          <h2 className="mt-3 font-serif text-[30px] font-bold leading-none text-[#202023]">
-            {t('One sticker code per partner business')}
-          </h2>
-          <div className="mt-[22px] grid gap-[14px] sm:grid-cols-3">
-            {samplePartnerQrs.map((partner) => (
-              <article key={partner.url} className="rounded-[8px] border border-[#dfe3e8] bg-[#ffffff] px-4 py-5 shadow-[0_2px_4px_rgba(16,24,40,0.04)]">
-                <div className="mx-auto w-[150px] border-[5px] border-[#111111] bg-[#ffffff] p-2">
-                  <QRCodeSVG
-                    value={partner.url}
-                    size={118}
-                    level="H"
-                    marginSize={2}
-                    fgColor="#111111"
-                    bgColor="#ffffff"
-                    className="mx-auto block"
-                  />
-                </div>
-                <h3 className="mt-4 text-[14px] font-bold text-[#202023]">{partner.name}</h3>
-                <p className="mt-2 text-[12px] font-medium leading-5 text-[#687282]">
-                  {t('Scans route to that business-specific Guatemala Rewards landing page.')}
-                </p>
-              </article>
-            ))}
-          </div>
         </div>
       </section>
 
