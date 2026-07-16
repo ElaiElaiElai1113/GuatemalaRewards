@@ -75,6 +75,24 @@ function getFilesByExtension(directory: string, extension: string): string[] {
   })
 }
 
+runTest('membership charges $25 USD monthly and keeps the $10 instant credit', () => {
+  const page = readFileSync('src/features/membership/pages/membership-page.tsx', 'utf8')
+  const banner = readFileSync('src/features/membership/components/membership-banner.tsx', 'utf8')
+  const gate = readFileSync('src/features/membership/components/earn-redeem-gate.tsx', 'utf8')
+  const pricing = readFileSync('src/features/membership/membership-pricing.ts', 'utf8')
+  const language = readFileSync('src/lib/language.tsx', 'utf8')
+  const migration = readFileSync('supabase/migrations/20260714000000_membership_price_25_usd.sql', 'utf8')
+
+  assert.match(pricing, /MEMBERSHIP_PRICE_CENTS = 2500/)
+  assert.match(pricing, /MEMBERSHIP_REWARD_CREDIT_CENTS = 1000/)
+  assert.match(page, /\$25\/mo flat/)
+  assert.match(banner, /\$25\/mo membership, \$10 credit instantly/)
+  assert.match(gate, /formatCurrency\(MEMBERSHIP_PRICE_USD\)/)
+  assert.match(language, /'\$25\/mo flat': '\$25\/mes fijo'/)
+  assert.match(migration, /price_cents = 2500/)
+  assert.match(migration, /grant_membership_credit\(actor_id, 1000\)/)
+})
+
 runTest('normalizeCheckoutItems aggregates duplicate products for one business', () => {
   const result = normalizeCheckoutItems([
     { productId: 'prod-1', businessId: 'biz-1', quantity: 1 },
@@ -717,23 +735,37 @@ runTest('welcome email API uses server-only Hostinger SMTP settings', () => {
   }
 })
 
-runTest('root route redirects to the actual landing page', () => {
+runTest('root route renders the synced rewards homepage', () => {
   const router = readFileSync('src/routes/router.tsx', 'utf8')
   const rootRouteStart = router.indexOf('function RootRoute()')
   const protectedRouteStart = router.indexOf('function ProtectedCustomerRoute()')
   const rootRoute = router.slice(rootRouteStart, protectedRouteStart)
 
-  assert.match(rootRoute, /<Navigate replace to="\/landing-page" \/>/)
+  assert.match(rootRoute, /<HomePage \/>/)
   assert.doesNotMatch(rootRoute, /<EarlyAccessPage \/>/)
-  assert.doesNotMatch(rootRoute, /<LandingPage \/>/)
-  assert.doesNotMatch(rootRoute, /landing-header-figma/)
 })
 
-runTest('client landing page is available at /landing-page', () => {
+runTest('synced rewards homepage is also available at /landing-page', () => {
   const router = readFileSync('src/routes/router.tsx', 'utf8')
 
   assert.match(router, /path: '\/landing-page'/)
-  assert.match(router, /element: <LandingPage \/>/)
+  assert.match(router, /element: <HomePage \/>/)
+})
+
+runTest('synced homepage keeps Guatemala branding and approved media', () => {
+  const indexHtml = readFileSync('index.html', 'utf8')
+  const homePage = readFileSync('src/features/home/pages/home-page.tsx', 'utf8')
+  const homeStyles = readFileSync('src/features/home/pages/home-page.css', 'utf8')
+
+  assert.match(indexHtml, /family=Fraunces/)
+  assert.match(indexHtml, /family=Inter/)
+  assert.match(homeStyles, /--home-display-font: 'Fraunces'/)
+  assert.match(homeStyles, /--home-body-font: 'Inter'/)
+  assert.match(homePage, /Guatemala Rewards/)
+  assert.match(homePage, /car-rewards-clean\.png/)
+  assert.match(homePage, /vacation-beach-clean\.webp/)
+  assert.doesNotMatch(homePage, /Medell[ií]n/)
+  assert.doesNotMatch(homePage, /\bCOP\b/)
 })
 
 runTest('platform guide is a Spanish-first video-ready onboarding page', () => {
@@ -1957,34 +1989,43 @@ runTest('business staff owner-only routes are guarded and hidden from navigation
   assert.doesNotMatch(layout, /\.filter\(\(item\) => !item\.ownerOnly \|\| profile\?\.role === 'business-owner'\)/)
 })
 
-runTest('public business page follows the clean landing-page format', () => {
+runTest('public business page follows the synced local-partner design', () => {
   const layout = readFileSync('src/layouts/public-browse-layout.tsx', 'utf8')
   const page = readFileSync('src/features/business/pages/for-businesses-page.tsx', 'utf8')
 
   assert.match(layout, /useLocation/)
   assert.match(layout, /isBusinessOnboarding/)
-  assert.match(layout, /bg-\[#ffffff\]/)
-  assert.match(layout, /max-w-\[1336px\]/)
-  assert.match(layout, /How it works/)
-  assert.match(layout, /Business tools/)
-  assert.match(layout, /md:hidden/)
-  assert.match(layout, /Start Onboarding/)
+  assert.match(layout, /business-public-shell/)
+  assert.match(layout, /Benefits/)
+  assert.match(layout, /How It Works/)
+  assert.match(layout, /Get Started/)
   assert.match(layout, /Business Login/)
+  assert.match(layout, /FOR BUSINESSES/)
+  assert.match(layout, /Privacy policy/)
+  assert.match(layout, /Member site/)
   assert.match(layout, /<Outlet \/>/)
-  assert.doesNotMatch(layout, /headerContainerClassName = isBusinessOnboarding/)
 
-  assert.match(page, /screenshot-landing/)
-  assert.match(page, /Business onboarding/)
-  assert.match(page, /Join the <span className="text-\[#cfaa44\]">rewards network<\/span>/)
+  assert.match(page, /business-landing/)
+  assert.match(page, /Helping local/)
+  assert.match(page, /businesses <em>grow,/)
+  assert.match(page, /<em>Rewards<\/em> to our/)
+  assert.match(page, /A steady stream of loyal, spending/)
+  assert.match(page, /Three steps\. That’s it\./)
+  assert.match(page, /Sign the agreement\. We’ll take/)
+  assert.match(page, /local-business-owner\.png/)
+  assert.match(page, /hotel-partner\.png/)
+  assert.match(page, /salon-partner\.png/)
+  assert.match(page, /staff-qr-checkout\.png/)
+  assert.match(page, /cta-overlay\.png/)
+  assert.match(page, /Guatemala Rewards/)
+  assert.doesNotMatch(page, /Medell[ií]n/)
+  assert.match(page, /id="benefits"/)
   assert.match(page, /id="how-it-works"/)
-  assert.match(page, /id="business-tools"/)
-  assert.match(page, /id="faq"/)
-  assert.match(page, /href="#book-demo"/)
-  assert.match(page, /to="\/business\/login"/)
-  assert.match(layout, /isBusinessOnboarding[\s\S]*Start Onboarding/)
+  assert.match(page, /id="get-started"/)
+  assert.match(page, /id="book-demo"/)
+  assert.match(layout, /isBusinessOnboarding[\s\S]*Get Started/)
   assert.match(layout, /isBusinessOnboarding[\s\S]*Business Login/)
-  assert.doesNotMatch(page, /ornate-page/)
-  assert.doesNotMatch(page, /ornate-frame/)
+  assert.doesNotMatch(page, /earlyAccessService/)
 })
 
 runTest('business and admin login pages follow the compact auth layout', () => {
@@ -2031,7 +2072,7 @@ runTest('workflow QA docs record staff operational policy and seeded workflow co
 runTest('package exposes a launch checklist test command', () => {
   const pkg = JSON.parse(readFileSync('package.json', 'utf8')) as { scripts?: Record<string, string> }
 
-  assert.equal(pkg.scripts?.['test:launch'], 'playwright test tests/e2e/launch-checklist.spec.ts')
+  assert.equal(pkg.scripts?.['test:launch'], 'node scripts/run-playwright-local.mjs tests/e2e/launch-checklist.spec.ts')
 })
 
 runTest('launch checklist Playwright suite maps to PT001 through PT008', () => {
@@ -2076,12 +2117,12 @@ runTest('workflow QA docs explain the automated launch checklist command', () =>
 runTest('package exposes focused workflow automation commands', () => {
   const pkg = JSON.parse(readFileSync('package.json', 'utf8')) as { scripts?: Record<string, string> }
 
-  assert.equal(pkg.scripts?.['test:referrals'], 'playwright test tests/e2e/referrals.spec.ts')
-  assert.equal(pkg.scripts?.['test:onboarding'], 'playwright test tests/e2e/onboarding.spec.ts')
-  assert.equal(pkg.scripts?.['test:gift-cards'], 'playwright test tests/e2e/gift-cards.spec.ts')
-  assert.equal(pkg.scripts?.['test:rewards'], 'playwright test tests/e2e/rewards-redemption.spec.ts')
-  assert.equal(pkg.scripts?.['test:load'], 'playwright test tests/e2e/load.spec.ts')
-  assert.equal(pkg.scripts?.['test:agreements'], 'playwright test tests/e2e/agreements.spec.ts')
+  assert.equal(pkg.scripts?.['test:referrals'], 'node scripts/run-playwright-local.mjs tests/e2e/referrals.spec.ts')
+  assert.equal(pkg.scripts?.['test:onboarding'], 'node scripts/run-playwright-local.mjs tests/e2e/onboarding.spec.ts')
+  assert.equal(pkg.scripts?.['test:gift-cards'], 'node scripts/run-playwright-local.mjs tests/e2e/gift-cards.spec.ts')
+  assert.equal(pkg.scripts?.['test:rewards'], 'node scripts/run-playwright-local.mjs tests/e2e/rewards-redemption.spec.ts')
+  assert.equal(pkg.scripts?.['test:load'], 'node scripts/run-playwright-local.mjs tests/e2e/load.spec.ts')
+  assert.equal(pkg.scripts?.['test:agreements'], 'node scripts/run-playwright-local.mjs tests/e2e/agreements.spec.ts')
   assert.equal(pkg.scripts?.['test:playwright'], 'node scripts/run-playwright-local.mjs')
   assert.equal(pkg.scripts?.['test:responsive'], 'node scripts/audit-responsive.mjs')
 })

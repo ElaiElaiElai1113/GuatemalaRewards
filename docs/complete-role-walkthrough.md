@@ -312,7 +312,7 @@ Route: `/membership`
 Steps:
 
 1. Open monthly membership.
-2. Explain the `$10/mo` demo membership.
+2. Explain the `$25/mo` demo membership.
 3. Subscribe when the account is eligible.
 4. Renew an existing membership.
 5. Cancel an existing membership.

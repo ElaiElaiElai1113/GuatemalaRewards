@@ -26,59 +26,54 @@ export function PublicBrowseLayout() {
 
   if (isBusinessOnboarding) {
     return (
-      <div className="flex min-h-screen flex-col bg-[#f6f7f8] text-[#242426]">
-        <header className="sticky top-0 z-50 flex min-h-[61px] items-center border-b border-[#e1e4e8] bg-[#ffffff] px-4 sm:px-8">
-          <div className="mx-auto flex w-full max-w-[1336px] flex-col items-stretch gap-3 py-3 sm:flex-row sm:items-center sm:justify-between">
-            <NavLink to="/" className="min-w-0">
-              <BrandLogo markClassName="h-9" textClassName="text-[23px] text-[#202023]" />
+      <div className="business-public-shell">
+        <header className="business-public-shell__header">
+          <div className="business-public-shell__container business-public-shell__header-inner">
+            <NavLink to="/" className="business-public-shell__brand" aria-label="Guatemala Rewards member homepage">
+              <img src="/favicon.svg" alt="" aria-hidden="true" />
+              <span>
+                GUATEMALA REWARDS
+                <small>FOR BUSINESSES</small>
+              </span>
             </NavLink>
-            <nav className="hidden items-center gap-[30px] text-[14px] font-medium leading-none text-[#687282] md:flex">
-              <a href="#how-it-works" className="transition hover:text-[#202023]">
-                How it works
-              </a>
-              <a href="#business-tools" className="transition hover:text-[#202023]">
-                Business tools
-              </a>
-              <a href="#faq" className="transition hover:text-[#202023]">
-                FAQ
-              </a>
-              <NavLink to="/business/login" className="transition hover:text-[#202023]">
-                Business Login
-              </NavLink>
-              <a href="#book-demo" className="font-semibold text-[#caa747] transition hover:text-[#a87916]">
-                Start onboarding
-              </a>
+
+            <nav className="business-public-shell__nav" aria-label="Business page navigation">
+              <a href="#benefits">Benefits</a>
+              <a href="#how-it-works">How It Works</a>
+              <NavLink to="/cost-calculator">Cost Calculator</NavLink>
+              <a href="#get-started">Get Started</a>
             </nav>
-            <div className="grid w-full grid-cols-2 gap-2 sm:w-auto md:hidden">
-              <a
-                href="#book-demo"
-                className="inline-flex min-h-9 items-center justify-center rounded-[8px] bg-[#d1ad4a] px-3 text-xs font-bold text-[#121212]"
-              >
-                Start Onboarding
-              </a>
-              <NavLink
-                to="/business/login"
-                className="inline-flex min-h-9 items-center justify-center rounded-[8px] border border-[#dfe3e8] bg-[#ffffff] px-3 text-xs font-bold text-[#4f5866]"
-              >
-                Business Login
-              </NavLink>
-            </div>
+
+            <NavLink to="/business/login" className="business-public-shell__login">
+              Business Login
+            </NavLink>
           </div>
         </header>
 
-        <main className="flex-1">
+        <main>
           <Outlet />
         </main>
-        <footer className="border-t border-[#e1e4e8] bg-[#ffffff] px-4 py-8 sm:px-6 lg:px-8">
-          <div className="mx-auto flex w-full max-w-[1336px] flex-col justify-between gap-4 text-sm text-[#687282] md:flex-row md:items-center">
-            <BrandLogo markClassName="h-9" textClassName="text-base text-[#202023]" />
-            <nav className="flex flex-wrap gap-4">
-              {legalLinks.map((link) => (
-                <NavLink key={link.to} to={link.to} className="transition-colors hover:text-[#202023]">
-                  {t(link.label)}
+
+        <footer className="business-public-shell__footer">
+          <div className="business-public-shell__container">
+            <div className="business-public-shell__footer-top">
+              <div>
+                <NavLink to="/" className="business-public-shell__brand" aria-label="Guatemala Rewards member homepage">
+                  <img src="/favicon.svg" alt="" aria-hidden="true" />
+                  <span>GUATEMALA REWARDS</span>
                 </NavLink>
-              ))}
-            </nav>
+                <p>Helping local businesses grow while<br />giving amazing Rewards to our members.</p>
+              </div>
+              <nav aria-label="Business footer navigation">
+                <NavLink to="/privacy">Privacy policy</NavLink>
+                <a href="mailto:info@guatemalarewards.com">Contact</a>
+                <NavLink to="/">Member site</NavLink>
+              </nav>
+            </div>
+            <div className="business-public-shell__footer-bottom">
+              <span>© 2026 Guatemala Rewards. All rights reserved.</span>
+              <span>Made for businesses in Guatemala</span>
+            </div>
           </div>
         </footer>
       </div>

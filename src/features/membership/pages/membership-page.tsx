@@ -2,6 +2,11 @@ import { CreditCard, RefreshCw, ShieldCheck } from 'lucide-react'
 
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import {
+  MEMBERSHIP_PRICE_CENTS,
+  MEMBERSHIP_PRICE_USD,
+  MEMBERSHIP_REWARD_CREDIT_USD,
+} from '@/features/membership/membership-pricing'
 import { useAuth } from '@/hooks/use-auth'
 import { useMembership } from '@/hooks/use-membership'
 import { useLanguage } from '@/lib/language'
@@ -46,7 +51,7 @@ export function MembershipPage() {
                 <ShieldCheck className="size-5 text-[var(--foreground)]" />
               </div>
               <div>
-                <h2 className="text-xl font-semibold text-[var(--foreground)]">{t('$10/mo flat')}</h2>
+                <h2 className="text-xl font-semibold text-[var(--foreground)]">{t('$25/mo flat')}</h2>
                 <p className="text-sm text-[var(--muted-foreground)]">{t('Get $10 credit instantly + earn rewards.')}</p>
               </div>
             </div>
@@ -70,11 +75,13 @@ export function MembershipPage() {
             <div className="grid gap-3 sm:grid-cols-3">
               <div className="rounded-lg border border-[var(--border)] p-4">
                 <p className="text-sm font-medium text-[var(--muted-foreground)]">{t('Monthly price')}</p>
-                <p className="mt-2 text-2xl font-semibold">{formatCurrency((membership?.priceCents ?? 1000) / 100)}</p>
+                <p className="mt-2 text-2xl font-semibold">
+                  {formatCurrency((membership?.priceCents ?? MEMBERSHIP_PRICE_CENTS) / 100)}
+                </p>
               </div>
               <div className="rounded-lg border border-[var(--border)] p-4">
                 <p className="text-sm font-medium text-[var(--muted-foreground)]">{t('Instant credit')}</p>
-                <p className="mt-2 text-2xl font-semibold">{formatCurrency(10)}</p>
+                <p className="mt-2 text-2xl font-semibold">{formatCurrency(MEMBERSHIP_REWARD_CREDIT_USD)}</p>
               </div>
               <div className="rounded-lg border border-[var(--border)] p-4">
                 <p className="text-sm font-medium text-[var(--muted-foreground)]">{t('Provider')}</p>
@@ -85,7 +92,9 @@ export function MembershipPage() {
 
           <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-5">
             <div className="flex items-baseline gap-1">
-              <span className="text-4xl font-semibold text-[var(--foreground)]">$10</span>
+              <span className="text-4xl font-semibold text-[var(--foreground)]">
+                {formatCurrency(MEMBERSHIP_PRICE_USD)}
+              </span>
               <span className="text-sm font-medium text-[var(--muted-foreground)]">/mo</span>
             </div>
             <p className="mt-2 text-xs leading-5 text-[var(--muted-foreground)]">

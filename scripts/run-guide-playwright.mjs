@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url'
 import { createServer } from 'vite'
 
 const host = '127.0.0.1'
-const port = 5175
+const port = 5275
 const baseUrl = `http://${host}:${port}`
 
 const server = await createServer({

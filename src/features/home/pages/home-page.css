@@ -1,0 +1,1092 @@
+.figma-home,
+.figma-home * {
+  box-sizing: border-box;
+}
+
+.figma-home {
+  --home-ink: #18130f;
+  --home-copy: #66615c;
+  --home-gold: #ddb31d;
+  --home-gold-dark: #8b6a08;
+  --home-paper: #f1f0ec;
+  --home-white: #fffefd;
+  --home-line: #dfddd8;
+  --home-display-font: 'Fraunces', Georgia, serif;
+  --home-body-font: 'Inter', Arial, sans-serif;
+  min-width: 0;
+  overflow-x: hidden;
+  background: var(--home-white);
+  color: var(--home-ink);
+  font-family: var(--home-body-font);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.figma-home a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.figma-home a:focus-visible,
+.figma-home summary:focus-visible {
+  outline: 3px solid var(--home-gold);
+  outline-offset: 5px;
+}
+
+.figma-home h1,
+.figma-home h2,
+.figma-home h3,
+.figma-home p,
+.figma-home ul,
+.figma-home figure {
+  margin: 0;
+}
+
+.figma-home h1,
+.figma-home h2,
+.figma-home h3 {
+  font-family: var(--home-display-font);
+  font-weight: 700;
+}
+
+.figma-home__container {
+  width: min(100% - 80px, 1200px);
+  margin-inline: auto;
+}
+
+.figma-home__paper,
+.figma-home__suggest {
+  background-color: var(--home-paper);
+  background-image: linear-gradient(rgb(245 244 240 / 44%), rgb(239 238 234 / 44%)),
+    url('../../../assets/landing/paper-texture.png');
+  background-repeat: repeat;
+  background-size: auto, 320px 320px;
+}
+
+.figma-home__header {
+  position: relative;
+  z-index: 10;
+}
+
+.figma-home__header-inner {
+  display: grid;
+  min-height: 116px;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 48px;
+}
+
+.figma-home__brand-link {
+  width: fit-content;
+}
+
+.figma-home__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  color: #c99f16;
+  font-family: var(--home-display-font);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.figma-home__brand img {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+}
+
+.figma-home__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 56px;
+  color: #765d16;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.figma-home__nav a,
+.figma-home__footer nav a {
+  transition: color 180ms ease;
+}
+
+.figma-home__nav a:hover,
+.figma-home__footer nav a:hover {
+  color: var(--home-gold);
+}
+
+.figma-home__button {
+  display: inline-flex;
+  min-height: 54px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--home-gold);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #e8c43b 0%, #d9ac18 100%);
+  box-shadow: 0 12px 24px rgb(139 106 8 / 14%);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 0 30px;
+  transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.figma-home__button:hover {
+  box-shadow: 0 15px 28px rgb(139 106 8 / 22%);
+  filter: saturate(1.08);
+  transform: translateY(-2px);
+}
+
+.figma-home__button--header {
+  min-width: 136px;
+  justify-self: end;
+}
+
+.figma-home__hero {
+  min-height: 1000px;
+  padding: 122px 0 172px;
+}
+
+.figma-home__hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(420px, 0.95fr);
+  align-items: center;
+  gap: 64px;
+}
+
+.figma-home__hero-copy h1 {
+  max-width: 680px;
+  font-size: clamp(58px, 5.15vw, 78px);
+  letter-spacing: -0.045em;
+  line-height: 0.91;
+}
+
+.figma-home__hero-copy h1 em {
+  color: var(--home-gold);
+  font-weight: 700;
+}
+
+.figma-home__hero-text {
+  display: grid;
+  max-width: 600px;
+  gap: 34px;
+  margin-top: 54px;
+  color: var(--home-copy);
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.figma-home__hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 44px;
+}
+
+.figma-home__hero-actions .figma-home__button {
+  min-width: 236px;
+}
+
+.figma-home__button--secondary {
+  border-color: #ccc8c0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--home-ink);
+}
+
+.figma-home__button--secondary:hover {
+  border-color: var(--home-gold);
+  box-shadow: none;
+}
+
+.figma-home .figma-home__hero-pills {
+  display: flex;
+  max-width: 520px;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 58px;
+  padding: 0;
+  list-style: none;
+}
+
+.figma-home__hero-pills li {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  border: 1px solid #d5d2ca;
+  border-radius: 999px;
+  color: #5e5a55;
+  font-size: 13px;
+  padding: 0 24px;
+}
+
+.figma-home__hero-pills li::before {
+  width: 7px;
+  height: 7px;
+  margin-right: 14px;
+  border-radius: 50%;
+  background: var(--home-gold);
+  content: '';
+}
+
+.figma-home__hero-visual {
+  position: relative;
+  width: min(100%, 560px);
+  justify-self: end;
+}
+
+.figma-home__hero-visual > img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.figma-home__reward-badge {
+  position: absolute;
+  right: 3%;
+  bottom: 17%;
+  display: grid;
+  min-width: 134px;
+  min-height: 110px;
+  place-content: center;
+  border-radius: 24px;
+  background: rgb(248 247 244 / 92%);
+  box-shadow: 0 14px 30px rgb(44 30 14 / 15%);
+  color: #322b24;
+  text-align: center;
+}
+
+.figma-home__reward-badge strong {
+  color: #856506;
+  font-family: var(--home-display-font);
+  font-size: 36px;
+  line-height: 0.9;
+}
+
+.figma-home__reward-badge span {
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  line-height: 1.12;
+}
+
+.figma-home__rewards {
+  position: relative;
+  padding: 170px 0 190px;
+  background: #fffcfb;
+}
+
+.figma-home__rewards::after {
+  position: absolute;
+  top: 176px;
+  right: -115px;
+  width: 340px;
+  height: 340px;
+  border: 1px solid #eee9e0;
+  border-radius: 50%;
+  content: '';
+}
+
+.figma-home__rewards h2,
+.figma-home__membership h2,
+.figma-home__process h2,
+.figma-home__faq h2 {
+  font-size: clamp(46px, 4vw, 62px);
+  letter-spacing: -0.035em;
+  line-height: 0.96;
+}
+
+.figma-home__value-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 98px;
+  border-top: 1px solid var(--home-line);
+}
+
+.figma-home__value-card {
+  min-height: 330px;
+  padding: 54px 44px 44px 0;
+}
+
+.figma-home__value-card + .figma-home__value-card {
+  border-left: 1px solid var(--home-line);
+  padding-left: 44px;
+}
+
+.figma-home__value-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid #a98719;
+  border-radius: 50%;
+  font-size: 18px;
+}
+
+.figma-home__value-card h3 {
+  margin-top: 34px;
+  font-size: 25px;
+  line-height: 1.1;
+}
+
+.figma-home__value-card p {
+  margin-top: 20px;
+  color: var(--home-copy);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.figma-home__category-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: 310px 370px;
+  gap: 24px;
+  margin-top: 62px;
+}
+
+.figma-home__category-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #ddd;
+  box-shadow: 0 13px 25px rgb(33 24 16 / 7%);
+}
+
+.figma-home__category-card--coffee,
+.figma-home__category-card--dining,
+.figma-home__category-card--salon {
+  grid-column: span 2;
+}
+
+.figma-home__category-card--cars {
+  grid-column: span 4;
+}
+
+.figma-home__category-card--real-estate {
+  grid-column: span 2;
+}
+
+.figma-home__category-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.figma-home__category-card--cars img {
+  object-position: center;
+}
+
+.figma-home__membership {
+  padding: 170px 0 200px;
+  background: #fff;
+}
+
+.figma-home__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #876708;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.figma-home__eyebrow::before {
+  width: 26px;
+  height: 2px;
+  background: #9a7812;
+  content: '';
+}
+
+.figma-home__membership h2,
+.figma-home__process h2,
+.figma-home__faq h2 {
+  margin-top: 28px;
+}
+
+.figma-home__section-intro {
+  margin-top: 20px !important;
+  color: var(--home-copy);
+  font-size: 16px;
+}
+
+.figma-home__membership-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 44px;
+  margin-top: 96px;
+}
+
+.figma-home__membership-card {
+  position: relative;
+  display: flex;
+  min-height: 570px;
+  flex-direction: column;
+  border: 1px solid var(--home-line);
+  border-radius: 30px;
+  background: #fff;
+  box-shadow: 0 18px 42px rgb(24 19 15 / 5%);
+  padding: 72px 50px 50px;
+}
+
+.figma-home__membership-card--regular {
+  border-color: var(--home-gold);
+  background: linear-gradient(160deg, #fff9dd 0%, #fff 48%);
+  box-shadow: 0 26px 55px rgb(139 106 8 / 13%);
+}
+
+.figma-home__free-ribbon {
+  position: absolute;
+  top: -19px;
+  right: 48px;
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #e8c43b 0%, #d6a915 100%);
+  box-shadow: 0 8px 18px rgb(139 106 8 / 22%);
+  color: white;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  padding: 0 22px;
+}
+
+.figma-home__membership-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.figma-home__membership-heading h3 {
+  font-size: 30px;
+  line-height: 1;
+}
+
+.figma-home__percentage {
+  display: grid;
+  width: 68px;
+  height: 68px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 2px solid #ddd9d4;
+  border-top-color: var(--home-gold);
+  border-radius: 50%;
+  color: #886709;
+  font-family: var(--home-display-font);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.figma-home__percentage--regular {
+  border: 3px solid #cda515;
+}
+
+.figma-home__price {
+  margin-top: 50px !important;
+  font-family: var(--home-display-font);
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.figma-home__price-note {
+  margin-top: 12px !important;
+  color: #29241f;
+  font-size: 14px;
+}
+
+.figma-home__benefit-list {
+  display: grid;
+  gap: 17px;
+  margin-top: 34px !important;
+  padding: 0;
+  color: var(--home-copy);
+  font-size: 14px;
+  line-height: 1.6;
+  list-style: none;
+}
+
+.figma-home__benefit-list li {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 12px;
+}
+
+.figma-home__benefit-list li::before {
+  color: var(--home-gold);
+  content: '—';
+  font-weight: 800;
+}
+
+.figma-home__membership-button {
+  display: inline-flex;
+  min-height: 58px;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #e7c13b, #d5a714);
+  box-shadow: 0 7px 14px rgb(139 106 8 / 16%);
+  color: white !important;
+  font-weight: 800;
+  transition: transform 180ms ease;
+}
+
+.figma-home__membership-button:hover {
+  transform: translateY(-2px);
+}
+
+.figma-home__membership-button--free {
+  border: 1px solid #dedbd6;
+  background: #f8f7f5;
+  box-shadow: none;
+  color: var(--home-ink) !important;
+}
+
+.figma-home__process {
+  padding: 170px 0 190px;
+  background: #fbf9f8;
+}
+
+.figma-home__process-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 52px;
+  margin-top: 104px;
+}
+
+.figma-home__process-step {
+  position: relative;
+  min-height: 270px;
+  border-top: 1px solid var(--home-line);
+  padding-top: 54px;
+}
+
+.figma-home__process-step::before {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 42px;
+  height: 2px;
+  background: #94710b;
+  content: '';
+}
+
+.figma-home__step-number {
+  color: #856609;
+  font-family: var(--home-display-font);
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.figma-home__process-step h3 {
+  margin-top: 34px;
+  font-size: 28px;
+}
+
+.figma-home__process-step p {
+  margin-top: 22px;
+  color: var(--home-copy);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.figma-home__vacation {
+  position: relative;
+  min-height: 655px;
+  overflow: hidden;
+  background-image: var(--vacation-art);
+  background-position: center top;
+  background-size: cover;
+  color: white;
+}
+
+.figma-home__vacation-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #4b2e1b 0%, #4b2e1b 42%, rgb(54 31 15 / 94%) 50%, rgb(32 18 9 / 28%) 72%, transparent 100%);
+}
+
+.figma-home__vacation-content {
+  position: relative;
+  z-index: 1;
+  padding-top: 106px;
+}
+
+.figma-home__vacation .figma-home__eyebrow {
+  color: #e6c43e;
+}
+
+.figma-home__vacation .figma-home__eyebrow::before {
+  background: #e6c43e;
+}
+
+.figma-home__vacation h2 {
+  margin-top: 30px;
+  font-size: clamp(52px, 5vw, 72px);
+  letter-spacing: -0.035em;
+  line-height: 0.91;
+}
+
+.figma-home__vacation p:not(.figma-home__eyebrow) {
+  margin-top: 28px;
+  color: rgb(255 255 255 / 86%);
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.figma-home__vacation .figma-home__button {
+  min-width: 190px;
+  margin-top: 42px;
+}
+
+.figma-home__faq {
+  padding: 180px 0 210px;
+  background: #fff;
+}
+
+.figma-home__faq-list {
+  margin-top: 100px;
+  border-top: 1px solid var(--home-line);
+}
+
+.figma-home__faq-list details {
+  border-bottom: 1px solid var(--home-line);
+}
+
+.figma-home__faq-list summary {
+  display: flex;
+  min-height: 102px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  font-family: var(--home-display-font);
+  font-size: 24px;
+  font-weight: 700;
+  list-style: none;
+}
+
+.figma-home__faq-list summary::-webkit-details-marker {
+  display: none;
+}
+
+.figma-home__faq-list summary > span:first-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.figma-home__faq-list summary > span:first-child > span {
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+}
+
+.figma-home__faq-toggle {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  border: 1px solid #8e6b0a;
+  border-radius: 50%;
+}
+
+.figma-home__faq-toggle::before,
+.figma-home__faq-toggle::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 11px;
+  height: 1px;
+  background: #8e6b0a;
+  content: '';
+  transform: translate(-50%, -50%);
+}
+
+.figma-home__faq-toggle::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.figma-home__faq-list details[open] .figma-home__faq-toggle {
+  border-color: #8e6b0a;
+  background: #8e6b0a;
+}
+
+.figma-home__faq-list details[open] .figma-home__faq-toggle::before,
+.figma-home__faq-list details[open] .figma-home__faq-toggle::after {
+  background: white;
+}
+
+.figma-home__faq-list details[open] .figma-home__faq-toggle::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.figma-home__faq-list details[open] .figma-home__faq-toggle::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.figma-home__faq-list details > p {
+  max-width: 760px;
+  padding: 0 0 42px;
+  color: var(--home-copy);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.figma-home__suggest {
+  min-height: 420px;
+}
+
+.figma-home__suggest-inner {
+  display: flex;
+  min-height: 420px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+}
+
+.figma-home__suggest h2 {
+  font-size: 42px;
+  line-height: 1;
+}
+
+.figma-home__suggest p {
+  margin-top: 28px;
+  color: var(--home-copy);
+  font-size: 16px;
+}
+
+.figma-home__suggest-button {
+  min-width: 260px;
+  min-height: 66px;
+  font-size: 17px;
+}
+
+.figma-home__footer {
+  padding: 134px 0 68px;
+  background: white;
+}
+
+.figma-home__footer-top {
+  display: flex;
+  min-height: 250px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.figma-home__footer-top > div > p {
+  margin-top: 40px;
+  color: var(--home-copy);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.figma-home__footer nav {
+  display: flex;
+  gap: 70px;
+  color: #5f5a55;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.figma-home__footer-bottom {
+  display: flex;
+  min-height: 105px;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+  border-top: 1px solid var(--home-line);
+  color: #8a8580;
+  font-size: 13px;
+}
+
+@media (max-width: 1050px) {
+  .figma-home__header-inner {
+    gap: 24px;
+  }
+
+  .figma-home__nav {
+    gap: 28px;
+  }
+
+  .figma-home__hero {
+    min-height: auto;
+  }
+
+  .figma-home__hero-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(340px, 0.85fr);
+    gap: 34px;
+  }
+
+  .figma-home__hero-copy h1 {
+    font-size: 54px;
+  }
+
+  .figma-home__membership-card {
+    padding-inline: 36px;
+  }
+}
+
+@media (max-width: 800px) {
+  .figma-home__container {
+    width: min(100% - 40px, 680px);
+  }
+
+  .figma-home__header-inner {
+    min-height: 86px;
+    grid-template-columns: 1fr auto;
+  }
+
+  .figma-home__nav {
+    display: none;
+  }
+
+  .figma-home__brand {
+    gap: 9px;
+    font-size: 13px;
+    letter-spacing: 0.07em;
+  }
+
+  .figma-home__brand img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .figma-home__button--header {
+    min-width: 104px;
+    min-height: 46px;
+    padding-inline: 20px;
+  }
+
+  .figma-home__hero {
+    padding: 76px 0 100px;
+  }
+
+  .figma-home__hero-grid {
+    grid-template-columns: 1fr;
+    gap: 72px;
+  }
+
+  .figma-home__hero-copy h1 {
+    max-width: 630px;
+    font-size: clamp(45px, 12.5vw, 62px);
+  }
+
+  .figma-home__hero-text {
+    gap: 22px;
+    margin-top: 38px;
+    font-size: 15px;
+  }
+
+  .figma-home__hero-actions {
+    margin-top: 34px;
+  }
+
+  .figma-home__hero-actions .figma-home__button {
+    width: 100%;
+  }
+
+  .figma-home .figma-home__hero-pills {
+    margin-top: 38px;
+  }
+
+  .figma-home__hero-visual {
+    width: min(100%, 520px);
+    justify-self: center;
+  }
+
+  .figma-home__reward-badge {
+    min-width: 112px;
+    min-height: 94px;
+  }
+
+  .figma-home__rewards,
+  .figma-home__membership,
+  .figma-home__process,
+  .figma-home__faq {
+    padding: 100px 0;
+  }
+
+  .figma-home__rewards h2,
+  .figma-home__membership h2,
+  .figma-home__process h2,
+  .figma-home__faq h2 {
+    font-size: 44px;
+  }
+
+  .figma-home__value-grid {
+    grid-template-columns: 1fr;
+    margin-top: 60px;
+  }
+
+  .figma-home__value-card,
+  .figma-home__value-card + .figma-home__value-card {
+    min-height: auto;
+    border-bottom: 1px solid var(--home-line);
+    border-left: 0;
+    padding: 42px 0;
+  }
+
+  .figma-home__category-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 270px);
+    gap: 14px;
+    margin-top: 54px;
+  }
+
+  .figma-home__category-card--coffee,
+  .figma-home__category-card--dining,
+  .figma-home__category-card--salon,
+  .figma-home__category-card--cars,
+  .figma-home__category-card--real-estate {
+    grid-column: span 1;
+  }
+
+  .figma-home__category-card--cars {
+    grid-column: span 2;
+  }
+
+  .figma-home__membership-grid,
+  .figma-home__process-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .figma-home__membership-grid {
+    gap: 52px;
+    margin-top: 70px;
+  }
+
+  .figma-home__process-grid {
+    gap: 12px;
+    margin-top: 70px;
+  }
+
+  .figma-home__process-step {
+    min-height: auto;
+    padding: 42px 0 54px;
+  }
+
+  .figma-home__vacation {
+    min-height: 640px;
+    background-position: 62% center;
+  }
+
+  .figma-home__vacation-shade {
+    background: linear-gradient(90deg, rgb(39 23 13 / 94%) 0%, rgb(41 24 13 / 79%) 70%, rgb(31 18 10 / 52%) 100%);
+  }
+
+  .figma-home__vacation-content {
+    padding-top: 92px;
+  }
+
+  .figma-home__vacation h2 {
+    font-size: 52px;
+  }
+
+  .figma-home__faq-list {
+    margin-top: 66px;
+  }
+
+  .figma-home__suggest-inner,
+  .figma-home__footer-top,
+  .figma-home__footer-bottom {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .figma-home__suggest-inner {
+    justify-content: center;
+    padding-block: 80px;
+  }
+
+  .figma-home__suggest-button {
+    width: 100%;
+  }
+
+  .figma-home__footer {
+    padding-top: 90px;
+  }
+
+  .figma-home__footer-top {
+    min-height: 290px;
+  }
+
+  .figma-home__footer nav {
+    gap: 40px;
+  }
+
+  .figma-home__footer-bottom {
+    min-height: 150px;
+    justify-content: flex-end;
+    padding-top: 40px;
+  }
+}
+
+@media (max-width: 520px) {
+  .figma-home__category-grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .figma-home__category-card {
+    min-height: 285px;
+  }
+
+  .figma-home__membership-card {
+    min-height: 600px;
+    border-radius: 24px;
+    padding: 58px 26px 28px;
+  }
+
+  .figma-home__membership-heading h3 {
+    font-size: 26px;
+  }
+
+  .figma-home__percentage {
+    width: 58px;
+    height: 58px;
+  }
+
+  .figma-home__price {
+    font-size: 38px;
+  }
+
+  .figma-home__free-ribbon {
+    right: 20px;
+  }
+
+  .figma-home__vacation h2 {
+    font-size: 44px;
+  }
+
+  .figma-home__vacation p:not(.figma-home__eyebrow) br {
+    display: none;
+  }
+
+  .figma-home__faq-list summary {
+    min-height: 92px;
+    font-size: 20px;
+  }
+
+  .figma-home__suggest h2 {
+    font-size: 36px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .figma-home *,
+  .figma-home *::before,
+  .figma-home *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

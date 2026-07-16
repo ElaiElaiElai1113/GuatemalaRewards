@@ -4,7 +4,7 @@ import { Navigate, Outlet, RouterProvider, createBrowserRouter, useLocation, use
 
 import { AdminPage } from '@/features/admin/pages/admin-page'
 import { AmbassadorsPage } from '@/features/ambassadors/pages/ambassadors-page'
-import { AuthPage, LandingPage } from '@/features/auth/pages/landing-page'
+import { AuthPage } from '@/features/auth/pages/landing-page'
 import { RequiredAgreementsPage } from '@/features/auth/pages/required-agreements-page'
 import { ResetPasswordPage } from '@/features/auth/pages/reset-password-page'
 import { StaffLoginPage } from '@/features/auth/pages/staff-login-page'
@@ -14,6 +14,7 @@ import { ForBusinessesPage } from '@/features/business/pages/for-businesses-page
 import { ActivityPage } from '@/features/activity/pages/activity-page'
 import { DashboardPage } from '@/features/dashboard/pages/dashboard-page'
 import { EarlyAccessPage } from '@/features/early-access/pages/early-access-page'
+import { HomePage } from '@/features/home/pages/home-page'
 import { ProfilePage } from '@/features/profile/pages/profile-page'
 import { PromotionsPage } from '@/features/promotions/pages/promotions-page'
 import { PromoPage } from '@/features/referrals/pages/promo-page'
@@ -169,7 +170,7 @@ function LandingRoute() {
 }
 
 function RootRoute() {
-  return <Navigate replace to="/landing-page" />
+  return <HomePage />
 }
 
 function ProtectedCustomerRoute() {
@@ -426,7 +427,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/landing-page',
-        element: <LandingPage />,
+        element: <HomePage />,
       },
       {
         path: '/b/:slug',

@@ -46,7 +46,7 @@ test.describe.serial('platform launch checklist PT001-PT008', () => {
 
     await page.goto('/landing-page')
     await expect(page.locator('body')).toContainText(/Early adopter monthly subscription|Monthly subscription/i)
-    await expect(page.locator('body')).toContainText(/\$100,000 in Rewards|\$100,000 Bonus/i)
+    await expect(page.locator('body')).toContainText(/\$25 USD|\$10 USD/i)
   })
 
   test('PT003 business QR code scan triggers a member transaction', async ({ page }) => {

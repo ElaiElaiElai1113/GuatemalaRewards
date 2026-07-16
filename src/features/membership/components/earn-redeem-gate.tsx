@@ -7,6 +7,10 @@ import { CheckCircle2, CreditCard, Gift, Sparkles } from 'lucide-react'
 
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import {
+  MEMBERSHIP_PRICE_USD,
+  MEMBERSHIP_REWARD_CREDIT_USD,
+} from '@/features/membership/membership-pricing'
 import { useAuth } from '@/hooks/use-auth'
 import { useMembership } from '@/hooks/use-membership'
 import { useLanguage } from '@/lib/language'
@@ -71,11 +75,15 @@ export function EarnRedeemGate({ children, action }: EarnRedeemGateProps) {
             <div className="grid gap-3 sm:grid-cols-3">
               <div className="rounded-xl border border-[var(--border)] bg-card p-3 text-card-foreground shadow-sm">
                 <p className="text-xs font-medium text-[var(--muted-foreground)]">{t('Monthly')}</p>
-                <p className="mt-2 text-2xl font-semibold text-[var(--foreground)]">{formatCurrency(10)}</p>
+                <p className="mt-2 text-2xl font-semibold text-[var(--foreground)]">
+                  {formatCurrency(MEMBERSHIP_PRICE_USD)}
+                </p>
               </div>
               <div className="rounded-xl border border-[var(--border)] bg-card p-3 text-card-foreground shadow-sm">
                 <p className="text-xs font-medium text-[var(--muted-foreground)]">{t('Instant credit')}</p>
-                <p className="mt-2 text-2xl font-semibold text-[var(--foreground)]">{formatCurrency(10)}</p>
+                <p className="mt-2 text-2xl font-semibold text-[var(--foreground)]">
+                  {formatCurrency(MEMBERSHIP_REWARD_CREDIT_USD)}
+                </p>
               </div>
               <div className="rounded-xl border border-[var(--border)] bg-card p-3 text-card-foreground shadow-sm">
                 <p className="text-xs font-medium text-[var(--muted-foreground)]">{t('Payment')}</p>

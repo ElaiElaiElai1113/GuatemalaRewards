@@ -1496,8 +1496,8 @@ const spanishTranslations: Record<string, string> = {
     'La verificacion ayuda a mantener las recompensas justas y protegidas para miembros reales.',
   ' by simply spending at amazing businesses within our platform':
     ' simplemente comprando en negocios increibles dentro de nuestra plataforma',
-  '$10/mo flat': '$10/mes fijo',
-  '$10/mo membership, $10 credit instantly': 'Membresia de $10/mes, credito de $10 al instante',
+  '$25/mo flat': '$25/mes fijo',
+  '$25/mo membership, $10 credit instantly': 'Membresia de $25/mes, credito de $10 al instante',
   '20% - 100%': '20% - 100%',
   '20–100% back on eligible spending': '20-100% de vuelta en compras elegibles',
   'A softer showcase for the items most likely to pull shoppers deeper into the catalog.':
